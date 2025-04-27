@@ -7,24 +7,65 @@
     <title>Créer un compte</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         body {
-            background-color: #f8f9fa;
-            font-family: 'Arial', sans-serif;
+            background-color: #f7f9fc;
+            font-family: 'Poppins', sans-serif;
         }
-        .form-section {
-            background-color: #ffffff;
+        .form-container {
+            max-width: 600px;
+            margin: 50px auto;
             padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        .form-container h1 {
+            font-size: 2rem;
+            color: #007bff;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .form-label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 8px;
+            display: inline-block;
         }
         .form-control {
-            height: calc(2.5rem + 2px); /* Uniformiser les champs */
+            height: 45px;
+            border-radius: 8px;
+            border: 1px solid #ced4da;
+            padding: 10px 15px;
+        }
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(30, 144, 255, 0.3);
+        }
+        .form-select {
+            height: 45px;
+            border-radius: 8px;
+        }
+        .btn-primary {
+            width: 100%;
+            height: 50px;
+            border-radius: 8px;
+            background-color: #007bff;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            transform: scale(1.03);
         }
         .footer {
+            text-align: center;
             background-color: #343a40;
-            color: white;
-            padding: 20px 0;
+            color: #fff;
+            padding: 15px;
+            margin-top: 40px;
         }
     </style>
 </head>
@@ -37,64 +78,82 @@
     </nav>
 
     <!-- Form Section -->
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-lg-10">
-                <div class="form-section">
-                    <h1 class="text-center text-primary mb-4">Créer un compte</h1>
+    <div class="form-container">
+        <h1>Créer un compte</h1>
 
-                    <!-- Sélecteur de rôle -->
-                    <form method="GET" action="{% url 'creer_compte' %}" class="mb-4">
-                        <div class="mb-3">
-                            <label for="role" class="form-label">Je suis :</label>
-                            <select id="role" name="role" class="form-select" onchange="this.form.submit()">
-                                <option value="patient" {% if role == 'patient' %}selected{% endif %}>Patient</option>
-                                <option value="medecin" {% if role == 'medecin' %}selected{% endif %}>Médecin</option>
-                            </select>
-                        </div>
-                    </form>
-
-                    <!-- Formulaire dynamique -->
-                    <form method="POST" action="{% url 'creer_compte' %}">
-                        {% csrf_token %}
-
-                        <!-- Champs organisés en grille -->
-                        <div class="row g-3">
-                            <!-- Parcourir les champs dynamiquement -->
-                            {% for field in form.visible_fields %}
-                                {% if field.name in 'email mot_de_passe' %}
-                                    <!-- Champs larges -->
-                                    <div class="col-12">
-                                        <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
-                                        {{ field }}
-                                        {% if field.help_text %}
-                                            <small class="form-text text-muted">{{ field.help_text }}</small>
-                                        {% endif %}
-                                    </div>
-                                {% else %}
-                                    <!-- Champs normaux côte à côte -->
-                                    <div class="col-md-6">
-                                        <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
-                                        {{ field }}
-                                        {% if field.help_text %}
-                                            <small class="form-text text-muted">{{ field.help_text }}</small>
-                                        {% endif %}
-                                    </div>
-                                {% endif %}
-                            {% endfor %}
-                        </div>
-
-                        <div class="text-center mt-4">
-                            <button type="submit" class="btn btn-primary btn-lg">Créer un compte</button>
-                        </div>
-                    </form>
-                </div>
+        <!-- Sélecteur de rôle -->
+        <form method="GET" action="{% url 'creer_compte' %}" class="mb-4">
+            <div class="mb-3">
+                <label for="role" class="form-label">Je suis :</label>
+                <select id="role" name="role" class="form-select" onchange="this.form.submit()">
+                    <option value="patient" {% if role == 'patient' %}selected{% endif %}>Patient</option>
+                    <option value="medecin" {% if role == 'medecin' %}selected{% endif %}>Médecin</option>
+                </select>
             </div>
-        </div>
+        </form>
+
+        <!-- Formulaire dynamique -->
+        <form method="POST" action="{% url 'creer_compte' %}">
+            {% csrf_token %}
+
+            <!-- Nom et Prénom -->
+            <div class="mb-3">
+                <label for="nom" class="form-label">Nom :</label>
+                <input type="text" class="form-control" id="nom" name="nom" placeholder="Votre nom">
+            </div>
+            <div class="mb-3">
+                <label for="prenom" class="form-label">Prénom :</label>
+                <input type="text" class="form-control" id="prenom" name="prenom" placeholder="Votre prénom">
+            </div>
+
+            <!-- Email -->
+            <div class="mb-3">
+                <label for="email" class="form-label">Email :</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Votre adresse email">
+            </div>
+
+            <!-- Mot de passe -->
+            <div class="mb-3">
+                <label for="mot_de_passe" class="form-label">Mot de passe :</label>
+                <input type="password" class="form-control" id="mot_de_passe" name="mot_de_passe" placeholder="Votre mot de passe">
+            </div>
+
+            {% if role == 'medecin' %}
+            <!-- Spécialité et Ville (Médecins uniquement) -->
+            <div class="mb-3">
+                <label for="specialite" class="form-label">Spécialité :</label>
+                <select id="specialite" name="specialite" class="form-select">
+                    <option value="generaliste">Généraliste</option>
+                    <option value="cardiologue">Cardiologue</option>
+                    <option value="dermatologue">Dermatologue</option>
+                    <option value="pediatre">Pédiatre</option>
+                    <option value="chirurgien">Chirurgien</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="ville" class="form-label">Ville :</label>
+                <select id="ville" name="ville" class="form-select">
+                    <option value="casablanca">Casablanca</option>
+                    <option value="rabat">Rabat</option>
+                    <option value="marrakech">Marrakech</option>
+                    <option value="tangier">Tanger</option>
+                    <option value="fes">Fès</option>
+                </select>
+            </div>
+            {% endif %}
+
+            <!-- Téléphone -->
+            <div class="mb-3">
+                <label for="numero_telephone" class="form-label">Numéro de téléphone :</label>
+                <input type="text" class="form-control" id="numero_telephone" name="numero_telephone" placeholder="Votre numéro">
+            </div>
+
+            <button type="submit" class="btn btn-primary mt-3">Créer un compte</button>
+        </form>
     </div>
 
     <!-- Footer -->
-    <footer class="footer text-center mt-5">
+    <footer class="footer">
         <p>© 2025 Cabinet médical - Tous droits réservés.</p>
     </footer>
 
