@@ -51,14 +51,14 @@
                         <a class="nav-link" href="{% url 'services'%}">Services</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'A propos'%}">À propos</a>
+                        <a class="nav-link" href="{% url 'propos'%}">À propos</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#contact">Contact</a>
                     </li>
                 </ul>
                 <div>
-                    <a href="" class="btn btn-outline-light me-2">Connexion</a>
+                    <a href="{% url 'login' %}" class="btn btn-outline-light me-2">Connexion</a>
                     <a href="{% url 'creer_compte' %}" class="btn btn-light">Inscription</a>
                 </div>
             </div>

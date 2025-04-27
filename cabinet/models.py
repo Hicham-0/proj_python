@@ -26,9 +26,18 @@ class Patient(models.Model):
     prenom = models.CharField(max_length=50)  # Prénom du patient
     email = models.EmailField(unique=True)  # Email du patient
     numero_telephone = models.CharField(max_length=15)  # Numéro de téléphone
-    date_naissance = models.DateField()  # Date de naissance
+    date_naissance = models.DateField(  )  # Date de naissance
     mot_de_passe = models.CharField(max_length=128)  # Mot de passe sécurisé
     dossier_medical = models.TextField(blank=True, null=True)  # Dossier médical (contenu textuel)
     def __str__(self):
         return f"{self.nom} {self.prenom} ({self.date_naissance})"
 
+
+class RendezVous(models.Model):
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    medecin = models.ForeignKey(Medecin, on_delete=models.CASCADE)
+    date = models.DateTimeField()
+    motif = models.TextField()
+
+    def __str__(self):
+        return f"RDV: {self.patient} avec {self.medecin} le {self.date}"

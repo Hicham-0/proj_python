@@ -10,149 +10,194 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         body {
-            background-color: #f7f9fc;
+            background-image: url('https://source.unsplash.com/1920x1080/?health,doctor');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
             font-family: 'Poppins', sans-serif;
+            color: #333;
         }
+
+        .overlay {
+            background-color: rgba(255, 255, 255, 0.8);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
         .form-container {
-            max-width: 600px;
-            margin: 50px auto;
-            padding: 40px;
-            background-color: #fff;
+            max-width: 700px;
+            margin: 80px auto;
+            padding: 50px;
+            background-color: #ffffff;
             border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            position: relative;
         }
+
         .form-container h1 {
-            font-size: 2rem;
+            font-size: 2.8rem;
             color: #007bff;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             text-align: center;
+            text-transform: uppercase;
         }
+
+        .form-container h1 span {
+            font-size: 1.2rem;
+            color: #555;
+            display: block;
+            margin-top: 10px;
+        }
+
         .form-label {
-            font-size: 0.9rem;
-            font-weight: 500;
+            font-size: 1rem;
+            font-weight: 600;
             margin-bottom: 8px;
-            display: inline-block;
+            color: #555;
         }
-        .form-control {
+
+        .form-control, .form-select {
             height: 45px;
-            border-radius: 8px;
+            border-radius: 10px;
             border: 1px solid #ced4da;
-            padding: 10px 15px;
+            padding: 10px;
+            background-color: #f9f9f9;
         }
-        .form-control:focus {
+
+        .form-control:focus, .form-select:focus {
             border-color: #007bff;
-            box-shadow: 0 0 5px rgba(30, 144, 255, 0.3);
+            box-shadow: 0 0 10px rgba(0, 123, 255, 0.3);
         }
-        .form-select {
-            height: 45px;
-            border-radius: 8px;
-        }
+
         .btn-primary {
             width: 100%;
             height: 50px;
             border-radius: 8px;
-            background-color: #007bff;
-            font-size: 1.1rem;
-            font-weight: bold;
-            transition: all 0.3s ease;
+            background: linear-gradient(to right, #007bff, #0056b3);
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+            transition: all 0.4s ease-in-out;
         }
+
         .btn-primary:hover {
-            background-color: #0056b3;
-            transform: scale(1.03);
+            background: linear-gradient(to right, #0056b3, #003b99);
+            transform: scale(1.05);
         }
+
         .footer {
             text-align: center;
-            background-color: #343a40;
+            background-color: #007bff;
             color: #fff;
-            padding: 15px;
+            padding: 20px;
             margin-top: 40px;
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer p {
+            font-size: 1rem;
+            margin: 0;
         }
     </style>
 </head>
 <body>
+    <!-- Overlay -->
+    <div class="overlay"></div>
+
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
         <div class="container">
             <a class="navbar-brand" href="{% url 'landing' %}">Cabinet Médical</a>
+            
+            <!-- Ajout du lien "Accueil" -->
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="{% url 'landing' %}"><i class="fas fa-home"></i> Accueil</a>
+                </li>
+            </ul>
         </div>
     </nav>
 
     <!-- Form Section -->
     <div class="form-container">
-        <h1>Créer un compte</h1>
+        <h1>
+            Créer un compte
+            <span>Inscrivez-vous pour accéder aux services</span>
+        </h1>
 
         <!-- Sélecteur de rôle -->
         <form method="GET" action="{% url 'creer_compte' %}" class="mb-4">
             <div class="mb-3">
                 <label for="role" class="form-label">Je suis :</label>
-                <select id="role" name="role" class="form-select" onchange="this.form.submit()">
+                <select id="role" name="role" class="form-select" onchange="this.form.submit()" required>
+                    <option value="" selected disabled>Choisissez votre rôle</option>
                     <option value="patient" {% if role == 'patient' %}selected{% endif %}>Patient</option>
                     <option value="medecin" {% if role == 'medecin' %}selected{% endif %}>Médecin</option>
                 </select>
             </div>
         </form>
 
-        <!-- Formulaire dynamique -->
+        {% if form %}
         <form method="POST" action="{% url 'creer_compte' %}">
             {% csrf_token %}
-
+            <input type="hidden" name="role" value="{{ role }}">
+            
             <!-- Nom et Prénom -->
             <div class="mb-3">
-                <label for="nom" class="form-label">Nom :</label>
-                <input type="text" class="form-control" id="nom" name="nom" placeholder="Votre nom">
+                <label for="{{ form.nom.id_for_label }}" class="form-label">Nom :</label>
+                {{ form.nom }}
             </div>
             <div class="mb-3">
-                <label for="prenom" class="form-label">Prénom :</label>
-                <input type="text" class="form-control" id="prenom" name="prenom" placeholder="Votre prénom">
+                <label for="{{ form.prenom.id_for_label }}" class="form-label">Prénom :</label>
+                {{ form.prenom }}
             </div>
 
             <!-- Email -->
             <div class="mb-3">
-                <label for="email" class="form-label">Email :</label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="Votre adresse email">
+                <label for="{{ form.email.id_for_label }}" class="form-label">Email :</label>
+                {{ form.email }}
             </div>
 
             <!-- Mot de passe -->
             <div class="mb-3">
-                <label for="mot_de_passe" class="form-label">Mot de passe :</label>
-                <input type="password" class="form-control" id="mot_de_passe" name="mot_de_passe" placeholder="Votre mot de passe">
+                <label for="{{ form.mot_de_passe.id_for_label }}" class="form-label">Mot de passe :</label>
+                {{ form.mot_de_passe }}
             </div>
 
-            {% if role == 'medecin' %}
-            <!-- Spécialité et Ville (Médecins uniquement) -->
+            {% if role == 'patient' %}
             <div class="mb-3">
-                <label for="specialite" class="form-label">Spécialité :</label>
-                <select id="specialite" name="specialite" class="form-select">
-                    <option value="generaliste">Généraliste</option>
-                    <option value="cardiologue">Cardiologue</option>
-                    <option value="dermatologue">Dermatologue</option>
-                    <option value="pediatre">Pédiatre</option>
-                    <option value="chirurgien">Chirurgien</option>
-                </select>
-            </div>
-            <div class="mb-3">
-                <label for="ville" class="form-label">Ville :</label>
-                <select id="ville" name="ville" class="form-select">
-                    <option value="casablanca">Casablanca</option>
-                    <option value="rabat">Rabat</option>
-                    <option value="marrakech">Marrakech</option>
-                    <option value="tangier">Tanger</option>
-                    <option value="fes">Fès</option>
-                </select>
+                <label for="{{ form.date_naissance.id_for_label }}" class="form-label">Date de naissance :</label>
+                {{ form.date_naissance }}
             </div>
             {% endif %}
 
-            <!-- Téléphone -->
+            {% if role == 'medecin' %}
             <div class="mb-3">
-                <label for="numero_telephone" class="form-label">Numéro de téléphone :</label>
-                <input type="text" class="form-control" id="numero_telephone" name="numero_telephone" placeholder="Votre numéro">
+                <label for="{{ form.specialite.id_for_label }}" class="form-label">Spécialité :</label>
+                {{ form.specialite }}
             </div>
+            <div class="mb-3">
+                <label for="{{ form.ville.id_for_label }}" class="form-label">Ville :</label>
+                {{ form.ville }}
+            </div>
+            {% endif %}
 
+            <div class="mb-3">
+                <label for="{{ form.numero_telephone.id_for_label }}" class="form-label">Numéro de téléphone :</label>
+                {{ form.numero_telephone }}
+            </div>
             <button type="submit" class="btn btn-primary mt-3">Créer un compte</button>
         </form>
+        {% else %}
+        <p class="text-danger text-center">Veuillez choisir un rôle pour afficher le formulaire.</p>
+        {% endif %}
     </div>
 
-    <!-- Footer -->
     <footer class="footer">
         <p>© 2025 Cabinet médical - Tous droits réservés.</p>
     </footer>
