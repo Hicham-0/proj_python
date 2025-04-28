@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from .forms import MedecinForm, PatientForm
+from django.contrib.auth.decorators import login_required 
 
 
 def creer_compte(request):
@@ -36,15 +37,18 @@ def creer_compte(request):
 
 
 
-
+@login_required
 def landing(request):
     return render(request, 'cabinet/landing.html')
+
 
 def services(request):
     return render(request, 'cabinet/services.html')
 
+
 def propos(request):
     return render(request, 'cabinet/apropos.html')
+
 
 def login(request):
 
