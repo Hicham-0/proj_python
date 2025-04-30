@@ -37,7 +37,7 @@ def creer_compte(request):
 
 
 
-@login_required
+
 def landing(request):
     return render(request, 'cabinet/landing.html')
 
@@ -46,8 +46,6 @@ def services(request):
     return render(request, 'cabinet/services.html')
 
 
-def propos(request):
-    return render(request, 'cabinet/apropos.html')
 
 
 def login(request):

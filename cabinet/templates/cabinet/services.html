@@ -1,13 +1,320 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9fbfc;
+}
+
+.section1 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 80px 10%;
+  background: linear-gradient(to right,#d6e3e7 , #ffffff);
+  box-sizing: border-box;
+  gap: 50px;
+  min-height: 100vh;
+}
+
+.text-content {
+  flex: 1;
+}
+
+.text-content h1 {
+  font-size: 3em;
+  color: #26474E;
+  margin-bottom: 20px;
+}
+
+.text-content p {
+  font-size: 1.15em;
+  color: #333;
+  line-height: 1.8;
+  margin-bottom: 30px;
+ 
+}
+
+.cta-button {
+  display: inline-block;
+  padding: 12px 25px;
+  background-color:#26474E;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.cta-button:hover {
+  background-color: #26474E;
+}
+.cta-button .arrow {
+  margin-left: 10px;
+  font-size: 1.2em;
+  transition: transform 0.3s ease;
+}
+
+.cta-button:hover .arrow {
+  transform: translateY(3px); /* petit mouvement vers le bas au survol */
+}
+.image-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-container img {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  margin-left: 140px;
+}
+.services-section {
+  padding: 25px 25px;
+  background-color: white;
+  text-align: center;
+padding-bottom: 120px;
+}
+
+.section-title {
+  font-size: 2em;
+  color: #26474E;
+  margin-bottom: 20px;
+}
+
+.services-section .intro {
+  max-width: 700px;
+  margin: 0 auto 40px;
+  font-size: 1.1em;
+  color: #555;
+}
+
+.services-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Trois cartes par ligne */
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.service-item {
+  background: #E6F0F3;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+  transition: transform 0.3s ease;
+ 
+}
+
+.service-item:hover {
+  transform: translateY(-7px);
+}
+
+.service-item h3 {
+  color: #26474E;
+  margin-bottom: 12px;
+  font-size: 1.3em;
+}
+
+.service-item p {
+  color: #444;
+  font-size: 0.95em;
+  line-height: 1.6;
+}
+.section7 {
+  display: flex;
+ 
+  flex-wrap: wrap;
+  padding: 30px;
+  background-color: #E6F0F3;
+  gap: 40px;
+
+}
+
+.info-block {
+  width: 22%;
+  min-width: 200px;
+  gap: 30px;
+}
+
+.section7 h4 {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #26474E;
+  margin-bottom: 10px;
+}
+
+.section7 p {
+  font-size: 0.95em;
+  color: #333;
+  line-height: 1.5;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  
+}
+
+.section7 p img {
+  width: 18px;
+  height: 18px;
+  margin-right: 8px;
+}
+
+.socials img {
+  width: 25px;
+  height: 25px;
+  margin-right: 10px;
+  object-fit: cover;
+}
+.socials a {
+  text-decoration: none; /* Supprime le soulignement */
+  display: inline-block; /* Corrige les comportements inline par défaut */
+}
+ 
+footer {
+  position: relative;
+  width: 100%; /* Force la largeur à 100% de la fenêtre */
+  background-color: #66B7AD;
+  padding: 20px 0;
+  margin: 0;
+ 
+}
+
+footer p {
+  color: white;
+  text-align: center;
+  margin: 0 auto;
+  font-size: 0.9em;
+  max-width: 1200px;
+}
+
+
+
+
+
+
+
+
+      </style>
 </head>
 <body>
-
-    page dial services (test)
+   
+  <section class="section1">
+    <div class="text-content">
+      <h1>Des services médicaux adaptés à vos besoins</h1>
+      <p>
+        Chez MediPlace, nous mettons à votre disposition une gamme complète 
+        de services de santé pour vous accompagner à chaque étape de votre vie. 
+        Notre équipe de professionnels qualifiés s’engage 
+        à vous offrir un accompagnement personnalisé, dans un cadre rassurant et moderne.
+        Votre santé est notre priorité.
+      </p>
+<a href="#section2" class="cta-button">
+  Découvrir nos services <span class="arrow">↓</span>
+</a>
+    </div>
+    <div class="image-container">
+      <img src="{% static 'cabinet/img/services.jpg' %}" alt="Services médicaux">
+    </div>
+  </section>
+  <section id="section2" class="services-section">
+    <h2 class="section-title">Nos Services Médicaux</h2>
+  
+    <p class="intro">
+      Découvrez les services proposés par MediPlace pour vous accompagner au quotidien avec des soins adaptés à tous les besoins.
+    </p>
+  
+    <div class="services-list">
+      <div class="service-item">
+        <h3>Médecine Générale</h3>
+        <p>Consultations pour toute la famille, prise en charge des soins courants et suivi global.</p>
+      </div>
+  
+      <div class="service-item">
+        <h3>Cardiologie</h3>
+        <p>Prévention et traitement des maladies cardiovasculaires avec des spécialistes expérimentés.</p>
+      </div>
+  
+      <div class="service-item">
+        <h3>Pédiatrie</h3>
+        <p>Soins adaptés aux enfants de tous âges pour garantir leur bonne santé et leur bien-être.</p>
+      </div>
+  
+      <div class="service-item">
+        <h3>Dermatologie</h3>
+        <p>Diagnostic et traitement des affections de la peau, des cheveux et des ongles.</p>
+      </div>
+  
+      <div class="service-item">
+        <h3>Neurologie</h3>
+        <p>Prise en charge des troubles du système nerveux: migraines, épilepsie, AVC, etc.</p>
+      </div>
+  
+      <div class="service-item">
+        <h3>Médecine Dentaire</h3>
+        <p>Soins bucco-dentaires pour petits et grands : prévention, traitements et esthétique.</p>
+      </div>
+    </div>
+  </section>
+  <section id="section7" class="section7">
+    <div class="info-block">
+      <h4>MediPlace</h4>
+      <p>Nous sommes honorés de faire partie de votre parcours de soins de santé et
+         nous nous engageons à fournir des soins compatissants, personnalisés et de premier ordre.
+         à chaque étape du processus.Confiez nous votre santéet laissé nous travailler ensemble
+         pour obtenir les meilleures Résultats possibles pour vous et vos proches
+      </p>
+    </div>
+  
+    <div class="info-block">
+      <h4>Départements</h4>
+      <p>
+        Médecine générale<br>
+        Cardiologie<br>
+        Pédiatrie<br>
+        Dermatologie<br>
+        Neurologie<br>
+        Médecine dentaire
+      </p>
+    </div>
+  
+    <div class="info-block">
+      <h4>Autres Services</h4>
+      <p>
+        24/7 services<br>
+        Contrôle de qualité<br>
+        Soins médicaux complets
+      </p>
+    </div>
+  
+    <div class="info-block">
+      <h4>Contactez-nous</h4>
+      <p><img src="{% static 'cabinet/img/localisation.webp' %}" alt="localisation"> Appt.3,Imm.3 RDC, Rue Oued Ziz, Rabat</p>
+      <p><img src="{% static 'cabinet/img/telallo.png' %}" alt="téléphone"> +212 69 756 7741</p>
+      <div class="socials">
+        <a href="https://www.instagram.com/projetpython/" target="_blank">
+          <img src="{% static 'cabinet/img/logoinsta.png' %}" alt="Instagram">
+        </a><a href="https://www.facebook.com/profile.php?id=61575824190449&name=xhp_nt__fb__action__open_user" target="_blank">
+            <img src="{% static 'cabinet/img/logofacebook.png' %}" alt="Facebook">
+          </a>
+        
+      </div>
+    </div>
+  </section>
+  <footer>
     
+<p>Copyright © 2025 MediPlace, tous droits réservés.</p>
+  </footer>
 </body>
 </html>

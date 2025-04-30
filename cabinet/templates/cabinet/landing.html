@@ -1,190 +1,721 @@
+
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cabinet Médical</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <title>MediPlace</title>
     <style>
-        .hero-section {
-            background-color: #f8f9fa;
-            padding: 60px 0;
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
         }
-        .stats-section, .services-section, .why-choose-us-section, .doctors-section, .contact-section {
-            background-color: #e9ecef;
-            padding: 40px 0;
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 30px;
+            background-color: #66B7AD;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-        .stat-box, .service-box, .contact-box, .doctor-card {
-            padding: 20px;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            text-align: center;
+        .left-section {
+            display: flex;
+            align-items: center;
+            gap: 40px;
         }
-        .doctor-card img {
-            width: 150px;
-            height: 150px;
-            object-fit: cover; /* Ajuste les images pour qu'elles aient toutes la même taille sans déformation */
-            border-radius: 50%; /* Pour conserver l'effet circulaire */
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
         }
-        footer {
-            background-color: #343a40;
+        .logo .medi {
+            color: white; /* Couleur pour Medi */
+        }
+        .logo .place {
+            color: #F0E5CF; /* Couleur pour Place */
+        }
+        nav {
+            display: flex;
+            gap: 25px;
+        }
+        nav a {
+            text-decoration: none;
             color: white;
-            padding: 20px 0;
+            font-size: 16px;
+            transition: color 0.3s;
         }
+        nav a:hover {
+            color:#E8EDDF ;
+        }
+        .buttons {
+            display: flex;
+            gap: 15px;
+        }
+        .buttons a {
+            padding: 8px 16px;
+            font-size: 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-decoration: wavy;
+        }
+        .login-btn {
+            background-color: white;
+            border: 1px solid white;
+            color: #F0E5CF;
+        }
+        .login-btn:hover {
+            background-color: #E8EDDF;
+            color: white;
+        }
+        .signup-btn {
+            background-color: #E8EDDF;
+           
+            color: white;
+        }
+        .signup-btn:hover {
+            background-color: #E8EDDF;
+        }
+        /* Section with image */
+        .section1 {
+            position: relative;
+            width: 100%;
+            height: 685px; /* Tu peux ajuster la hauteur selon ce que tu veux */
+            overflow: hidden;
+        }
+
+        .section1 img {
+            width: 100%;
+            height: auto;
+            object-fit: cover; /* Garde la proportion de l'image */
+            opacity: 0.7;
+        }
+
+        /* Superposition de couleur (filtre) */
+        .section1::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(232, 237, 223 , 0.5); /* Filtre de couleur rouge avec 50% de transparence */
+            pointer-events: none; /* Permet d'interagir avec l'image derrière */
+        }
+        .overlay-text {
+    position: absolute;
+    top: 50%;
+    left: 5%;
+    transform: translateY(-50%);
+    text-align: left;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    max-width: 600px;
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.6);
+    padding-top: 50px;
+}
+
+.overlay-text h1 {
+    font-size: 36px; /* Taille plus modérée pour le titre */
+    font-weight: 800; /* Gras pour attirer l'attention */
+    margin: 0;
+    color: #26474E; /* Couleur élégante et sobre */
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3); /* Ombre douce mais suffisamment présente */
+    text-align: left; /* Aligné à gauche */
+    font-family: 'Helvetica Neue', sans-serif; /* Police moderne et lisible */
+    padding-left: 20px; /* Marge à gauche pour un effet soigné */
+}
+
+.overlay-text p {
+    font-size: 18px; /* Taille plus raisonnable pour le texte */
+    margin-top: 15px;
+    line-height: 1.6; /* Espacement confortable entre les lignes */
+    font-weight: 600; /* Légèrement épais mais pas trop lourd */
+    color: #26474E; /* Même couleur que le titre pour la cohérence */
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2); /* Ombre légère pour améliorer la lisibilité */
+    font-family: 'Georgia', serif; /* Police élégante mais claire */
+    text-align: left; /* Aligné à gauche */
+    padding-left: 20px; /* Espacement à gauche pour l'harmonie avec le titre */
+    max-width: 900px; /* Limite la largeur pour un texte plus agréable à lire */
+    margin-left: auto;
+    margin-right: auto; /* Centré horizontalement */
+}
+.overlay-button {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 12px 24px;
+    background-color: #66B7AD; /* Couleur du bouton */
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    animation: pulse 2s infinite; /* Animation continue */
+    margin-left: 20px;
+}
+
+/* Animation douce */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(102, 183, 173, 0.7);
+    }
+    70% {
+        transform: scale(1.05);
+        box-shadow: 0 0 10px 10px rgba(102, 183, 173, 0);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(102, 183, 173, 0);
+    }
+}
+
+.overlay-button:hover {
+    background-color: #559b92;
+    transform: translateY(-3px) scale(1.05); /* Remonte un peu et grossit */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Ombre plus forte au hover */
+}
+.section2 {
+    padding: 20px 20px 20px ;
+    background-color: #f9f9f9;
+    text-align: center;
+}
+
+.section2 h1 {
+    font-size: 28px;
+    color: #26474E;
+    margin-bottom: 30px;
+    font-weight: 800;
+}
+
+.service-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px; /* Réduit l'espace entre les cartes */
+    max-width: 1000px; /* Réduit la largeur du container */
+    margin: 0 auto; /* Centre horizontalement le container */
+}
+
+.service-card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 40%; /* Réduit la largeur des cartes pour plus de compacité */
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.service-card img {
+    width: 100px; /* Réduit la taille de l'image */
+    height: 80px;
+    object-fit: contain;
+    margin-bottom: 15px;
+}
+
+.service-card h1 {
+    font-size: 18px; /* Réduit la taille du titre */
+    color:#26474E;
+    margin-bottom: 10px;
+}
+
+.service-card p {
+    font-size: 14px; /* Réduit la taille du texte */
+    color: #555;
+    line-height: 1.6;
+}
+.section3 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 60px 80px;
+    background-color: #E6F0F3; /* couleur de fond douce (modifiable) */
+    flex-wrap: wrap;
+}
+
+.section3 h1 {
+    font-size: 32px;
+    color: #26474E;
+    margin-bottom: 20px;
+}
+
+.section3 p {
+    font-size: 16px;
+    color: #444;
+    line-height: 1.8;
+    max-width: 600px;
+}
+
+.section3-text {
+    flex: 1;
+    min-width: 300px;
+    padding-right: 40px;
+}
+
+.section3 img {
+    flex: 1;
+    min-width: 280px;
+    max-width: 470px; /* taille réduite */
+    height: auto;
+    border-radius: 0; /* plus de bords arrondis */
+    object-fit: cover;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+.section4 {
+  padding: 30px 75px;
+  position: relative;
+  
+ 
+ 
+}
+
+.section-title-left {
+  font-size: 28px;
+  color: #26474E;
+  margin-bottom: 30px;
+  text-align: left;
+}
+
+.doctor-grid-wrapper {
+  display: flex;
+  justify-content: center;
+  /* pousse les cartes vers la droite */
+}
+
+.doctor-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 cartes par ligne */
+  gap: 50px;
+}
+
+.doctor-card {
+    background-color: #d6e3e7;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  width: 220px;
+  text-align: center;
+  padding: 15px;
+  transition: transform 0.3s ease ;
+ cursor: pointer;
+ outline: none;
+ 
+}
+
+.doctor-card:hover {
+
+  transform: scale(1.10);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+}
+
+.doctor-card img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.doctor-card p {
+  font-weight: bold;
+  color: #26474E;
+  font-size: 16px;
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* Animation au clic */
+.doctor-card:active {
+    transform: scale(3);
+    z-index: 10;
+}
+.section5 {
+  background-color: #E6F0F3;
+  padding: 30px 75px;
+}
+
+.stats-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+.section5 h1 {
+  font-size: 26px;
+  color: #26474E;
+  min-width: 220px;
+  margin: 0;
+}
+
+.stats-container {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.stat-card {
+  background-color: white;
+  border-radius: 10px;
+  padding: 25px;
+  width: 200px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+}
+
+.stat-number {
+  font-size: 24px;
+  font-weight: bold;
+  color: #1a3c40;
+  margin-bottom: 8px;
+}
+
+.stat-label {
+  font-size: 14px;
+  color: #333;
+  margin: 0;
+}
+.section6 {
+    text-align: center;
+    padding: 30px 50px;
+    margin: 0 auto;
+    max-width: 1300px;
+   
+}
+
+.section6 h1 {
+    font-size: 1.8em; /* Taille du titre réduite */
+    font-weight: bold;
+    color: #26474E;
+    margin-bottom: 30px;
+}
+
+.section6 .content {
+    display: flex;
+    justify-content: space-between; /* Espacement équidistant entre les images et leurs paragraphes */
+    align-items: flex-start; /* Aligner les éléments en haut */
+    gap: 30px; /* Espaces entre chaque bloc image + texte */
+}
+
+.section6 .content .item {
+    width: 30%; /* Chaque bloc occupe 30% de la largeur */
+    display: flex;
+    flex-direction: column; /* Aligne image et texte verticalement */
+    align-items: center; /* Centre les éléments dans chaque bloc */
+    text-align: center;
+}
+
+.section6 img {
+    width: 40%; /* Les images occupent 100% de la largeur du conteneur */
+    height: auto; /* Respecte les proportions des images */
+    object-fit: contain; /* S'adapte sans être coupée, mais préserve les proportions */
+    border-radius: 8px; /* Arrondir les bords des images */
+
+}
+.last-block{
+    margin-top: 50px;
+
+}
+.section6 p {
+    font-size: 1em;
+    color: #333;
+    line-height: 1.6;
+    margin-top: 15px;
+    margin-bottom: 0; /* Evite trop d'espace sous le paragraphe */
+}
+.section6 p::first-line {
+  font-weight: bold;
+  color: #26474E; /* ou la couleur de ton choix */
+}
+
+.section7 {
+  display: flex;
+ 
+  flex-wrap: wrap;
+  padding: 30px;
+  background-color: #E6F0F3;
+  gap: 40px;
+
+}
+
+.info-block {
+  width: 22%;
+  min-width: 200px;
+  gap: 30px;
+}
+
+.section7 h4 {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #26474E;
+  margin-bottom: 10px;
+}
+
+.section7 p {
+  font-size: 0.95em;
+  color: #333;
+  line-height: 1.5;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  
+}
+
+.section7 p img {
+  width: 18px;
+  height: 18px;
+  margin-right: 8px;
+}
+
+.socials img {
+  width: 25px;
+  height: 25px;
+  margin-right: 10px;
+  object-fit: cover;
+}
+.socials a {
+  text-decoration: none; /* Supprime le soulignement */
+  display: inline-block; /* Corrige les comportements inline par défaut */
+}
+ 
+footer {
+  position: relative;
+  width: 100%; /* Force la largeur à 100% de la fenêtre */
+  background-color: #66B7AD;
+  padding: 20px 0;
+  margin: 0;
+ 
+}
+
+footer p {
+  color: white;
+  text-align: center;
+  margin: 0 auto;
+  font-size: 0.9em;
+  max-width: 1200px;
+}
+html {
+scroll-behavior: smooth;
+}
+
+
+
+
     </style>
 </head>
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <div class="container">
-            <a class="navbar-brand animate__animated animate__fadeInDown" href="#">Cabinet Médical</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'services'%}">Services</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'propos'%}">À propos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#contact">Contact</a>
-                    </li>
-                </ul>
-                <div>
-                    <a href="{% url 'login' %}" class="btn btn-outline-light me-2">Connexion</a>
-                    <a href="{% url 'creer_compte' %}" class="btn btn-light">Inscription</a>
-                </div>
-            </div>
-        </div>
-    </nav>
 
-    <!-- Hero Section -->
-    <section class="hero-section">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-md-6 animate__animated animate__fadeInLeft">
-                    <h1 class="display-4 text-primary">Simplifiez votre gestion de santé</h1>
-                    <p class="lead">Connectez médecins et patients pour une expérience fluide et sécurisée.</p>
-                    <a href="{% url 'creer_compte' %}" class="btn btn-primary btn-lg">Créer un compte</a>
-                </div>
-                <div class="col-md-6 animate__animated animate__fadeInRight">
-                    <img src="{% static 'cabinet/img/med1.jpg' %}" alt="Santé" class="img-fluid rounded">
-                </div>
-            </div>
+<header>
+    <div class="left-section">
+        <div class="logo">
+            <span class="medi">Medi</span><span class="place">Place</span>
         </div>
-    </section>
+        <nav>
+            <a href="{% url 'services' %}">Services</a>
+            <a href="#section3">À propos</a>
+            <a href="#section7">Contact</a>
+        </nav>
+    </div>
+    <div class="buttons">
+        <a class="login-btn"href="{% url 'login' %}">Connexion</a>
+        <a class="signup-btn"href="{% url 'creer_compte' %}">Inscription</a>
+    </div>
+</header>
+<section class="section1" >
+<img src="{% static 'cabinet/img/principal.jpg' %}" alt="im1">
+<div class="overlay-text" >
+<h1>Le début de votre bien-être </h1>
+<p> Bienvenue, où des expériences exceptionnelles pour les patients sont notre priorité. Avec
+    des soins compatissants, des installations de pointe et une approche centrée sur le patient,
+    nous nous engageons pour votre bien-être. Confiez-nous votre santé
+    et découvrez la différence.</p>
+    <a class="overlay-button"href="{% url 'services' %}">Nos Services</a>
+</div>
+</section>
+<section class="section2" >
+<h1 class="section2">Pourquoi nous choisir</h1>
+<div class="service-container">
+    <div class="service-card">
+        <img src="{% static 'cabinet/img/medcinexpert.avif' %}" alt="im1">
+        <h1>Expertise Médicale de Haut Niveau</h1>
+        <p>Nos médecins et spécialistes sont hautement qualifiés et expérimentés, offrant des soins personnalisés et adaptés aux besoins de chaque patient.</p>
+    </div>
 
-    <!-- Stats Section -->
-    <section class="stats-section text-center">
-        <div class="container">
-            <h2 class="mb-4 text-primary animate__animated animate__fadeInUp">Nos Résultats</h2>
-            <div class="row g-4">
-                <div class="col-md-4 animate__animated animate__zoomIn">
-                    <div class="stat-box">
-                        <h3 class="text-primary">+341</h3>
-                        <p>Médecins inscrits</p>
-                    </div>
-                </div>
-                <div class="col-md-4 animate__animated animate__zoomIn animate__delay-1s">
-                    <div class="stat-box">
-                        <h3 class="text-primary">98%</h3>
-                        <p>Satisfaction garantie</p>
-                    </div>
-                </div>
-                <div class="col-md-4 animate__animated animate__zoomIn animate__delay-2s">
-                    <div class="stat-box">
-                        <h3 class="text-primary">+10,000</h3>
-                        <p>Patients satisfaits</p>
-                    </div>
-                </div>
-            </div>
+    <div class="service-card">
+        <img src="{% static 'cabinet/img/medicalbox.avif' %}" alt="im2">
+        <h1>Technologies Médicales Avancées</h1>
+        <p>Notre cabinet est équipé d’installations modernes et d’équipements de dernière génération pour garantir des diagnostics précis et des traitements efficaces.</p>
+    </div>
+
+    <div class="service-card">
+        <img src="{% static 'cabinet/img/available.avif' %}" alt="im3">
+        <h1>Accessibilité et Disponibilité</h1>
+        <p>Nous mettons tout en œuvre pour vous accueillir rapidement et avec flexibilité, que ce soit pour une consultation urgente ou un suivi régulier.</p>
+    </div>
+
+    <div class="service-card">
+        <img src="{% static 'cabinet/img/ecoute.webp' %}" alt="im4">
+        <h1>Écoute et Accompagnement Personnalisé</h1>
+        <p>Chez nous, chaque patient est unique. Nous prenons le temps de vous écouter et de vous accompagner tout au long de votre parcours de soins.</p>
+    </div>
+</div>
+</section>
+
+<section id="section3" class="section3">
+    <div class="section3-text">
+        <h1>À propos de nous</h1>
+        <p>
+            Chez Medi Place, nous mettons la santé et le bien-être de nos patients au centre de nos priorités. 
+            Notre cabinet médical s’engage à offrir des soins de santé de qualité, accessibles à tous. 
+            Forts d’une équipe pluridisciplinaire de médecins expérimentés et de spécialistes attentifs, 
+            nous mettons le patient au cœur de notre approche. Grâce à des équipements modernes et à un accompagnement 
+            personnalisé, nous veillons à instaurer un climat de confiance et à garantir un suivi adapté à chaque besoin.
+            Notre mission est de vous offrir un service humain, professionnel et à la hauteur de vos attentes.
+            Medi Place, c’est bien plus qu’un centre de soins : c’est un espace de confiance, d’accompagnement
+            et d’expertise au service de votre santé.
+        </p>
+    </div>
+    <img src="{% static 'cabinet/img/imgaboutus.jpg' %}" alt="im1">
+</section>
+<section class="section4">
+    <h1 class="section-title-left">Nos Médecins Spéciaux</h1>
+  
+    <div class="doctor-grid-wrapper">
+      <div class="doctor-grid">
+        <div class="doctor-card">
+          <img src="{% static 'cabinet/img/médecin11.avif' %}" alt="Dr Ben Saad Nadia">
+          <p>Dr. Ben Saad Nadia<br>Généraliste</p>
         </div>
-    </section>
-
-    <!-- Why Choose Us Section -->
-    <section class="why-choose-us-section text-center">
-        <div class="container">
-            <h2 class="text-primary mb-4 animate__animated animate__fadeInUp">Pourquoi nous choisir ?</h2>
-            <p class="lead animate__animated animate__fadeInUp animate__delay-1s">
-                Nous sommes spécialisés dans la connexion entre patients et médecins pour simplifier l'accès aux soins. Avec une plateforme intuitive, un suivi personnalisé et une équipe médicale qualifiée, nous garantissons une expérience fluide et efficace. Choisissez un cabinet digital qui met l'humain au cœur de ses préoccupations !
+        <div class="doctor-card">
+          <img src="{% static 'cabinet/img/medecin2.jpg' %}" alt="Dr Moubaraki Houda">
+          <p>Dr. Moubaraki Houda<br>Cardiologue</p>
+        </div>
+        <div class="doctor-card">
+          <img src="{% static 'cabinet/img/medecin3.avif' %}" alt="Dr Kabbaj Fouad">
+          <p>Dr. Kabbaj Fouad<br>Pédiatre</p>
+        </div>
+        <div class="doctor-card">
+          <img src="{% static 'cabinet/img/medecin4.avif' %}" alt="Dr Afifi Yasser">
+          <p>Dr. Afifi Yasser<br>Dermatologue</p>
+        </div>
+        <div class="doctor-card">
+          <img src="{% static 'cabinet/img/medecin5.jpg' %}" alt="Dr Sakhi Othmane">
+          <p>Dr. Sakhi Othmane<br>Neurologue</p>
+        </div>
+        <div class="doctor-card">
+          <img src="{% static 'cabinet/img/medecin6.jpg' %}" alt="Dr Belghiti Yousra">
+          <p>Dr. Belghiti Yousra<br>Dentiste</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="section5">
+    <div class="stats-row">
+      <h1>MediPlace en chiffres</h1>
+      <div class="stats-container">
+        <div class="stat-card">
+          <p class="stat-number">97%</p>
+          <p class="stat-label">Prises de rendez-vous réussies</p>
+        </div>
+        <div class="stat-card">
+          <p class="stat-number">+10 000</p>
+          <p class="stat-label">Patients satisfaits</p>
+        </div>
+        <div class="stat-card">
+          <p class="stat-number">98%</p>
+          <p class="stat-label">Taux de réussite des diagnostics</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="section6">
+    <h1>Votre partenaire santé au quotidien</h1>
+    <div class="content">
+        <div class="item">
+            <img src="{% static 'cabinet/img/medecins.jpg' %}" alt="1">
+            <p>Des médecins spécialisés à votre écoute<br>
+                MediPlace réunit une équipe de professionnels spécialisés dans divers domaines médicaux pour vous offrir des soins complets et adaptés.
+                Nos médecins sont à l’écoute de vos préoccupations et travaillent avec vous pour définir les traitements les plus appropriés à votre situation.
             </p>
         </div>
-    </section>
-
-    <!-- Doctors Section -->
-    <section class="doctors-section text-center">
-        <div class="container">
-            <h2 class="text-primary mb-4 animate__animated animate__fadeInUp">Nos Médecins</h2>
-            <div class="row g-4">
-                <div class="col-md-4 animate__animated animate__zoomIn animate__delay-1s">
-                    <div class="doctor-card">
-                        <img src="{% static 'cabinet/img/med5.jpg' %}" alt="Médecin" class="img-fluid">
-                        <h5>Dr. James Anderson</h5>
-                        <p>Cardiologue</p>
-                    </div>
-                </div>
-                <div class="col-md-4 animate__animated animate__zoomIn animate__delay-2s">
-                    <div class="doctor-card">
-                        <img src="{% static 'cabinet/img/med3.jpg' %}" alt="Médecin" class="img-fluid">
-                        <h5>Dr. Emily Nislon</h5>
-                        <p>Neurochirurgien</p>
-                    </div>
-                </div>
-                <div class="col-md-4 animate__animated animate__zoomIn animate__delay-3s">
-                    <div class="doctor-card">
-                        <img src="{% static 'cabinet/img/med4.webp' %}" alt="Médecin" class="img-fluid">
-                        <h5>Dr. Michael Lee</h5>
-                        <p>Dermatologue</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="contact-section">
-        <div class="container">
-            <h2 class="text-primary text-center mb-4 animate__animated animate__fadeInUp">Contactez-nous</h2>
-            <form>
-                <div class="row g-3">
-                    <div class="col-md-6">
-                        <label for="name" class="form-label">Nom</label>
-                        <input type="text" id="name" class="form-control" placeholder="Votre nom">
-                    </div>
-                    <div class="col-md-6">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="email" id="email" class="form-control" placeholder="Votre email">
-                    </div>
-                    <div class="col-12">
-                        <label for="message" class="form-label">Message</label>
-                        <textarea id="message" class="form-control" rows="4" placeholder="Votre message"></textarea>
-                    </div>
-                </div>
-                <div class="text-center mt-4">
-                    <button type="submit" class="btn btn-primary">Envoyer</button>
-                </div>
-            </form>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="text-center">
-        <div class="container">
-            <p>© 2025 Cabinet médical - Tous droits réservés.</p>
-            <p>
-                <a href="#" class="text-white me-2">Politique de confidentialité</a>
-                <a href="#" class="text-white">Conditions générales</a>
+        <div class="item">
+            <img src="{% static 'cabinet/img/priorite.jpg' %}" alt="2">
+            <p>Votre bien-être notre engagement<br>
+                Votre bien-être est au cœur de notre mission. Avec des technologies de pointe et une équipe médicale compétente, nous nous engageons à vous fournir un suivi rigoureux et personnalisé, afin que vous puissiez vivre pleinement en bonne santé.
             </p>
         </div>
-    </footer>
-
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+        <div class="item last-block">
+            <img src="{% static 'cabinet/img/soinsperso.jpg' %}" alt="3">
+            <p>Soins personnalisés pour chaque patient<br>
+                Chez MediPlace, nous offrons des soins adaptés à chaque patient, En tenant compte de vos besoins spécifiques, nos médecins élaborent des plans de traitement personnalisés pour garantir une prise en charge optimale et un suivi efficace de votre santé.
+            </p>
+        </div>
+    </div>
+</section>
+<section id="section7" class="section7">
+    <div class="info-block">
+      <h4>MediPlace</h4>
+      <p>Nous sommes honorés de faire partie de votre parcours de soins de santé et
+         nous nous engageons à fournir des soins compatissants, personnalisés et de premier ordre.
+         à chaque étape du processus.Confiez nous votre santéet laissé nous travailler ensemble
+         pour obtenir les meilleures Résultats possibles pour vous et vos proches
+      </p>
+    </div>
+  
+    <div class="info-block">
+      <h4>Départements</h4>
+      <p>
+        Médecine générale<br>
+        Cardiologie<br>
+        Pédiatrie<br>
+        Dermatologie<br>
+        Neurologie<br>
+        Médecine dentaire
+      </p>
+    </div>
+  
+    <div class="info-block">
+      <h4>Autres Services</h4>
+      <p>
+        24/7 services<br>
+        Contrôle de qualité<br>
+        Soins médicaux complets
+      </p>
+    </div>
+  
+    <div class="info-block">
+      <h4>Contactez-nous</h4>
+      <p><img src="{% static 'cabinet/img/localisation.webp' %}" alt="localisation"> Appt.3,Imm.3 RDC, Rue Oued Ziz, Rabat</p>
+      <p><img src="{% static 'cabinet/img/telallo.png' %}" alt="téléphone"> +212 69 756 7741</p>
+      <div class="socials">
+        <a href="https://www.instagram.com/projetpython/" target="_blank">
+          <img src="{% static 'cabinet/img/logoinsta.png' %}" alt="Instagram">
+        </a><a href="https://www.facebook.com/profile.php?id=61575824190449&name=xhp_nt__fb__action__open_user" target="_blank">
+            <img src="{% static 'cabinet/img/logofacebook.png' %}" alt="Facebook">
+          </a>
+        
+      </div>
+    </div>
+  </section>
+  <footer>
+    
+<p>Copyright © 2025 MediPlace, tous droits réservés.</p>
+  </footer>
 </body>
+</html>
