@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    {% load static %}
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Connexion - MediPlace</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+    <style>
+       * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body, html {
+            height: 100%;
+            background-color: #f2f6f9;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+            width: 100%;
+        }
+
+        .left-panel {
+            width: 50%;
+            background-color: #eaf4f9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .left-panel img {
+            width: 220px;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 50%;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .text-content {
+            max-width: 350px;
+            color: #3a506b;
+        }
+
+        .text-content h1 {
+            font-size: 26px;
+            margin-bottom: 15px;
+        }
+
+        .text-content p {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .text-content ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .text-content li {
+            margin-bottom: 10px;
+            font-size: 15px;
+        }
+
+        .text-content i {
+            color: #3a8fb7;
+            margin-right: 8px;
+        }
+
+        .right-panel {
+            width: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f5f5f5;
+            padding: 40px;
+        }
+
+        .login-box {
+            width: 100%;
+            max-width: 400px;
+            background: #eaf4f9;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .login-box:hover {
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+        }
+
+        .login-box h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #3a506b;
+            font-size: 25px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            background-color: #f5f8fa;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .input-group input:focus,
+        .input-group select:focus {
+            border-color: #3a506b;
+            box-shadow: 0 0 6px rgba(58, 143, 183, 0.4);
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #3a506b;
+            color: white;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color:#3a506b;
+            transform: translateY(-2px);
+        }
+
+        .footer-text {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 12px;
+            color: #aaa;
+        }
+
+        .radio-group {
+            margin-top: 20px;
+        }
+
+        .radio-group div {
+            margin-bottom: 10px;
+        }
+
+        .radio-group input[type="radio"] {
+            margin-right: 8px;
+        }
+
+        .radio-group label {
+            font-weight: 600;
+            color: #333;
+            cursor: pointer;
+        }
+
+        .radio-select-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .radio-label {
+            font-weight: 600;
+            color: #333;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+            border: 1px solid transparent;
+            border-radius: 8px;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        .radio-label:hover {
+            background-color: #f0f8ff;
+            border-color: #3a506b;
+        }
+
+        .radio-box {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            border: 2px solid #3a506b;
+            margin-right: 10px;
+            display: inline-block;
+            position: relative;
+        }
+
+        .radio-box::after {
+            content: "";
+            width: 10px;
+            height: 10px;
+            background-color: #3a8fb7;
+            border-radius: 50%;
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            display: none;
+        }
+
+        input[type="radio"]:checked + .radio-label .radio-box::after {
+            display: block;
+        }
+
+        .select-nom,
+        .select-specialite {
+            display: none;
+            margin-top: 15px;
+        }
+
+        #par-nom:checked ~ .select-nom {
+            display: block;
+        }
+
+        #par-specialite:checked ~ .select-specialite {
+            display: block;
+        }
+
+        .select-group {
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .select-nom select,
+        .select-specialite select {
+            background-color: #f5f8fa;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            font-size: 14px;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .left-panel {
+                display: none;
+            }
+
+            .right-panel {
+                width: 100%;
+            }
+        }
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="left-panel">
+        <img src="{% static 'cabinet/img/prdrerdvpage.avif' %}" alt="Illustration médicale">
+        <div class="text-content">
+            <h1>Bienvenue sur MediPlace</h1>
+            <p>Réservez vos consultations médicales en quelques clics.</p>
+            <ul>
+                <li><i class="fas fa-calendar-check"></i> Prise de rendez-vous rapide</li>
+                <li><i class="fas fa-user-md"></i> Médecins certifiés</li>
+                <li><i class="fas fa-lock"></i> Données sécurisées</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="right-panel">
+        <div class="login-box">
+            <h2>Réserver votre rendez-vous médical</h2>
+
+            <!-- Choisir date -->
+            <div class="input-group">
+                <label>Choisir la date de rendez-vous :</label>
+                <input type="date" id="date-rdv" name="date-rdv" required />
+            </div>
+
+            <div class="input-group">
+                <label>Choisir médecin :</label>
+
+                <div class="radio-select-group">
+                    <input type="radio" id="par-nom" name="choix" hidden>
+                    <label class="radio-label" for="par-nom">
+                        <span class="radio-box"></span> Rechercher par nom 
+                    </label>
+
+                    <input type="radio" id="par-specialite" name="choix" hidden>
+                    <label class="radio-label" for="par-specialite">
+                        <span class="radio-box"></span> Rechercher par spécialisation 
+                    </label>
+
+                    <div class="select-nom">
+                        <label for="nom-medecin">Nom du médecin :</label>
+                        <select id="nom-medecin" name="medecin_nom">
+                            <option value="">-- Choisissez un médecin --</option>
+                            <option>Dr. Ben Saad Nadia</option>
+                            <option>Dr. Moubaraki Houda</option>
+                            <option>Dr. Kabbaj Fouad</option>
+                            <option>Dr. Afifi Yasser</option>
+                            <option>Dr. Sakhi Othmane</option>
+                            <option>Dr. Belghiti Youssra</option>
+
+                        </select>
+                    </div>
+
+                    <div class="select-specialite">
+                        <label for="specialite">Spécialité :</label>
+                        <select id="specialite" name="medecin_specialite">
+                            <option value="">-- Choisissez une spécialité --</option>
+                            <option>Cardiologie</option>
+                            <option>Médecine générale</option>
+                            <option>Pédiatrie</option>
+                            <option>Médecine dentaire</option>
+                            <option>Neurologie</option>
+                            <option>Dermatologie</option>
+                        </select>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Bouton Réserver -->
+            <button type="submit">Réserver</button>
+            
+            <p class="footer-text">©️ 2025 MediPlace. Tous droits réservés.</p>
+        </div>
+    </div>
+</div>
+</body>
+</html>

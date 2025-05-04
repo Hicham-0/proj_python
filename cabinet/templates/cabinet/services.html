@@ -30,7 +30,7 @@ body {
 
 .text-content h1 {
   font-size: 3em;
-  color: #26474E;
+  color:#26474E ;
   margin-bottom: 20px;
 }
 
@@ -45,7 +45,7 @@ body {
 .cta-button {
   display: inline-block;
   padding: 12px 25px;
-  background-color:#26474E;
+  background-color:#66B7AD;
   color: #fff;
   text-decoration: none;
   border-radius: 5px;
@@ -54,7 +54,7 @@ body {
 }
 
 .cta-button:hover {
-  background-color: #26474E;
+  background-color: #66B7AD;
 }
 .cta-button .arrow {
   margin-left: 10px;
@@ -198,9 +198,63 @@ footer p {
   font-size: 0.9em;
   max-width: 1200px;
 }
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 30px;
+    background-color: #66B7AD;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
+.left-section {
+    display: flex;
+    align-items: center;
+}
 
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+}
 
+.logo .medi {
+    color: white;
+}
+
+.logo .place {
+    color: #F0E5CF;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+}
+
+nav a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+nav a:hover {
+    color: #E8EDDF;
+}
+
+.icon-home {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+   
+}
+nav {
+    display: flex;
+    align-items: center;
+    margin-right: 70px; /* Décale le lien vers la gauche */
+}   
 
 
 
@@ -209,7 +263,20 @@ footer p {
       </style>
 </head>
 <body>
-   
+  <header>
+    <div class="left-section">
+        <div class="logo">
+            <span class="medi">Medi</span><span class="place">Place</span>
+        </div>
+    </div>
+
+    <nav>
+        <a href="{% url 'landing' %}">
+            <img src="{% static 'cabinet/img/homelogo.png' %}" alt="Accueil" class="icon-home">
+            Accueil
+        </a>
+    </nav>
+</header>
   <section class="section1">
     <div class="text-content">
       <h1>Des services médicaux adaptés à vos besoins</h1>

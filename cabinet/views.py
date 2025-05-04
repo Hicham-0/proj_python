@@ -21,7 +21,7 @@ def creer_compte(request):
             form = PatientForm(request.POST)
             if form.is_valid():
                 form.save()
-                return redirect('success_page')
+                return redirect('login')
             else:
                 print("Erreurs Formulaire Patient :", form.errors)
         else:
@@ -47,6 +47,17 @@ def landing(request):
 def services(request):
     return render(request, 'cabinet/services.html')
 
+def reserverrdv(request):
+    return render(request,'cabinet/reserverrdv.html')
+
+def consulterhistoriquepat(request):
+    return render (request,'cabinet/voirhistopat.html')
+
+def effecpaiementpat(request):
+    return render(request,'cabinet/paiementpat.html')
+
+def consultprofilpat(request):
+    return render(request,'cabinet/consulterprfl.html')
 
 
 

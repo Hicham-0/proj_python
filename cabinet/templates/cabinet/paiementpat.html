@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Créer un compte</title>
+  <title>Connexion</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <style>
     * {
@@ -28,7 +28,7 @@
     .triangle-section {
       width: 50%;
       background: #66B7AD;
-      clip-path: polygon(0 0, 100% 0, 50% 100%, 0% 100%);
+      clip-path: polygon(0 0, 100% 0, 50% 100%, 0% 100%); /* Triangle jusqu'à la diagonale */
       display: flex;
       align-items: center;
       justify-content: center;
@@ -46,7 +46,8 @@
 
     .triangle-content h3 {
       font-size: 32px;
-      margin-bottom: 10px;
+      margin-bottom: 20px;
+      color:#F0E5CF;
     }
 
     .highlight {
@@ -56,6 +57,7 @@
     .triangle-content p {
       font-size: 17px;
       line-height: 1.5;
+      color: #fff;
     }
 
     .form-container {
@@ -63,16 +65,15 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 20px;
-      margin-left: -140px;
-      margin-top: 10px;
+      padding: 40px;
+      margin-left: -80px;
     }
 
     form {
       background: #fff;
       border-radius: 12px;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-      padding: 30px;
+      padding: 40px;
       width: 100%;
       max-width: 400px;
       animation: fadeInUp 1s ease-in-out;
@@ -102,7 +103,7 @@
     .input-group input,
     .input-group select {
       width: 100%;
-      padding: 10px;
+      padding: 12px;
       border: 1px solid #ccc;
       border-radius: 8px;
       font-size: 14px;
@@ -116,7 +117,7 @@
 
     button {
       width: 100%;
-      padding: 10px;
+      padding: 12px;
       border: none;
       border-radius: 8px;
       background-color:#8B827D;
@@ -143,16 +144,29 @@
       }
     }
 
-    .small-triangle {
-      position: absolute;
-      bottom: 0;
-      right: 0;
-      width: 350px;
-      height: 120px;
-      background-color: #66B7AD;
-      clip-path: polygon(100% 0, 0 100%, 100% 100%);
-      z-index: 1;
-    }
+    .triangle-section {
+  width: 50%;
+  background: #66B7AD;
+  clip-path: polygon(0 0, 100% 0, 50% 100%, 0% 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  padding: 40px;
+  position: relative;
+  background-image: url('path/to/pattern.png');
+  background-size: cover;
+}
+.small-triangle {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 400px;
+  height: 150px;
+  background-color: #66B7AD;
+  clip-path: polygon(100% 0, 0 100%, 100% 100%);
+  z-index: 1;
+}
   </style>
 </head>
 <body>
@@ -160,49 +174,35 @@
     <div class="triangle-section">
       <div class="triangle-content">
         <h3>
-          Bienvenue sur <span style="color: white;">Medi</span><span style="color: #F0E5CF;" class="highlight">Place</span>
+            Règler votre facture <br> en quelques instants
         </h3>
         <p>
-          Votre espace santé, pensé pour vous.<br>
-          Inscrivez-vous pour accéder à nos services de santé
+        Le traitement de votre paiement est entièrement sécurisé, <br> 
+        assurant la protection de vos données personnelles et<br>  bancaires à chaque étape.
         </p>
       </div>
     </div>
 
     <div class="form-container">
       <form>
-        <h2>Créer un compte</h2>
+        <h2>Paiement </h2>
+
         <div class="input-group">
-          <label for="nom">Nom :</label>
-          <input type="text" id="nom" placeholder="Nom" required>
+          <label for="numfact">Numéro de la facture :</label>
+          <input type="number" id="numfact" placeholder="numéro de votrre facture" required>
         </div>
 
         <div class="input-group">
-          <label for="prenom">Prénom :</label>
-          <input type="text" id="prenom" placeholder="Prénom" required>
+          <label for="identifiant">Votre identifiant:</label>
+          <input type="number" id="identifiant" placeholder="Votre identifiant" required>
         </div>
 
         <div class="input-group">
-          <label for="email">Email :</label>
-          <input type="email" id="email" placeholder="Email" required>
-        </div>
+            <label for="monthant">Montant à payer (Dhs):</label>
+            <input type="number" id="montant" placeholder="Montant à payer" required>
+          </div>
 
-        <div class="input-group">
-          <label for="password">Mot de passe :</label>
-          <input type="password" id="password" placeholder="Mot de passe" required>
-        </div>
-
-        <div class="input-group">
-          <label for="dob">Date de naissance :</label>
-          <input type="date" id="dob" required>
-        </div>
-
-        <div class="input-group">
-          <label for="tel">Numéro de téléphone :</label>
-          <input type="tel" id="tel" placeholder="Numéro de téléphone" required>
-        </div>
-
-        <button type="submit">Créer un compte</button>
+        <button type="submit">Payer maintenant</button>
       </form>
     </div>
   </div>
