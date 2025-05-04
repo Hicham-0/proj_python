@@ -1,0 +1,243 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9fbfc;
+}
+
+.section1 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 80px 10%;
+  background: linear-gradient(to right,#d6e3e7 , #ffffff);
+  box-sizing: border-box;
+  gap: 50px;
+  min-height: 100vh;
+}
+
+.text-content {
+  flex: 1;
+}
+
+.text-content h1 {
+  font-size: 3em;
+  color:#26474E ;
+  margin-bottom: 20px;
+}
+
+.text-content p {
+  font-size: 1.15em;
+  color: #333;
+  line-height: 1.8;
+  margin-bottom: 30px;
+ 
+}
+
+.cta-button {
+  display: inline-block;
+  padding: 12px 25px;
+  background-color:#66B7AD;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.cta-button:hover {
+  background-color: #66B7AD;
+}
+.cta-button .arrow {
+  margin-left: 10px;
+  font-size: 1.2em;
+  transition: transform 0.3s ease;
+}
+
+.cta-button:hover .arrow {
+  transform: translateY(3px); /* petit mouvement vers le bas au survol */
+}
+.image-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-container img {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  margin-left: 140px;
+}
+.services-section {
+  padding: 25px 25px;
+  background-color: white;
+  text-align: center;
+padding-bottom: 120px;
+}
+
+.section-title {
+  font-size: 2em;
+  color: #26474E;
+  margin-bottom: 20px;
+}
+
+.services-section .intro {
+  max-width: 700px;
+  margin: 0 auto 40px;
+  font-size: 1.1em;
+  color: #555;
+}
+
+.services-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Trois cartes par ligne */
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.service-item {
+  background: #E6F0F3;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+  transition: transform 0.3s ease;
+ 
+}
+
+.service-item:hover {
+  transform: translateY(-7px);
+}
+
+.service-item h3 {
+  color: #26474E;
+  margin-bottom: 12px;
+  font-size: 1.3em;
+}
+
+.service-item p {
+  color: #444;
+  font-size: 0.95em;
+  line-height: 1.6;
+}
+.section7 {
+  display: flex;
+ 
+  flex-wrap: wrap;
+  padding: 30px;
+  background-color: #E6F0F3;
+  gap: 40px;
+
+}
+
+.info-block {
+  width: 22%;
+  min-width: 200px;
+  gap: 30px;
+}
+
+.section7 h4 {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #26474E;
+  margin-bottom: 10px;
+}
+
+.section7 p {
+  font-size: 0.95em;
+  color: #333;
+  line-height: 1.5;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  
+}
+
+.section7 p img {
+  width: 18px;
+  height: 18px;
+  margin-right: 8px;
+}
+
+.socials img {
+  width: 25px;
+  height: 25px;
+  margin-right: 10px;
+  object-fit: cover;
+}
+.socials a {
+  text-decoration: none; /* Supprime le soulignement */
+  display: inline-block; /* Corrige les comportements inline par défaut */
+}
+ 
+footer {
+  position: relative;
+  width: 100%; /* Force la largeur à 100% de la fenêtre */
+  background-color: #66B7AD;
+  padding: 20px 0;
+  margin: 0;
+ 
+}
+
+footer p {
+  color: white;
+  text-align: center;
+  margin: 0 auto;
+  font-size: 0.9em;
+  max-width: 1200px;
+}
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 30px;
+    background-color: #66B7AD;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.left-section {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.logo .medi {
+    color: white;
+}
+
+.logo .place {
+    color: #F0E5CF;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+}
+
+nav a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+nav a:hover {
+    color: #E8EDDF;
+}
+
+.icon-home {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+} 
