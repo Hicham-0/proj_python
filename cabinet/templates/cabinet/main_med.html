@@ -4,7 +4,7 @@
     <title>Espace Médecin</title>
 </head>
 <body>
-    <h1>Bienvenue dans votre espace médecin</h1>
+    <h1>Bienvenue dans votre espace mddecin {{request.session.user_email}}</h1>
     <a href="{% url 'logout' %}">Se déconnecter</a>
 </body>
 </html>

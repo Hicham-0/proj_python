@@ -1,41 +1,30 @@
 from django.shortcuts import render, redirect
-from .forms import MedecinForm, PatientForm, LoginForm
-from .models import Medecin, Patient
+from .models import Medecin, Patient,Facture
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required 
 
 
+
 def creer_compte(request):
-    role = request.POST.get('role') or request.GET.get('role')  # Vérifie d'abord dans POST, puis dans GET
+   if request.method =='POST':
 
-    if request.method == 'POST':
-        print("Données POST :", request.POST)
-        if role == 'medecin':
-            form = MedecinForm(request.POST)
-            if form.is_valid():
-                form.save()
-                return redirect('login')
-            else:
-                print("Erreurs Formulaire Médecin :", form.errors)
-        elif role == 'patient':
-            form = PatientForm(request.POST)
-            if form.is_valid():
-                form.save()
-                return redirect('login')
-            else:
-                print("Erreurs Formulaire Patient :", form.errors)
-        else:
-            form = None
-    else:
-        if role == 'medecin':
-            form = MedecinForm()
-        elif role == 'patient':
-            form = PatientForm()
-        else:
-            form = None  # Aucun formulaire sans rôle
+    nompat=request.POST.get('nom')
+    prenompat=request.POST.get('prenom')
+    emailpat=request.POST.get('email')
+    mtdppat=request.POST.get('mdp')
+    datenaissancepat=request.POST.get('datenaiss')
+    numtelpat=request.POST.get('numtel')
+    if nompat and prenompat and emailpat and mtdppat and datenaissancepat and numtelpat :
+        data=Patient(nom=nompat,prenom=prenompat,email=emailpat,numero_telephone= numtelpat,date_naissance=datenaissancepat,mot_de_passe=mtdppat)
+        data.save()
+        return render(request, 'cabinet/signup.html', {'form':"votre compte est crée avec succés"})
+    else :
+        return render(request, 'cabinet/signup.html')
 
-    return render(request, 'cabinet/signup.html', {'form': form, 'role': role})
+   return render(request, 'cabinet/signup.html')
 
+   
+    
 
 
 
@@ -54,54 +43,92 @@ def consulterhistoriquepat(request):
     return render (request,'cabinet/voirhistopat.html')
 
 def effecpaiementpat(request):
+    if request.method == 'POST':
+       numfacture=request.POST.get('numfact')
+       nom=request.POST.get('nom')
+       prenom=request.POST.get('prenom')
+       montantnv=request.POST.get('montant')
+       datepaiement=request.POST.get('date')
+       emailpatt=request.session.get('user_email')
+       statut="EN_ATTENTE"
+       if numfacture and nom and prenom and montantnv and datepaiement and emailpatt :
+           try :
+               fact=Facture.objects.get(numero_facture=numfacture,statut_paiement=statut,Nompat=nom,prenompat=prenom,emailpat=emailpatt,montant=montantnv)
+               fact.statut_paiement="PAYEE"
+               fact.date_paiement=datepaiement
+               fact.save()
+               return render(request,'cabinet/paiementpat.html',{'form':"paiement validé avec succés"})
+           except Facture.DoesNotExist:
+                return render(request,'cabinet/paiementpat.html',{'form':"informations invalide"})
     return render(request,'cabinet/paiementpat.html')
 
+    
+
 def consultprofilpat(request):
-    return render(request,'cabinet/consulterprfl.html')
-
-
+        emailp=request.session.get('user_email')
+        mdpp=request.session.get('user_mdp')
+        infos=Patient.objects.get(email=emailp,mot_de_passe=mdpp)
+        return render(request,'cabinet/consulterprfl.html',{'user':infos})
+    
+def updateprflpat(request):
+    if request.method == 'POST':
+         emailp=request.session.get('user_email')
+         mdpp=request.session.get('user_mdp')
+         nvemail=request.POST.get('email')
+         nvtel=request.POST.get('telephone')
+         nvdate=request.POST.get('date_naissance')
+         nvmdp=request.POST.get('mdp')
+         pat=Patient.objects.get(email=emailp,mot_de_passe=mdpp)
+         pat.email=nvemail
+         pat.numero_telephone = nvtel
+         pat.date_naissance = nvdate
+         pat.mot_de_passe=nvmdp
+         pat.save() 
+         try:
+             fact=Facture.objects.get(emailpat=emailp)
+             fact.emailpat=nvemail
+             fact.save()
+             return render(request,'cabinet/updateprflpat.html',{'msg':"Vos informations ont été mises à jour avec succès"})
+         except Facture.DoesNotExist:
+               return render(request,'cabinet/updateprflpat.html',{'msg':"Vos informations ont été mises à jour avec succès"})
+    return  render(request,'cabinet/updateprflpat.html')
+        
 
 def login(request):
     if request.method == 'POST':
-        form = LoginForm(request.POST)
-        if form.is_valid():
-            email = form.cleaned_data['email']
-            mot_de_passe = form.cleaned_data['mot_de_passe']
-            role = form.cleaned_data['role']
-
-            if role == 'patient':
-                try:
-                    patient = Patient.objects.get(email=email, mot_de_passe=mot_de_passe)
-                    request.session['user_id'] = patient.id
-                    request.session['user_type'] = 'patient'
-                    return redirect('main_pat')
-                except Patient.DoesNotExist:
-                    messages.error(request, "Email ou mot de passe incorrect")
-            else:
-                try:
-                    medecin = Medecin.objects.get(email=email, mot_de_passe=mot_de_passe)
-                    request.session['user_id'] = medecin.id
-                    request.session['user_type'] = 'medecin'
-                    return redirect('main_med')
-                except Medecin.DoesNotExist:
-                    messages.error(request, "Email ou mot de passe incorrect")
-    else:
-        form = LoginForm()
-    
-    return render(request, 'cabinet/login.html', {'form': form})
+       emaila=request.POST.get('email')
+       mdpa=request.POST.get('mdp')
+       rolea=request.POST.get('role')
+       if emaila and mdpa and rolea and rolea =="patient":
+           try:
+               user=Patient.objects.get(email=emaila,mot_de_passe=mdpa)
+               request.session["user_email"]=user.email
+               request.session["user_mdp"]=user.mot_de_passe
+               request.session["user_role"]="patient"
+               return redirect("main_pat")
+           except Patient.DoesNotExist:
+               return render(request,'cabinet/login.html',{'form':"impossible de se connecter,informations invalide "})
+       elif emaila and mdpa and rolea and rolea =="medecin":
+           try:
+               user=Medecin.objects.get(email=emaila,mot_de_passe=mdpa)
+               request.session["user_email"]=user.email
+               request.session["user_mdp"]=user.mot_de_passe
+               request.session["user_role"]="médecin"
+               return redirect("main_med")
+           except Medecin.DoesNotExist:
+               return render(request,'cabinet/login.html',{'form':"impossible de se connecter,informations invalide "})
+    return render(request,'cabinet/login.html')
+               
 
 def logout(request):
     request.session.flush()  # Efface toutes les données de session
     return redirect('landing')
 
-@login_required
+def main_med(request):
+    return render(request, 'cabinet/main_med.html')
+
 def main_pat(request):
-    if request.session.get('user_type') != 'patient':
-        return redirect('main_med')
     return render(request, 'cabinet/main_pat.html')
 
-@login_required
-def main_med(request):
-    if request.session.get('user_type') != 'medecin':
-        return redirect('main_pat')
-    return render(request, 'cabinet/main_med.html')
+
+

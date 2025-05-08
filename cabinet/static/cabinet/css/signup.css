@@ -145,3 +145,7 @@ button:hover {
   clip-path: polygon(100% 0, 0 100%, 100% 100%);
   z-index: 1;
 } 
+.success-message {
+  color: #4CAF50; /* Vert */
+ 
+}

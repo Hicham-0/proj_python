@@ -1,1 +1,52 @@
-<p>consulter profil page</p>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    
+    {% load static %}
+    <meta charset="UTF-8">
+    <title>Mon Profil - MediPlace</title>
+    <link rel="stylesheet" href="{% static 'cabinet/css/voirprflpat.css' %}"/>
+</head>
+<body>
+<form method="POST">
+    {% csrf_token %}
+<div class="main-container">
+    <!-- Partie gauche avec le message -->
+    <div class="left-panel">
+        <div>
+            <h1>Bienvenue sur votre profil</h1>
+            <p>Accédez à vos informations personnelles en toute sécurité, et modifiez-les si nécessaire pour garder vos données à jour.</p>
+        </div>
+    </div>
+    
+    <!-- Partie droite avec les informations -->
+    <div class="right-panel">
+        <h2>Mon Profil</h2>
+
+        <div class="profile-item">
+            <div class="label">Nom :</div>
+            <div class="value">{{ user.nom }}</div>
+        </div>
+        <div class="profile-item">
+            <div class="label">Prénom :</div>
+            <div class="value">{{ user.prenom }}</div>
+        </div>
+        <div class="profile-item">
+            <div class="label">Email :</div>
+            <div class="value">{{ user.email }}</div>
+        </div>
+        <div class="profile-item">
+            <div class="label">Téléphone :</div>
+            <div class="value">{{ user.numero_telephone }}</div>
+        </div>
+        <div class="profile-item">
+            <div class="label">Date de naissance :</div>
+            <div class="value">{{ user.date_naissance }}</div>
+        </div> 
+        <a href="{% url 'updateprflpat' %}" class="edit-btn">Modifier mon profil</a>
+       
+    </div>
+</div>
+</form>
+</body>
+</html>

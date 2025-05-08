@@ -146,3 +146,8 @@ button:hover {
   clip-path: polygon(100% 0, 0 100%, 100% 100%);
   z-index: 1;
 } 
+/* Style pour le message d'erreur */
+.error-message {
+  color: #721c24; /* Rouge foncé */
+ 
+}

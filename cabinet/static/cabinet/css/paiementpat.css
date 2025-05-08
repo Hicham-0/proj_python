@@ -60,7 +60,7 @@ body, html {
   align-items: center;
   justify-content: center;
   padding: 40px;
-  margin-left: -80px;
+  margin-left: -140px;
 }
 
 form {
@@ -142,9 +142,28 @@ button:hover {
   position: absolute;
   bottom: 0;
   right: 0;
-  width: 400px;
-  height: 150px;
+  width: 220px;
+  height: 160px;
   background-color: #66B7AD;
   clip-path: polygon(100% 0, 0 100%, 100% 100%);
   z-index: 1;
 } 
+/* Style pour le message de succès */
+.success-message {
+  color: #4CAF50; /* Vert */
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 10px 0;
+}
+
+/* Style pour le message d'erreur */
+.error-message {
+  color: #721c24; /* Rouge foncé */
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 10px 0;
+}

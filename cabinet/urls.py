@@ -18,4 +18,5 @@ path("voirhistopat/", views.consulterhistoriquepat, name="voirhistopat"),
 path("payerpat/", views.effecpaiementpat, name="payerpat"),
 path("consultprflpat/", views.consultprofilpat, name="consultprflpat"),
 
+path("updateprflpat/", views.updateprflpat, name="updateprflpat"),
 ]

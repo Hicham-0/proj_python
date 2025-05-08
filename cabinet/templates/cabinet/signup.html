@@ -23,39 +23,44 @@
     </div>
 
     <div class="form-container">
-      <form>
+      <form method="POST">
+        {% csrf_token %}
         <h2>Créer un compte</h2>
         <div class="input-group">
           <label for="nom">Nom :</label>
-          <input type="text" id="nom" placeholder="Nom" required>
+          <input type="text" name="nom" id="nom" placeholder="Nom" required>
         </div>
 
         <div class="input-group">
           <label for="prenom">Prénom :</label>
-          <input type="text" id="prenom" placeholder="Prénom" required>
+          <input type="text" name="prenom" id="prenom" placeholder="Prénom" required>
         </div>
 
         <div class="input-group">
           <label for="email">Email :</label>
-          <input type="email" id="email" placeholder="Email" required>
+          <input type="email" name="email" id="email" placeholder="Email" required>
         </div>
 
         <div class="input-group">
           <label for="password">Mot de passe :</label>
-          <input type="password" id="password" placeholder="Mot de passe" required>
+          <input type="password" name="mdp" id="password" placeholder="Mot de passe" required>
         </div>
 
         <div class="input-group">
           <label for="dob">Date de naissance :</label>
-          <input type="date" id="dob" required>
+          <input type="date" name="datenaiss" id="dob" required>
         </div>
 
         <div class="input-group">
           <label for="tel">Numéro de téléphone :</label>
-          <input type="tel" id="tel" placeholder="Numéro de téléphone" required>
+          <input type="tel" name="numtel"  id="tel" placeholder="Numéro de téléphone" required>
         </div>
 
         <button type="submit">Créer un compte</button>
+        <br>
+        <br>
+        <br>
+        <h3 class="success-message">{{ form }}</h3>
       </form>
     </div>
   </div>
