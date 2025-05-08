@@ -1,1 +1,72 @@
-<p> page de consluter historique</p>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <title>Historique des Rendez-vous - MediPlace</title>
+    <link rel="stylesheet" href="{% static 'cabinet/css/main_pat.css' %}"/>
+</head>
+<body>
+    <header>
+        <div class="left-section">
+            <div class="logo">
+                <span class="medi">Medi</span><span class="place">Place</span>
+            </div>
+        </div>
+        <div class="buttons">
+            <a class="signup-btn" href="{% url 'landing' %}">Se déconnecter</a>
+        </div>
+    </header>
+    <section class="services-section">
+        <h2 class="services-title">Historique de mes rendez-vous</h2>
+        <style>
+            .empty-history-msg {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 300px;
+                font-size: 2rem;
+                color: #579E96;
+                font-weight: 600;
+                background: #fff;
+                border-radius: 10px;
+                margin: 40px auto;
+                max-width: 700px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            }
+            .services-section {
+                min-height: 70vh;
+            }
+        </style>
+        {% if rdvs %}
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Médecin</th>
+                        <th>Spécialité</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for rdv in rdvs %}
+                    <tr>
+                        <td>{{ rdv.date|date:"d/m/Y H:i" }}</td>
+                        <td>Dr. {{ rdv.medecin.nom }} {{ rdv.medecin.prenom }}</td>
+                        <td>{{ rdv.medecin.specialite }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+            <div class="empty-history-msg">
+                Vous n'avez pas encore de rendez-vous dans votre historique.
+            </div>
+        {% endif %}
+    </section>
+    <footer>
+        <p>Copyright © 2025 MediPlace, tous droits réservés.</p>
+    </footer>
+</body>
+</html>

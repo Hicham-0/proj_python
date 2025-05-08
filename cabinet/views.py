@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Medecin, Patient,Facture
+from .models import Medecin, Patient,Facture, RendezVous
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required 
 
@@ -40,7 +40,15 @@ def reserverrdv(request):
     return render(request,'cabinet/reserverrdv.html')
 
 def consulterhistoriquepat(request):
-    return render (request,'cabinet/voirhistopat.html')
+    emailp = request.session.get('user_email')
+    if not emailp:
+        return redirect('login')
+    try:
+        patient = Patient.objects.get(email=emailp)
+        rdvs = RendezVous.objects.filter(patient=patient).order_by('-date')
+    except Patient.DoesNotExist:
+        rdvs = []
+    return render(request, 'cabinet/voirhistopat.html', {'rdvs': rdvs})
 
 def effecpaiementpat(request):
     if request.method == 'POST':

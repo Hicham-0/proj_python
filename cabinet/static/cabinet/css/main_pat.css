@@ -97,6 +97,7 @@ header {
 .services-section {
   background-color: #E8EDDF;
   padding: 60px 40px;
+  min-height: 70vh;
 }
 
 .services-title {
@@ -228,4 +229,22 @@ footer p {
   margin: 0 auto;
   font-size: 0.9em;
   max-width: 1200px;
+}
+
+.empty-history-msg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 120px;
+    font-size: 1.25rem;
+    color: #4a7c74;
+    font-weight: 500;
+    background: #fff;
+    border-radius: 14px;
+    margin: 40px auto 60px auto;
+    max-width: 520px;
+    box-shadow: 0 4px 16px rgba(102,183,173,0.10), 0 1.5px 6px rgba(0,0,0,0.04);
+    padding: 32px 24px 28px 24px;
+    text-align: center;
+    letter-spacing: 0.01em;
 }  
