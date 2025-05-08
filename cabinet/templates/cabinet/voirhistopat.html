@@ -40,12 +40,13 @@
         </style>
         {% if rdvs %}
         <div class="table-responsive">
-            <table class="table table-striped">
+            <table class="modern-table">
                 <thead>
                     <tr>
                         <th>Date</th>
                         <th>Médecin</th>
                         <th>Spécialité</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -54,6 +55,14 @@
                         <td>{{ rdv.date|date:"d/m/Y H:i" }}</td>
                         <td>Dr. {{ rdv.medecin.nom }} {{ rdv.medecin.prenom }}</td>
                         <td>{{ rdv.medecin.specialite }}</td>
+                        <td>
+                            <a href="{% url 'annuler_rdv' rdv.id %}" class="action-btn delete-btn" title="Annuler" onclick="return confirm('Êtes-vous sûr de vouloir annuler ce rendez-vous ?');">
+                                <span>&#128465;</span>
+                            </a>
+                            <a href="{% url 'modifier_rdv' rdv.id %}" class="action-btn edit-btn" title="Modifier">
+                                <span>&#9998;</span>
+                            </a>
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>

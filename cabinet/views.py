@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .models import Medecin, Patient,Facture, RendezVous
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required 
+from django.urls import reverse
 
 
 
@@ -137,6 +138,50 @@ def main_med(request):
 
 def main_pat(request):
     return render(request, 'cabinet/main_pat.html')
+
+def annuler_rdv(request, rdv_id):
+    emailp = request.session.get('user_email')
+    if not emailp:
+        return redirect('login')
+    try:
+        patient = Patient.objects.get(email=emailp)
+        rdv = RendezVous.objects.get(id=rdv_id, patient=patient)
+        rdv.delete()
+        messages.success(request, "Le rendez-vous a été annulé avec succès.")
+    except (Patient.DoesNotExist, RendezVous.DoesNotExist):
+        messages.error(request, "Impossible d'annuler ce rendez-vous.")
+    return redirect('voirhistopat')
+
+def modifier_rdv(request, rdv_id):
+    emailp = request.session.get('user_email')
+    if not emailp:
+        return redirect('login')
+    try:
+        patient = Patient.objects.get(email=emailp)
+        rdv = RendezVous.objects.get(id=rdv_id, patient=patient)
+    except (Patient.DoesNotExist, RendezVous.DoesNotExist):
+        messages.error(request, "Impossible de modifier ce rendez-vous.")
+        return redirect('voirhistopat')
+
+    from .models import Medecin
+    medecins = Medecin.objects.all()
+
+    if request.method == 'POST':
+        date = request.POST.get('date')
+        medecin_id = request.POST.get('medecin')
+        motif = request.POST.get('motif')
+        try:
+            medecin = Medecin.objects.get(id=medecin_id)
+            rdv.date = date
+            rdv.medecin = medecin
+            rdv.motif = motif
+            rdv.save()
+            messages.success(request, "Le rendez-vous a été modifié avec succès.")
+            return redirect('voirhistopat')
+        except Medecin.DoesNotExist:
+            messages.error(request, "Médecin invalide.")
+
+    return render(request, 'cabinet/modifier_rdv.html', {'rdv': rdv, 'medecins': medecins})
 
 
 

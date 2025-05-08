@@ -19,4 +19,6 @@ path("payerpat/", views.effecpaiementpat, name="payerpat"),
 path("consultprflpat/", views.consultprofilpat, name="consultprflpat"),
 
 path("updateprflpat/", views.updateprflpat, name="updateprflpat"),
+path("annuler_rdv/<int:rdv_id>/", views.annuler_rdv, name="annuler_rdv"),
+path("modifier_rdv/<int:rdv_id>/", views.modifier_rdv, name="modifier_rdv"),
 ]
