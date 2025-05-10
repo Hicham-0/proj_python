@@ -33,7 +33,6 @@
 
       <div class="right-panel">
         <div class="login-box">
-          <!-- ✅ Début du formulaire -->
           <form method="post" action="{% url 'reserverrdv' %}">
             {% csrf_token %} {% if messages %}
             <div class="messages">
@@ -93,12 +92,10 @@
               </div>
             </div>
 
-            <!-- Bouton Réserver -->
             <button type="submit">Réserver</button>
 
             <p class="footer-text">©️ 2025 MediPlace. Tous droits réservés.</p>
           </form>
-          <!-- ✅ Fin du formulaire -->
         </div>
       </div>
     </div>

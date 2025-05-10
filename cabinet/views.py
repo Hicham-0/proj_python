@@ -201,7 +201,7 @@ def reserverrdv(request):
             medecin = None
 
             if nom_medecin:
-                # Nettoyer et séparer nom/prénom correctement
+               
                 nom_complet = nom_medecin.replace("Dr.", "").strip()
                 noms = nom_complet.split(maxsplit=1)
 
@@ -209,7 +209,6 @@ def reserverrdv(request):
                     nom = noms[0]
                     prenom = noms[1]
 
-                    # Recherche exacte mais insensible à la casse
                     medecin = Medecin.objects.filter(
                         nom__iexact=nom,
                         prenom__iexact=prenom
@@ -229,7 +228,6 @@ def reserverrdv(request):
 
             patient = Patient.objects.get(email=email_patient)
 
-            # Enregistrement du rendez-vous
             RendezVous.objects.create(
                 patient=patient,
                 medecin=medecin,
