@@ -3,6 +3,9 @@ from .models import Medecin, Patient,Facture, RendezVous
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required 
 from django.urls import reverse
+from datetime import datetime, time
+from django.http import JsonResponse
+import random
 
 
 
@@ -38,7 +41,43 @@ def services(request):
     return render(request, 'cabinet/services.html')
 
 def reserverrdv(request):
-    return render(request,'cabinet/reserverrdv.html')
+    from .models import Medecin, Patient, RendezVous, Facture
+    medecins = Medecin.objects.all()
+    horaires_fixes = [time(h, 0) for h in range(8, 17)]  # 8h à 16h
+    today = datetime.now().date().isoformat()
+
+    if request.method == 'POST':
+        medecin_id = request.POST.get('medecin')
+        date_str = request.POST.get('date')
+        heure_str = request.POST.get('heure')
+        motif = request.POST.get('motif')
+        if medecin_id and date_str and heure_str and motif:
+            medecin = Medecin.objects.get(id=medecin_id)
+            date_obj = datetime.strptime(date_str, '%Y-%m-%d').date()
+            heure_obj = datetime.strptime(heure_str, '%H:%M').time()
+            datetime_rdv = datetime.combine(date_obj, heure_obj)
+            email_patient = request.session.get('user_email')
+            patient = Patient.objects.get(email=email_patient)
+            if RendezVous.objects.filter(medecin=medecin, date=datetime_rdv).exists():
+                messages.error(request, "Ce créneau est déjà réservé.")
+            else:
+                rdv = RendezVous.objects.create(
+                    patient=patient,
+                    medecin=medecin,
+                    date=datetime_rdv,
+                    motif=motif
+                )
+                numero_facture = f"FCT-{random.randint(10,999)}"
+                Facture.objects.create(
+                    numero_facture=numero_facture,
+                    montant=200,
+                    date_emission=datetime.now().date(),
+                    statut_paiement='EN_ATTENTE',
+                    rendez_vous=rdv
+                )
+                messages.success(request, "Votre rendez-vous a été réservé avec succès.")
+                return redirect('voirhistopat')
+    return render(request, 'cabinet/reserverrdv.html', {'medecins': medecins, 'today': today})
 
 def consulterhistoriquepat(request):
     emailp = request.session.get('user_email')
@@ -52,24 +91,25 @@ def consulterhistoriquepat(request):
     return render(request, 'cabinet/voirhistopat.html', {'rdvs': rdvs})
 
 def effecpaiementpat(request):
+    emailpatt = request.session.get('user_email')
+    if not emailpatt:
+        return redirect('login')
+    from .models import Facture, Patient
+    patient = Patient.objects.get(email=emailpatt)
     if request.method == 'POST':
-       numfacture=request.POST.get('numfact')
-       nom=request.POST.get('nom')
-       prenom=request.POST.get('prenom')
-       montantnv=request.POST.get('montant')
-       datepaiement=request.POST.get('date')
-       emailpatt=request.session.get('user_email')
-       statut="EN_ATTENTE"
-       if numfacture and nom and prenom and montantnv and datepaiement and emailpatt :
-           try :
-               fact=Facture.objects.get(numero_facture=numfacture,statut_paiement=statut,Nompat=nom,prenompat=prenom,emailpat=emailpatt,montant=montantnv)
-               fact.statut_paiement="PAYEE"
-               fact.date_paiement=datepaiement
-               fact.save()
-               return render(request,'cabinet/paiementpat.html',{'form':"paiement validé avec succés"})
-           except Facture.DoesNotExist:
-                return render(request,'cabinet/paiementpat.html',{'form':"informations invalide"})
-    return render(request,'cabinet/paiementpat.html')
+        facture_id = request.POST.get('facture_id')
+        try:
+            facture = Facture.objects.get(id=facture_id, rendez_vous__patient=patient, statut_paiement='EN_ATTENTE')
+            facture.statut_paiement = 'PAYEE'
+            facture.date_paiement = datetime.now().date()
+            facture.save()
+            msg = "Facture payée avec succès."
+        except Facture.DoesNotExist:
+            msg = "Facture introuvable ou déjà payée."
+    else:
+        msg = None
+    factures = Facture.objects.filter(rendez_vous__patient=patient, statut_paiement='EN_ATTENTE')
+    return render(request, 'cabinet/paiementpat.html', {'factures': factures, 'msg': msg})
 
     
 
@@ -153,6 +193,8 @@ def annuler_rdv(request, rdv_id):
     return redirect('voirhistopat')
 
 def modifier_rdv(request, rdv_id):
+    from .models import Medecin, RendezVous, Patient
+    from datetime import datetime, time
     emailp = request.session.get('user_email')
     if not emailp:
         return redirect('login')
@@ -163,83 +205,57 @@ def modifier_rdv(request, rdv_id):
         messages.error(request, "Impossible de modifier ce rendez-vous.")
         return redirect('voirhistopat')
 
-    from .models import Medecin
     medecins = Medecin.objects.all()
+    today = datetime.now().date().isoformat()
 
     if request.method == 'POST':
-        date = request.POST.get('date')
         medecin_id = request.POST.get('medecin')
+        date_str = request.POST.get('date')
+        heure_str = request.POST.get('heure')
         motif = request.POST.get('motif')
-        try:
+        if medecin_id and date_str and heure_str and motif:
             medecin = Medecin.objects.get(id=medecin_id)
-            rdv.date = date
-            rdv.medecin = medecin
-            rdv.motif = motif
-            rdv.save()
-            messages.success(request, "Le rendez-vous a été modifié avec succès.")
-            return redirect('voirhistopat')
-        except Medecin.DoesNotExist:
-            messages.error(request, "Médecin invalide.")
+            date_obj = datetime.strptime(date_str, '%Y-%m-%d').date()
+            heure_obj = datetime.strptime(heure_str, '%H:%M').time()
+            datetime_rdv = datetime.combine(date_obj, heure_obj)
+            # Vérifier que le créneau est libre ou que c'est le même RDV
+            conflit = RendezVous.objects.filter(medecin=medecin, date=datetime_rdv).exclude(id=rdv.id).exists()
+            if conflit:
+                messages.error(request, "Ce créneau est déjà réservé.")
+            else:
+                rdv.medecin = medecin
+                rdv.date = datetime_rdv
+                rdv.motif = motif
+                rdv.save()
+                messages.success(request, "Le rendez-vous a été modifié avec succès.")
+                return redirect('voirhistopat')
 
-    return render(request, 'cabinet/modifier_rdv.html', {'rdv': rdv, 'medecins': medecins})
+    # Pré-remplissage pour le GET ou en cas d'erreur
+    context = {
+        'medecins': medecins,
+        'rdv': rdv,
+        'today': today,
+    }
+    return render(request, 'cabinet/modifier_rdv.html', context)
 
 from datetime import datetime
 from django.contrib import messages # type: ignore 
 
-def reserverrdv(request):
-    if request.method == 'POST':
-        date_str = request.POST.get('date-rdv')
-        nom_medecin = request.POST.get('medecin_nom')
-        specialite = request.POST.get('medecin_specialite')
-
-        if not date_str:
-            messages.error(request, "Veuillez choisir une date.")
-            return redirect('reserverrdv')
-
-        try:
-            date_rdv = datetime.strptime(date_str, '%Y-%m-%d')
-            medecin = None
-
-            if nom_medecin:
-               
-                nom_complet = nom_medecin.replace("Dr.", "").strip()
-                noms = nom_complet.split(maxsplit=1)
-
-                if len(noms) >= 2:
-                    nom = noms[0]
-                    prenom = noms[1]
-
-                    medecin = Medecin.objects.filter(
-                        nom__iexact=nom,
-                        prenom__iexact=prenom
-                    ).first()
-
-            elif specialite:
-                medecin = Medecin.objects.filter(specialite__iexact=specialite).first()
-
-            if not medecin:
-                messages.error(request, "Aucun médecin trouvé avec ces critères.")
-                return redirect('reserverrdv')
-
-            email_patient = request.session.get('user_email')
-            if not email_patient:
-                messages.error(request, "Vous devez être connecté.")
-                return redirect('login')
-
-            patient = Patient.objects.get(email=email_patient)
-
-            RendezVous.objects.create(
-                patient=patient,
-                medecin=medecin,
-                date=date_rdv,
-                motif="Rendez-vous réservé via formulaire"
-            )
-
-            messages.success(request, "Votre rendez-vous a été réservé avec succès.")
-            return redirect('voirhistopat')
-
-        except Exception as e:
-            messages.error(request, f"Erreur : {e}")
-
-    return render(request, 'cabinet/reserverrdv.html')
+def creneaux_disponibles(request):
+    from .models import Medecin, RendezVous
+    from datetime import datetime, time
+    medecin_id = request.GET.get('medecin')
+    date_str = request.GET.get('date')
+    horaires_fixes = [time(h, 0) for h in range(8, 17)]  # 8h à 16h
+    if not medecin_id or not date_str:
+        return JsonResponse({'creneaux': []})
+    try:
+        medecin = Medecin.objects.get(id=medecin_id)
+        date_obj = datetime.strptime(date_str, '%Y-%m-%d').date()
+        rdvs = RendezVous.objects.filter(medecin=medecin, date__date=date_obj)
+        heures_prises = [rdv.date.time() for rdv in rdvs]
+        horaires_disponibles = [h.strftime('%H:%M') for h in horaires_fixes if h not in heures_prises]
+        return JsonResponse({'creneaux': horaires_disponibles})
+    except Exception:
+        return JsonResponse({'creneaux': []})
 

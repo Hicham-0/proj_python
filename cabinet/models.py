@@ -66,23 +66,12 @@ class Facture(models.Model):
         ('EN_ATTENTE', 'En attente'),
         ('PAYEE', 'Payée'),
     ]
-    MEDECIN_CHOICES=[
-        ('DR1', 'Dr.Ben Saad Nadia'),
-        ('DR2', 'Dr.Moubaraki Houda'),
-        ('DR3', 'Dr.Kabbaj Fouad'),
-        ('DR4', 'Dr.Afifi Yasser'),
-        ('DR5', 'Dr.Sakhi Othmane'),
-        ('DR6', 'Dr.Belghiti Yousra'),
-    ]
-    Nomcomplet_med = models.CharField(max_length=30, choices=MEDECIN_CHOICES,default="Dr.Kabbaj Fouad")
-    Nompat = models.CharField(max_length=20,default="aucun")
-    prenompat = models.CharField(max_length=20,default="aucun")
-    emailpat=models.EmailField(unique=True,default="aucun")
     numero_facture = models.CharField(max_length=20, unique=True)
     montant = models.DecimalField(max_digits=10, decimal_places=2)
     date_emission = models.DateField(null=True, blank=True)
     date_paiement = models.DateField(null=True, blank=True)
     statut_paiement = models.CharField(max_length=20, choices=STATUT_CHOICES, default='EN_ATTENTE')
-    
+    rendez_vous = models.OneToOneField('RendezVous', on_delete=models.CASCADE, related_name='facture', null=True, blank=True)
+
     def __str__(self):
         return f"Facture {self.numero_facture}"

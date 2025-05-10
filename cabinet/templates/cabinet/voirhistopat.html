@@ -37,6 +37,9 @@
             .services-section {
                 min-height: 70vh;
             }
+            .modern-table tbody tr:hover {
+             background: inherit;
+}
         </style>
         {% if rdvs %}
         <div class="table-responsive">
@@ -46,6 +49,7 @@
                         <th>Date</th>
                         <th>Médecin</th>
                         <th>Spécialité</th>
+                        <th>Facture</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -55,6 +59,17 @@
                         <td>{{ rdv.date|date:"d/m/Y H:i" }}</td>
                         <td>Dr. {{ rdv.medecin.nom }} {{ rdv.medecin.prenom }}</td>
                         <td>{{ rdv.medecin.specialite }}</td>
+                        <td>
+                            {% if rdv.facture %}
+                                {% if rdv.facture.statut_paiement == 'PAYEE' %}
+                                    <span style="color: #2e7d32; font-weight: bold;">Payée</span>
+                                {% else %}
+                                    <span style="color: #b91c1c; font-weight: bold;">Non payée</span>
+                                {% endif %}
+                            {% else %}
+                                <span style="color: #888;">-</span>
+                            {% endif %}
+                        </td>
                         <td>
                             <a href="{% url 'annuler_rdv' rdv.id %}" class="action-btn delete-btn" title="Annuler" onclick="return confirm('Êtes-vous sûr de vouloir annuler ce rendez-vous ?');">
                                 <span>&#128465;</span>

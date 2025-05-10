@@ -18,15 +18,12 @@
     <div class="right-panel">
         <div class="login-box">
             <h2>Modifier le rendez-vous</h2>
-            <form method="POST">
+            <form method="post" id="modif-rdv-form">
                 {% csrf_token %}
                 <div class="input-group">
-                    <label for="date">Date et heure :</label>
-                    <input type="datetime-local" id="date" name="date" value="{{ rdv.date|date:'Y-m-d\\TH:i' }}" required />
-                </div>
-                <div class="input-group">
-                    <label for="medecin">Médecin :</label>
-                    <select id="medecin" name="medecin" required>
+                    <label>Médecin :</label>
+                    <select name="medecin" id="medecin-select" required>
+                        <option value="">-- Choisissez un médecin --</option>
                         {% for med in medecins %}
                             <option value="{{ med.id }}" {% if med.id == rdv.medecin.id %}selected{% endif %}>
                                 Dr. {{ med.nom }} {{ med.prenom }} - {{ med.specialite }}
@@ -35,13 +32,62 @@
                     </select>
                 </div>
                 <div class="input-group">
-                    <label for="motif">Motif :</label>
-                    <textarea id="motif" name="motif" rows="3" required>{{ rdv.motif }}</textarea>
+                    <label>Date :</label>
+                    <input type="date" name="date" id="date-select" value="{{ rdv.date|date:'Y-m-d' }}" required min="{{ today }}" />
+                </div>
+                <div class="input-group">
+                    <label>Heure :</label>
+                    <select name="heure" id="heure-select" required>
+                        <option value="">-- Choisissez une heure --</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>Motif :</label>
+                    <input type="text" name="motif" value="{{ rdv.motif }}" required />
                 </div>
                 <button type="submit">Enregistrer les modifications</button>
             </form>
         </div>
     </div>
 </div>
+<script>
+const medecinSelect = document.getElementById('medecin-select');
+const dateSelect = document.getElementById('date-select');
+const heureSelect = document.getElementById('heure-select');
+const heureInitiale = "{{ rdv.date|date:'H:i' }}";
+
+function updateCreneaux() {
+    const medecin = medecinSelect.value;
+    const date = dateSelect.value;
+    heureSelect.innerHTML = '<option value="">-- Choisissez une heure --</option>';
+    if (medecin && date) {
+        fetch(`/creneaux_disponibles/?medecin=${medecin}&date=${date}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.creneaux.length === 0) {
+                    const opt = document.createElement('option');
+                    opt.value = '';
+                    opt.textContent = 'Aucun créneau disponible';
+                    heureSelect.appendChild(opt);
+                } else {
+                    data.creneaux.forEach(h => {
+                        const opt = document.createElement('option');
+                        opt.value = h;
+                        opt.textContent = h;
+                        if (h === heureInitiale) {
+                            opt.selected = true;
+                        }
+                        heureSelect.appendChild(opt);
+                    });
+                    // Si l'heure initiale n'est pas dans la liste (créneau déjà pris par un autre), elle n'est pas sélectionnée
+                }
+            });
+    }
+}
+medecinSelect.addEventListener('change', updateCreneaux);
+dateSelect.addEventListener('change', updateCreneaux);
+// Pré-remplir la liste des heures au chargement
+window.addEventListener('DOMContentLoaded', updateCreneaux);
+</script>
 </body>
 </html> 

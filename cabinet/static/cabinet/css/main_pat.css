@@ -289,7 +289,7 @@ footer p {
 }
 
 .modern-table tbody tr:hover {
-    background: #e8eddf;
+    background: inherit;
 }
 
 .modern-table td {
