@@ -183,5 +183,65 @@ def modifier_rdv(request, rdv_id):
 
     return render(request, 'cabinet/modifier_rdv.html', {'rdv': rdv, 'medecins': medecins})
 
+from datetime import datetime
+from django.contrib import messages # type: ignore 
 
+def reserverrdv(request):
+    if request.method == 'POST':
+        date_str = request.POST.get('date-rdv')
+        nom_medecin = request.POST.get('medecin_nom')
+        specialite = request.POST.get('medecin_specialite')
+
+        if not date_str:
+            messages.error(request, "Veuillez choisir une date.")
+            return redirect('reserverrdv')
+
+        try:
+            date_rdv = datetime.strptime(date_str, '%Y-%m-%d')
+            medecin = None
+
+            if nom_medecin:
+                # Nettoyer et séparer nom/prénom correctement
+                nom_complet = nom_medecin.replace("Dr.", "").strip()
+                noms = nom_complet.split(maxsplit=1)
+
+                if len(noms) >= 2:
+                    nom = noms[0]
+                    prenom = noms[1]
+
+                    # Recherche exacte mais insensible à la casse
+                    medecin = Medecin.objects.filter(
+                        nom__iexact=nom,
+                        prenom__iexact=prenom
+                    ).first()
+
+            elif specialite:
+                medecin = Medecin.objects.filter(specialite__iexact=specialite).first()
+
+            if not medecin:
+                messages.error(request, "Aucun médecin trouvé avec ces critères.")
+                return redirect('reserverrdv')
+
+            email_patient = request.session.get('user_email')
+            if not email_patient:
+                messages.error(request, "Vous devez être connecté.")
+                return redirect('login')
+
+            patient = Patient.objects.get(email=email_patient)
+
+            # Enregistrement du rendez-vous
+            RendezVous.objects.create(
+                patient=patient,
+                medecin=medecin,
+                date=date_rdv,
+                motif="Rendez-vous réservé via formulaire"
+            )
+
+            messages.success(request, "Votre rendez-vous a été réservé avec succès.")
+            return redirect('voirhistopat')
+
+        except Exception as e:
+            messages.error(request, f"Erreur : {e}")
+
+    return render(request, 'cabinet/reserverrdv.html')
 

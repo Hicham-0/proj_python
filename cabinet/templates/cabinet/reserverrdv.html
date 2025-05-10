@@ -1,88 +1,106 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
+  <head>
     {% load static %}
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Connexion - MediPlace</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-    <link rel="stylesheet" href="{% static 'cabinet/css/reserverrdv.css' %}"/>
-</head>
-<body>
-<div class="container">
-    <div class="left-panel">
-        <img src="{% static 'cabinet/img/prdrerdvpage.avif' %}" alt="Illustration médicale">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css "
+    />
+    <link rel="stylesheet" href="{% static 'cabinet/css/reserverrdv.css' %}" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="left-panel">
+        <img
+          src="{% static 'cabinet/img/prdrerdvpage.avif' %}"
+          alt="Illustration médicale"
+        />
         <div class="text-content">
-            <h1>Bienvenue sur MediPlace</h1>
-            <p>Réservez vos consultations médicales en quelques clics.</p>
-            <ul>
-                <li><i class="fas fa-calendar-check"></i> Prise de rendez-vous rapide</li>
-                <li><i class="fas fa-user-md"></i> Médecins certifiés</li>
-                <li><i class="fas fa-lock"></i> Données sécurisées</li>
-            </ul>
+          <h1>Bienvenue sur MediPlace</h1>
+          <p>Réservez vos consultations médicales en quelques clics.</p>
+          <ul>
+            <li>
+              <i class="fas fa-calendar-check"></i> Prise de rendez-vous rapide
+            </li>
+            <li><i class="fas fa-user-md"></i> Médecins certifiés</li>
+            <li><i class="fas fa-lock"></i> Données sécurisées</li>
+          </ul>
         </div>
-    </div>
+      </div>
 
-    <div class="right-panel">
+      <div class="right-panel">
         <div class="login-box">
+          <!-- ✅ Début du formulaire -->
+          <form method="post" action="{% url 'reserverrdv' %}">
+            {% csrf_token %} {% if messages %}
+            <div class="messages">
+              {% for message in messages %}
+              <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+              {% endfor %}
+            </div>
+            {% endif %}
+
             <h2>Réserver votre rendez-vous médical</h2>
 
             <!-- Choisir date -->
             <div class="input-group">
-                <label>Choisir la date de rendez-vous :</label>
-                <input type="date" id="date-rdv" name="date-rdv" required />
+              <label>Choisir la date de rendez-vous :</label>
+              <input type="date" id="date-rdv" name="date-rdv" required />
             </div>
 
             <div class="input-group">
-                <label>Choisir médecin :</label>
+              <label>Choisir médecin :</label>
 
-                <div class="radio-select-group">
-                    <input type="radio" id="par-nom" name="choix" hidden>
-                    <label class="radio-label" for="par-nom">
-                        <span class="radio-box"></span> Rechercher par nom 
-                    </label>
+              <div class="radio-select-group">
+                <input type="radio" id="par-nom" name="choix" hidden />
+                <label class="radio-label" for="par-nom">
+                  <span class="radio-box"></span> Rechercher par nom
+                </label>
 
-                    <input type="radio" id="par-specialite" name="choix" hidden>
-                    <label class="radio-label" for="par-specialite">
-                        <span class="radio-box"></span> Rechercher par spécialisation 
-                    </label>
+                <input type="radio" id="par-specialite" name="choix" hidden />
+                <label class="radio-label" for="par-specialite">
+                  <span class="radio-box"></span> Rechercher par spécialisation
+                </label>
 
-                    <div class="select-nom">
-                        <label for="nom-medecin">Nom du médecin :</label>
-                        <select id="nom-medecin" name="medecin_nom">
-                            <option value="">-- Choisissez un médecin --</option>
-                            <option>Dr. Ben Saad Nadia</option>
-                            <option>Dr. Moubaraki Houda</option>
-                            <option>Dr. Kabbaj Fouad</option>
-                            <option>Dr. Afifi Yasser</option>
-                            <option>Dr. Sakhi Othmane</option>
-                            <option>Dr. Belghiti Youssra</option>
-
-                        </select>
-                    </div>
-
-                    <div class="select-specialite">
-                        <label for="specialite">Spécialité :</label>
-                        <select id="specialite" name="medecin_specialite">
-                            <option value="">-- Choisissez une spécialité --</option>
-                            <option>Cardiologie</option>
-                            <option>Médecine générale</option>
-                            <option>Pédiatrie</option>
-                            <option>Médecine dentaire</option>
-                            <option>Neurologie</option>
-                            <option>Dermatologie</option>
-                        </select>
-                    </div>
-
+                <div class="select-nom">
+                  <label for="nom-medecin">Nom du médecin :</label>
+                  <select id="nom-medecin" name="medecin_nom">
+                    <option value="">-- Choisissez un médecin --</option>
+                    <option>Dr. Nadia Ben Saad</option>
+                    <option>Dr. Houda Moubaraki</option>
+                    <option>Dr. Fouad Kabbaj</option>
+                    <option>Dr. Yasser Afifi</option>
+                    <option>Dr. Othmane Sakhi</option>
+                    <option>Dr. Youssra Belghiti</option>
+                  </select>
                 </div>
+
+                <div class="select-specialite">
+                  <label for="specialite">Spécialité :</label>
+                  <select id="specialite" name="medecin_specialite">
+                    <option value="">-- Choisissez une spécialité --</option>
+                    <option>cardiologue</option>
+                    <option>généraliste</option>
+                    <option>Pédiatre</option>
+                    <option>Dermatologue</option>
+                    <option>Neurologue</option>
+                    <option>Dentiste</option>
+                  </select>
+                </div>
+              </div>
             </div>
 
             <!-- Bouton Réserver -->
             <button type="submit">Réserver</button>
-            
+
             <p class="footer-text">©️ 2025 MediPlace. Tous droits réservés.</p>
+          </form>
+          <!-- ✅ Fin du formulaire -->
         </div>
+      </div>
     </div>
-</div>
-</body>
+  </body>
 </html>
