@@ -23,4 +23,19 @@ path("annuler_rdv/<int:rdv_id>/", views.annuler_rdv, name="annuler_rdv"),
 path("modifier_rdv/<int:rdv_id>/", views.modifier_rdv, name="modifier_rdv"),
 path('creneaux_disponibles/', views.creneaux_disponibles, name='creneaux_disponibles'),
 
+
+path("voirrdvmed/",views.voirrdvmed,name="voirrdvmed"),
+path("voirprflvmed/",views.voirprflmed,name="voirprflmed"),
+
+
+path("genfact/",views.genfact,name="genfact"),
+path("createfolder/",views.createfolder,name="createfolder"),
+
+path("consultdossier/",views.consultdossier,name="consultdossier"),
+path("ajoutordonnance/",views.ajoutordonnance,name="ajoutordonnance"),
+
+path("ajoutobservation/",views.ajoutobservation,name="ajoutobservation"),
+path("updateprflmed/",views.updateprflmed,name="updateprflmed"),
+
+
 ]

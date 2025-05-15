@@ -133,14 +133,8 @@ def updateprflpat(request):
          pat.date_naissance = nvdate
          pat.mot_de_passe=nvmdp
          pat.save() 
-         try:
-             fact=Facture.objects.get(emailpat=emailp)
-             fact.emailpat=nvemail
-             fact.save()
-             return render(request,'cabinet/updateprflpat.html',{'msg':"Vos informations ont été mises à jour avec succès"})
-         except Facture.DoesNotExist:
-               return render(request,'cabinet/updateprflpat.html',{'msg':"Vos informations ont été mises à jour avec succès"})
-    return  render(request,'cabinet/updateprflpat.html')
+         return render(request,'cabinet/updateprflpat.html',{'msg':"Vos informations ont été mises à jour avec succès"})
+
         
 
 def login(request):
@@ -174,7 +168,10 @@ def logout(request):
     return redirect('landing')
 
 def main_med(request):
-    return render(request, 'cabinet/main_med.html')
+    email=request.session.get('user_email')
+    med=Medecin.objects.get(email=email)
+    contexte=med
+    return render(request, 'cabinet/main_med.html',{'form':contexte})
 
 def main_pat(request):
     return render(request, 'cabinet/main_pat.html')
@@ -259,3 +256,48 @@ def creneaux_disponibles(request):
     except Exception:
         return JsonResponse({'creneaux': []})
 
+def voirrdvmed(request):
+    return render(request,'cabinet/voirrdv_med.html')
+
+def voirprflmed(request):
+        emailm=request.session.get('user_email')
+        mdpm=request.session.get('user_mdp')
+        infos=Medecin.objects.get(email=emailm,mot_de_passe=mdpm)
+        return render(request,'cabinet/voirprfl_med.html',{'user':infos})
+
+def genfact(request):
+    return render(request,'cabinet/genererfacture_med.html')
+
+def createfolder(request):
+    return render(request,'cabinet/creerdossier_med.html')
+
+
+def consultdossier(request):
+    return render(request,'cabinet/voirdossier_med.html')
+
+def ajoutordonnance(request):
+    return render(request,'cabinet/ajoutordan_med.html')
+
+
+def ajoutobservation(request):
+    return render(request,'cabinet/ajoutobserv_med.html')
+
+def updateprflmed(request):
+         if request.method == 'POST':
+             
+            emailm=request.session.get('user_email')
+            mdpm=request.session.get('user_mdp')
+            nvemail=request.POST.get('email')
+            nvtel=request.POST.get('numero_telephone')
+            nvville=request.POST.get('ville')
+            nvmdp=request.POST.get('mdp')
+            med=Medecin.objects.get(email=emailm,mot_de_passe=mdpm)
+            med.email=nvemail
+            med.numero_telephone = nvtel
+            med.ville = nvville
+            med.mot_de_passe=nvmdp
+            med.save()
+            return render(request,'cabinet/updateprfl_med.html',{'msg':"Vos informations ont été mises à jour avec succès"})
+         return render(request,'cabinet/updateprfl_med.html')
+
+    

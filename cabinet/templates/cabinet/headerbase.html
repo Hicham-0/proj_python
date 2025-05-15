@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    {% load static %}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MediPlace</title>
+   <link rel="stylesheet" href="{% static 'cabinet/css/headerbase.css' %}"/>
+</head>
+<body>
+  <header>
+    <div class="left-section">
+      <div class="logo">
+        <span class="medi">Medi</span><span class="place">Place</span>
+      </div>
+      <nav>
+        <div class="dropdown">
+          <input type="checkbox" id="menuToggle" />
+          <label for="menuToggle">Menu</label>
+          <div class="dropdown-content">
+            <a href="{% url 'consultprflpat' %}">Mon Profil</a>
+            <a href="{% url 'reserverrdv' %}">Nouveau Rendez-vous</a>
+            <a href="{% url 'payerpat' %}">Paiement</a>
+            <a href="{% url 'voirhistopat' %}">Mon Historique</a>
+          </div>
+        </div>
+        <a href="{% url 'services' %}">Services</a>
+        <a href="#section7">Contact</a>
+      </nav>
+    </div>
+    <div class="buttons">
+      <a class="login-btn" href="{% url 'main_pat' %}">Retour</a>
+      <a class="signup-btn" href="{% url 'landing' %}">Déconnexion</a>
+    </div>
+  </header>
+</body>
+</html>

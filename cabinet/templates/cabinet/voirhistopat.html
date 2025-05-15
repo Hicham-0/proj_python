@@ -7,16 +7,7 @@
     <link rel="stylesheet" href="{% static 'cabinet/css/main_pat.css' %}"/>
 </head>
 <body>
-    <header>
-        <div class="left-section">
-            <div class="logo">
-                <span class="medi">Medi</span><span class="place">Place</span>
-            </div>
-        </div>
-        <div class="buttons">
-            <a class="signup-btn" href="{% url 'landing' %}">Se déconnecter</a>
-        </div>
-    </header>
+    {% include 'cabinet/headerbase.html' %}
     <section class="services-section">
         <h2 class="services-title">Historique de mes rendez-vous</h2>
         <style>
@@ -89,8 +80,7 @@
             </div>
         {% endif %}
     </section>
-    <footer>
-        <p>Copyright © 2025 MediPlace, tous droits réservés.</p>
-    </footer>
+     <div style="height: 240px;background-color:#e8eddf;"></div>
+{% include 'cabinet/footerbase.html' %}
 </body>
 </html>

@@ -1,0 +1,33 @@
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Profil</title>
+    <link rel="stylesheet" href="{% static 'cabinet/css/voirprflmed.css' %}" />
+</head>
+<body>
+    {% include 'cabinet/headerbasepagemed.html' %}
+    <div class="content">
+        <div class="profile-container">
+            <!-- Partie gauche -->
+            <div class="profile-left">
+                <h2>Bienvenue sur votre profil</h2>
+                <p>Accédez à vos informations personnelles en toute sécurité et modifiez-les si nécessaire.</p>
+            </div>
+
+            <!-- Partie droite (avec lignes et centrée) -->
+            <div class="profile-right">
+                <h2>Mon Profil</h2>
+                <div class="profile-item"><span class="label">Nom :</span> <span class="value">{{ user.nom }}</span></div>
+                <div class="profile-item"><span class="label">Prénom :</span> <span class="value">{{ user.prenom }}</span></div>
+                <div class="profile-item"><span class="label">Email :</span> <span class="value">{{ user.email }}</span></div>
+                <div class="profile-item"><span class="label">Téléphone :</span> <span class="value">{{ user.numero_telephone }}</span></div>
+                <div class="profile-item"><span class="label">Spécialité :</span> <span class="value">{{ user.specialite }}</span></div>
+                <div class="profile-item"><span class="label">Ville :</span> <span class="value">{{ user.ville }}</span></div>
+                <a href="{% url 'updateprflmed' %}" class="edit-btn">Modifier mon profil</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

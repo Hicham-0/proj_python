@@ -16,16 +16,7 @@
     <link rel="stylesheet" href="{% static 'cabinet/css/main_pat.css' %}" />
   </head>
   <body>
-    <header>
-      <div class="left-section">
-        <div class="logo">
-          <span class="medi">Medi</span><span class="place">Place</span>
-        </div>
-      </div>
-      <div class="buttons">
-        <a class="signup-btn" href="{% url 'landing' %}"> Se déconnecter </a>
-      </div>
-    </header>
+   {% include 'cabinet/headerbase.html' %}
 
     <section class="section1">
       <p>

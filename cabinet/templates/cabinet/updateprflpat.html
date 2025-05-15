@@ -9,7 +9,9 @@
     <link rel="stylesheet" href="{% static 'cabinet/css/updateprfpat.css' %}"/>
 </head>
 <body>
-
+    {% include 'cabinet/headerbase.html' %}
+    <br>
+    
 <form method="POST">
     {% csrf_token %}
     <div class="main-container">
@@ -53,6 +55,7 @@
         <br>
         <h3 class="success-message">{{ msg }}</h3>
 </form>
-
+<div style="height: 250px;"></div>
+{% include 'cabinet/footerbase.html' %}
 </body>
 </html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modifier Mon Profil</title>
+      <link rel="stylesheet" href="{% static 'cabinet/css/updateprflmed.css' %}"/>
+</head>
+<body>
+    {% include 'cabinet/headerbasepagemed.html' %}
+    <div class="content">
+        <div class="profile-container">
+            <!-- Partie gauche -->
+            <div class="profile-left">
+                <h2>Modifier votre profil</h2>
+                <p>Vous pouvez mettre à jour vos informations personnelles à tout moment pour garantir l’exactitude de vos données.</p>
+            </div>
+
+            <!-- Partie droite : formulaire -->
+            <div class="profile-right">
+                <h2>Edité mon profil</h2>
+                <form method="POST">
+                    {% csrf_token %}
+
+                    <div class="profile-item">
+                        <label class="label" for="email">Email :</label>
+                        <input type="email" id="email" name="email" class="value" >
+                    </div>
+
+                    <div class="profile-item">
+                        <label class="label" for="email">Mot de passe :</label>
+                        <input type="password" id="mdp" name="mdp" class="value" >
+                    </div>
+                    <div class="profile-item">
+                        <label class="label" for="numero_telephone">Téléphone :</label>
+                        <input type="tel" id="numero_telephone" name="numero_telephone" class="value" >
+                    </div>
+                    <div class="profile-item">
+                        <label class="label" for="ville">Ville :</label>
+                        <input type="text" id="ville" name="ville" class="value" >
+                    </div>
+
+                    <button type="submit" class="edit-btn">Enregistrer les modifications</button>
+                     <br>
+                    {% if msg %}
+                    
+        <div class="success-message" style="display:flex;align-items:center;gap:8px;color: green;margin-top: 20px;"><span style="font-size:1.3em;">✔️</span> {{ msg }}</div>
+      {% endif %}
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

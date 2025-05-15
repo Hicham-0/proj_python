@@ -7,95 +7,11 @@
   <title>Paiement - MediPlace</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <link rel="stylesheet" href="{% static 'cabinet/css/main_pat.css' %}"/>
-  <style>
-    body {
-      background: #e8eddf;
-      margin: 0;
-      padding: 0;
-    }
-    .navbar {
-      background: #66B7AD;
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 16px 40px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
-    }
-    .navbar .logo {
-      font-size: 1.7em;
-      font-weight: bold;
-    }
-    .navbar .logo .medi { color: white; }
-    .navbar .logo .place { color: #F0E5CF; }
-    .navbar .nav-btn {
-      background: #B0B9A8;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      padding: 8px 18px;
-      font-size: 1em;
-      cursor: pointer;
-      text-decoration: none;
-      transition: background 0.2s;
-    }
-    .navbar .nav-btn:hover {
-      background: #8fa393;
-    }
-    .paiement-section {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      min-height: 80vh;
-      padding: 40px 0 0 0;
-    }
-    .paiement-box {
-      background: #fff;
-      border-radius: 16px;
-      box-shadow: 0 4px 16px rgba(102,183,173,0.10), 0 1.5px 6px rgba(0,0,0,0.04);
-      padding: 36px 32px 32px 32px;
-      max-width: 900px;
-      width: 100%;
-      margin: 0 auto;
-      text-align: center;
-    }
-    .paiement-box h2 {
-      color: #26474E;
-      font-size: 1.5em;
-      margin-bottom: 24px;
-    }
-    .success-message, .error-message {
-      margin: 0 auto 18px auto;
-      padding: 12px 18px;
-      border-radius: 8px;
-      font-weight: 600;
-      width: fit-content;
-      font-size: 1.1em;
-    }
-    .success-message { background: #d4f7d4; color: #2e7d32; }
-    .error-message { background: #ffeaea; color: #b91c1c; }
-    .empty-history-msg {
-      margin: 30px auto 0 auto;
-      color: #888;
-      font-size: 1.15em;
-      font-weight: 500;
-      background: #f4f5f7;
-      border-radius: 10px;
-      padding: 24px 0;
-      max-width: 400px;
-    }
-    @media (max-width: 700px) {
-      .paiement-box { padding: 18px 4vw; }
-      .navbar { padding: 12px 10px; }
-    }
-  </style>
+  <link rel="stylesheet" href="{% static 'cabinet/css/Paiementpat.css' %}"/>
+    
 </head>
 <body>
-  <div class="navbar">
-    <div class="logo"><span class="medi">Medi</span><span class="place">Place</span></div>
-    <a href="{% url 'main_pat' %}" class="nav-btn"><i class="fas fa-arrow-left"></i> Retour à l'espace patient</a>
-  </div>
+ {% include 'cabinet/headerbase.html' %}
   <section class="paiement-section">
     <div class="paiement-box">
       <div style="font-size:2.5em; margin-bottom: 10px; color:#66B7AD;">💳</div>
@@ -134,5 +50,7 @@
       {% endif %}
     </div>
   </section>
+   <div style="height: 80px;"></div>
+{% include 'cabinet/footerbase.html' %}
 </body>
 </html>

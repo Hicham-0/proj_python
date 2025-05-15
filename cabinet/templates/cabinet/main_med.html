@@ -1,10 +1,236 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-    <title>Espace Médecin</title>
+  {% load static %}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MediPlace</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+       background: linear-gradient(135deg, #e0f7f4, #ffffff);
+    }
+
+    header {
+      height: 60px;
+      background-color: #66B7AD;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      color: white;
+    }
+
+    .menu-toggle {
+      margin-right: 35px;
+      cursor: pointer;
+      font-size: 26px;
+      margin-left: 22px;
+
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .logo .medi {
+      color: white;
+    }
+
+    .logo .place {
+      color: #F0E5CF;
+    }
+
+    .main-container {
+      display: flex;
+      height: calc(100vh - 60px);
+    }
+
+    #toggle {
+      display: none;
+    }
+
+    .sidebar {
+      width: 100px;
+      background-color: #66B7AD;
+      padding-top: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: width 0.3s;
+      overflow: hidden;
+      padding-left: 5px;
+    }
+
+    #toggle:checked ~ .main-container .sidebar {
+      width: 250px;
+      align-items: flex-start;
+      padding-left: 20px;
+    }
+
+    .menu-item {
+      color: white;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .menu-item i {
+      font-size: 26px;
+    }
+
+    .menu-item .text-default {
+      font-size: 12px;
+      display: block;
+    }
+
+    .menu-item .text-expanded {
+      display: none;
+      font-size: 15px;
+      margin-left: 10px;
+    }
+
+    #toggle:checked ~ .main-container .sidebar .menu-item {
+      display: flex;
+      align-items: center;
+    }
+
+    #toggle:checked ~ .main-container .sidebar .menu-item .text-default {
+      display: none;
+    }
+
+    #toggle:checked ~ .main-container .sidebar .menu-item .text-expanded {
+      display: inline;
+    }
+
+    .content {
+      flex: 1;
+      background-color: #f7f7f7;
+    }
+    .header-buttons {
+  display: flex;
+  gap: 15px;
+  margin-left: auto;
+}
+
+.nav-btn {
+  background-color: #939597;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.nav-btn:hover {
+  background-color: #B0B9A8;
+}
+.menu-item a {
+  text-decoration: none;
+  color: inherit;
+}
+ .welcome-container {
+    height: calc(100vh - 60px); /* pour prendre tout l’espace dispo en dessous du header */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 20px;
+    margin-top: -40px;
+    margin-left: 240px;
+  }
+
+  .welcome-container h2 {
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+  }
+
+  .welcome-container p {
+    font-size: 18px;
+    color: #555;
+    line-height: 1.6;
+  }
+
+  </style>
 </head>
 <body>
-    <h1>Bienvenue dans votre espace mddecin {{request.session.user_email}}</h1>
-    <a href="{% url 'logout' %}">Se déconnecter</a>
+
+
+  <!-- Toggle -->
+  <input type="checkbox" id="toggle">
+
+  <!-- Navbar -->
+  <header>
+    <label for="toggle" class="menu-toggle">
+      <i class="fa fa-bars"></i>
+    </label>
+    <div class="logo">
+      <span class="medi">Medi</span><span class="place">Place</span>
+    </div>
+   <div class="header-buttons">
+         <a href="{% url 'main_med' %}" class="nav-btn">Retour</a>
+      <a href="{% url 'landing' %}" class="nav-btn">Déconnexion</a>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <div class="main-container">
+    <div class="sidebar">
+      <div class="menu-item">
+        <i class="fa fa-calendar-alt"></i>
+        <span class="text-default"><a href="{% url 'voirrdvmed' %}">Rendez-vous</a></span>
+        <span class="text-expanded"><a href="{% url 'voirrdvmed' %}">Consulter mes rendez-vous</a></span>
+      </div>
+      <div class="menu-item">
+        <i class="fa fa-user"></i>
+        <span class="text-default"><a href="{% url 'voirprflmed' %}">Profil</a></span>
+        <span class="text-expanded"><a href="{% url 'voirprflmed' %}">Voir mes informations</a></span>
+      </div>
+      <div class="menu-item">
+        <i class="fa fa-file-invoice"></i>
+        <span class="text-default"><a href="{% url 'genfact' %}">Facture</a></span>
+        <span class="text-expanded"><a href="{% url 'genfact' %}">Etablir une facture </a></span>
+      </div>
+      <div class="menu-item">
+        <i class="fa fa-folder-plus"></i>
+        <span class="text-default"><a href="{% url 'createfolder' %}">Créer</a></span>
+        <span class="text-expanded"><a href="{% url 'createfolder' %}">Créer Dossier Médical</a></span>
+      </div>
+      <div class="menu-item">
+        <i class="fa fa-folder-open"></i>
+        <span class="text-default"><a href="{% url 'consultdossier' %}">Voir</a></span>
+        <span class="text-expanded"><a href="{% url 'consultdossier' %}">Consulter Dossier Médical</a></span>
+      </div>
+      <div class="menu-item">
+        <i class="fa fa-file-medical"></i>
+        <span class="text-default"><a href="{% url 'ajoutordonnance' %}">Ordonnance</a></span>
+        <span class="text-expanded"><a href="{% url 'ajoutordonnance' %}">Ajouter une Ordonnance</a></span>
+      </div>
+      <div class="menu-item">
+        <i class="fa fa-notes-medical"></i>
+        <span class="text-default"><a href="{% url 'ajoutobservation' %}">Note</a></span>
+        <span class="text-expanded"><a href="{% url 'ajoutobservation' %}">Ajouter une Observation</a></span>
+      </div>
+      <div class="menu-item">
+  <i class="fa fa-pen-to-square"></i>
+  <span class="text-default"><a href="{% url 'updateprflmed' %}">Modifier</a></span>
+  <span class="text-expanded"><a href="{% url 'updateprflmed' %}">Modifier mes données</a></span>
+</div>
+    </div>
+  <div class="welcome-container">
+  <h2>Bienvenue dans votre espace professionnel, Dr {{form.nom}} {{form.prenom}}</h2>
+  <p>Votre tableau de bord centralisé pour gérer efficacement <br>vos consultations, dossiers médicaux et prescriptions.</p>
+</div>
 </body>
 </html>
