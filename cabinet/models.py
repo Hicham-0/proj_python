@@ -25,8 +25,6 @@ class Patient(models.Model):
     def __str__(self):
         return f"{self.nom} {self.prenom}"
     
-
-
 class RendezVous(models.Model):
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     medecin = models.ForeignKey(Medecin, on_delete=models.CASCADE)

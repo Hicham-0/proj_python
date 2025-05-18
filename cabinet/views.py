@@ -255,10 +255,7 @@ def creneaux_disponibles(request):
         return JsonResponse({'creneaux': horaires_disponibles})
     except Exception:
         return JsonResponse({'creneaux': []})
-
-def voirrdvmed(request):
-    return render(request,'cabinet/voirrdv_med.html')
-
+    
 def voirprflmed(request):
         emailm=request.session.get('user_email')
         mdpm=request.session.get('user_mdp')
@@ -300,4 +297,16 @@ def updateprflmed(request):
             return render(request,'cabinet/updateprfl_med.html',{'msg':"Vos informations ont été mises à jour avec succès"})
          return render(request,'cabinet/updateprfl_med.html')
 
-    
+
+def mes_rdv_med(request):
+    email_med = request.session.get('user_email')
+    if not email_med:
+        return redirect('login')
+
+    try:
+        medecin = Medecin.objects.get(email=email_med)
+        rdvs = RendezVous.objects.filter(medecin=medecin).order_by('-date')
+        return render(request, 'cabinet/mes_rdv_med.html', {'rdvs': rdvs})
+    except Medecin.DoesNotExist:
+        messages.error(request, "Médecin non trouvé.")
+        return redirect('login')

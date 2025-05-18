@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    {% load static %}
+    <meta charset="UTF-8" />
+    <title>Mes Rendez-vous - MediPlace</title>
+    <link rel="stylesheet" href="{% static 'cabinet/css/main_pat.css' %}" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <!-- Le CSS du header est déjà inclus via headerbasepagemed.html -->
+    <style>
+      .content {
+        flex: 1;
+        background-color: #f7f7f7;
+      }
+      .services-section {
+        min-height: 70vh;
+        padding: 40px 30px 0 30px;
+      }
+      .modern-table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #fff;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      }
+      .modern-table th,
+      .modern-table td {
+        padding: 14px 18px;
+        text-align: left;
+      }
+      .modern-table th {
+        background: #66b7ad;
+        color: #fff;
+        font-weight: 600;
+      }
+      .modern-table tbody tr:nth-child(even) {
+        background: #f2f2f2;
+      }
+      .modern-table tbody tr:hover {
+        background: #e0f7f4;
+      }
+      .table-responsive {
+        overflow-x: auto;
+        margin-top: 30px;
+      }
+      .empty-history-msg {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 300px;
+        font-size: 2rem;
+        color: #579e96;
+        font-weight: 600;
+        background: #fff;
+        border-radius: 10px;
+        margin: 40px auto;
+        max-width: 700px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      }
+    </style>
+  </head>
+  <body>
+    {% include 'cabinet/headerbasepagemed.html' %}
+    <div class="content" style="padding: 40px 0 0 0">
+      <section class="services-section">
+        <h2 class="services-title">Mes rendez-vous</h2>
+        {% if rdvs %}
+        <div class="table-responsive">
+          <table class="modern-table">
+            <thead>
+              <tr>
+                <th>Nom du patient</th>
+                <th>Prénom du patient</th>
+                <th>Date et heure</th>
+                <th>Motif</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for rdv in rdvs %}
+              <tr>
+                <td>{{ rdv.patient.nom }}</td>
+                <td>{{ rdv.patient.prenom }}</td>
+                <td>{{ rdv.date|date:"d/m/Y H:i" }}</td>
+                <td>{{ rdv.motif|truncatechars:50 }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% else %}
+        <div class="empty-history-msg">
+          Aucun rendez-vous prévu pour le moment.
+        </div>
+        {% endif %}
+      </section>
+      <div style="height: 240px; background-color: #e8eddf"></div>
+    </div>
+  </body>
+</html>

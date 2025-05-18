@@ -24,7 +24,7 @@ path("modifier_rdv/<int:rdv_id>/", views.modifier_rdv, name="modifier_rdv"),
 path('creneaux_disponibles/', views.creneaux_disponibles, name='creneaux_disponibles'),
 
 
-path("voirrdvmed/",views.voirrdvmed,name="voirrdvmed"),
+path('mes-rdv-med/', views.mes_rdv_med, name='mes_rdv_med'),
 path("voirprflvmed/",views.voirprflmed,name="voirprflmed"),
 
 
