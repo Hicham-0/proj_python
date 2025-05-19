@@ -37,7 +37,6 @@ class RendezVous(models.Model):
 class DossierMedical(models.Model):
     patient = models.OneToOneField(Patient, on_delete=models.CASCADE)
     date_creation = models.DateTimeField(auto_now_add=True)
-    
     def __str__(self):
         return f"Dossier médical de {self.patient}"
 

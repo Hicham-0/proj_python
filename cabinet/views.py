@@ -1,5 +1,5 @@
-from django.shortcuts import render, redirect
-from .models import Medecin, Patient,Facture, RendezVous
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Medecin, Patient,Facture, RendezVous, DossierMedical, Ordonnance, Observation
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required 
 from django.urls import reverse
@@ -21,6 +21,8 @@ def creer_compte(request):
     if nompat and prenompat and emailpat and mtdppat and datenaissancepat and numtelpat :
         data=Patient(nom=nompat,prenom=prenompat,email=emailpat,numero_telephone= numtelpat,date_naissance=datenaissancepat,mot_de_passe=mtdppat)
         data.save()
+        # Création automatique du dossier médical
+        DossierMedical.objects.create(patient=data)
         return render(request, 'cabinet/signup.html', {'form':"votre compte est crée avec succés"})
     else :
         return render(request, 'cabinet/signup.html')
@@ -272,6 +274,23 @@ def createfolder(request):
 def consultdossier(request):
     return render(request,'cabinet/voirdossier_med.html')
 
+def mes_patients_med(request):
+    """
+    Vue pour afficher la liste des patients ayant déjà eu un rendez-vous avec le médecin connecté.
+    """
+    email_med = request.session.get('user_email')
+    if not email_med:
+        return redirect('login')
+    try:
+        medecin = Medecin.objects.get(email=email_med)
+        # Récupérer tous les patients ayant eu un rendez-vous avec ce médecin (sans doublons)
+        patient_ids = RendezVous.objects.filter(medecin=medecin).values_list('patient', flat=True).distinct()
+        patients = Patient.objects.filter(id__in=patient_ids)
+        return render(request, 'cabinet/mes_patients_med.html', {'patients': patients})
+    except Medecin.DoesNotExist:
+        messages.error(request, "Médecin non trouvé.")
+        return redirect('login')
+
 def ajoutordonnance(request):
     return render(request,'cabinet/ajoutordan_med.html')
 
@@ -310,3 +329,70 @@ def mes_rdv_med(request):
     except Medecin.DoesNotExist:
         messages.error(request, "Médecin non trouvé.")
         return redirect('login')
+
+def dossier_patient_med(request, patient_id):
+    """
+    Vue pour afficher le dossier médical d'un patient (infos, ordonnances, observations) et permettre l'ajout.
+    """
+    email_med = request.session.get('user_email')
+    if not email_med:
+        return redirect('login')
+    medecin = get_object_or_404(Medecin, email=email_med)
+    patient = get_object_or_404(Patient, id=patient_id)
+    dossier = DossierMedical.objects.filter(patient=patient).first()
+    ordonnances = Ordonnance.objects.filter(dossier_medical=dossier) if dossier else []
+    observations = Observation.objects.filter(dossier_medical=dossier) if dossier else []
+    msg = None
+
+    # Ajout d'une ordonnance
+    if request.method == 'POST' and 'ajouter_ordonnance' in request.POST:
+        contenu = request.POST.get('contenu_ordonnance')
+        if contenu and dossier:
+            Ordonnance.objects.create(dossier_medical=dossier, medecin=medecin, contenu=contenu)
+            msg = "Ordonnance ajoutée avec succès."
+            ordonnances = Ordonnance.objects.filter(dossier_medical=dossier)
+    # Ajout d'une observation
+    if request.method == 'POST' and 'ajouter_observation' in request.POST:
+        contenu = request.POST.get('contenu_observation')
+        if contenu and dossier:
+            Observation.objects.create(dossier_medical=dossier, medecin=medecin, contenu=contenu)
+            msg = "Observation ajoutée avec succès."
+            observations = Observation.objects.filter(dossier_medical=dossier)
+
+    return render(request, 'cabinet/dossier_patient_med.html', {
+        'patient': patient,
+        'dossier': dossier,
+        'ordonnances': ordonnances,
+        'observations': observations,
+        'msg': msg,
+    })
+
+def ajout_ordonnance_patient(request, patient_id):
+    email_med = request.session.get('user_email')
+    if not email_med:
+        return redirect('login')
+    medecin = get_object_or_404(Medecin, email=email_med)
+    patient = get_object_or_404(Patient, id=patient_id)
+    dossier = DossierMedical.objects.filter(patient=patient).first()
+    if request.method == 'POST':
+        contenu = request.POST.get('contenu_ordonnance')
+        if contenu and dossier:
+            Ordonnance.objects.create(dossier_medical=dossier, medecin=medecin, contenu=contenu)
+            messages.success(request, "Ordonnance ajoutée avec succès.")
+            return redirect(reverse('dossier_patient_med', args=[patient.id]))
+    return render(request, 'cabinet/ajout_ordonnance_patient.html', {'patient': patient})
+
+def ajout_observation_patient(request, patient_id):
+    email_med = request.session.get('user_email')
+    if not email_med:
+        return redirect('login')
+    medecin = get_object_or_404(Medecin, email=email_med)
+    patient = get_object_or_404(Patient, id=patient_id)
+    dossier = DossierMedical.objects.filter(patient=patient).first()
+    if request.method == 'POST':
+        contenu = request.POST.get('contenu_observation')
+        if contenu and dossier:
+            Observation.objects.create(dossier_medical=dossier, medecin=medecin, contenu=contenu)
+            messages.success(request, "Observation ajoutée avec succès.")
+            return redirect(reverse('dossier_patient_med', args=[patient.id]))
+    return render(request, 'cabinet/ajout_observation_patient.html', {'patient': patient})

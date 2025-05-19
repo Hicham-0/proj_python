@@ -31,11 +31,16 @@ path("voirprflvmed/",views.voirprflmed,name="voirprflmed"),
 path("genfact/",views.genfact,name="genfact"),
 path("createfolder/",views.createfolder,name="createfolder"),
 
-path("consultdossier/",views.consultdossier,name="consultdossier"),
+
 path("ajoutordonnance/",views.ajoutordonnance,name="ajoutordonnance"),
 
 path("ajoutobservation/",views.ajoutobservation,name="ajoutobservation"),
 path("updateprflmed/",views.updateprflmed,name="updateprflmed"),
 
+path('dossier-patient-med/<int:patient_id>/', views.dossier_patient_med, name='dossier_patient_med'),
+path('mes-patients-med/', views.mes_patients_med, name='mes_patients_med'),
+
+path('ajout-ordonnance-patient/<int:patient_id>/', views.ajout_ordonnance_patient, name='ajout_ordonnance_patient'),
+path('ajout-observation-patient/<int:patient_id>/', views.ajout_observation_patient, name='ajout_observation_patient'),
 
 ]

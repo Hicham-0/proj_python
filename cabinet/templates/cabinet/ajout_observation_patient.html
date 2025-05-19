@@ -1,0 +1,28 @@
+{% include 'cabinet/headerbasepagemed.html' %}
+<div class="main-bg">
+  <div class="content-centered">
+    <section class="services-section">
+      <h2 class="services-title">Ajouter une observation pour {{ patient.nom }} {{ patient.prenom }}</h2>
+      <form method="post" class="form-ajout-unique">
+        {% csrf_token %}
+        <label for="contenu_observation">Contenu de l'observation</label>
+        <textarea name="contenu_observation" id="contenu_observation" rows="4" required></textarea>
+        <button type="submit" class="btn-ajout-unique"><i class="fa fa-plus"></i> Ajouter</button>
+        <a href="{% url 'dossier_patient_med' patient.id %}" class="btn-retour-unique"><i class="fa fa-arrow-left"></i> Retour au dossier</a>
+      </form>
+    </section>
+  </div>
+</div>
+<style>
+  .main-bg { min-height: 100vh; background: #f5f6f7; width: 100vw; }
+  .content-centered { max-width: 600px; margin: 0 auto; padding-top: 40px; }
+  .services-section { padding: 0 20px; }
+  .services-title { font-size: 2rem; color: #3a7c7c; font-weight: 700; margin-bottom: 24px; }
+  .form-ajout-unique { background: #fff; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.10); padding: 32px 28px 24px 28px; display: flex; flex-direction: column; gap: 16px; }
+  .form-ajout-unique label { font-weight: 600; color: #3a7c7c; margin-bottom: 4px; }
+  .form-ajout-unique textarea { border-radius: 6px; border: 1px solid #b7c9a8; padding: 10px 12px; font-size: 1.08rem; resize: vertical; min-height: 60px; max-height: 180px; }
+  .btn-ajout-unique { background: #66b7ad; color: #fff; border: none; border-radius: 6px; padding: 10px 24px; font-weight: 600; font-size: 1.1rem; cursor: pointer; transition: background 0.2s; align-self: flex-start; }
+  .btn-ajout-unique:hover { background: #3a7c7c; }
+  .btn-retour-unique { display: inline-block; margin-top: 10px; background: #e8eddf; color: #3a7c7c !important; padding: 8px 22px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 1.05rem; border: 1px solid #b7c9a8; transition: background 0.2s, color 0.2s; }
+  .btn-retour-unique:hover { background: #3a7c7c; color: #fff !important; }
+</style> 

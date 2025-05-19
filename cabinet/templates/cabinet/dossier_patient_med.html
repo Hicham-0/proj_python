@@ -1,0 +1,197 @@
+{% include 'cabinet/headerbasepagemed.html' %}
+<div class="dossier-bg">
+  <div class="dossier-centered">
+    <h2 class="dossier-title"><i class="fa fa-folder-open"></i> Dossier médical de {{ patient.nom }} {{ patient.prenom }}</h2>
+    {% if msg %}
+      <div class="alert-success-custom">{{ msg }}</div>
+    {% endif %}
+    <div class="patient-card">
+      <h4><i class="fa fa-user"></i> Informations du patient</h4>
+      <div class="patient-info-row">
+        <div><strong>Nom :</strong> {{ patient.nom }}</div>
+        <div><strong>Prénom :</strong> {{ patient.prenom }}</div>
+        <div><strong>Date de naissance :</strong> {{ patient.date_naissance }}</div>
+        <div><strong>Email :</strong> {{ patient.email }}</div>
+        <div><strong>Téléphone :</strong> {{ patient.numero_telephone }}</div>
+      </div>
+    </div>
+    <div class="section-card">
+      <h5 class="card-title-obs"><i class="fa fa-notes-medical"></i> Observations</h5>
+      {% if observations %}
+        <ul class="list-group-custom">
+          {% for observation in observations %}
+            <li class="mini-card">
+              <div><strong>Date :</strong> {{ observation.date|date:'d/m/Y H:i' }}</div>
+              <div><strong>Médecin :</strong> Dr. {{ observation.medecin.nom }} {{ observation.medecin.prenom }}</div>
+              <div><strong>Contenu :</strong> {{ observation.contenu }}</div>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <div class="empty-history-msg">Aucune observation.</div>
+      {% endif %}
+      <a href="{% url 'ajout_observation_patient' patient.id %}" class="btn-action-add"><i class="fa fa-plus"></i> Ajouter une observation</a>
+    </div>
+    <div class="section-card">
+      <h5 class="card-title-ordo"><i class="fa fa-prescription-bottle-alt"></i> Ordonnances</h5>
+      {% if ordonnances %}
+        <ul class="list-group-custom">
+          {% for ordonnance in ordonnances %}
+            <li class="mini-card">
+              <div><strong>Date :</strong> {{ ordonnance.date|date:'d/m/Y H:i' }}</div>
+              <div><strong>Médecin :</strong> Dr. {{ ordonnance.medecin.nom }} {{ ordonnance.medecin.prenom }}</div>
+              {% for ligne in ordonnance.contenu.splitlines %}
+                <div><strong>Médicament & posologie :</strong> {{ ligne }}</div>
+              {% endfor %}
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <div class="empty-history-msg">Aucune ordonnance.</div>
+      {% endif %}
+      <a href="{% url 'ajout_ordonnance_patient' patient.id %}" class="btn-action-add"><i class="fa fa-plus"></i> Ajouter une ordonnance</a>
+    </div>
+    <div class="retour-center">
+      <a href="{% url 'mes_patients_med' %}" class="btn-retour-main"><i class="fa fa-arrow-left"></i> Retour à la liste des patients</a>
+    </div>
+  </div>
+</div>
+<style>
+.dossier-bg {
+  min-height: 100vh;
+  background: #f7f8fa;
+  width: 100vw;
+}
+.dossier-centered {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 48px 0 48px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 38px;
+}
+.dossier-title {
+  font-size: 2.3rem;
+  color: #2d4c4c;
+  font-weight: 800;
+  margin-bottom: 0;
+  text-align: center;
+}
+.patient-card, .section-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 18px rgba(44, 62, 80, 0.09);
+  padding: 32px 38px 26px 38px;
+  margin: 0 auto;
+  width: 100%;
+  font-size: 1.15rem;
+}
+.patient-card h4 {
+  color: #3a7c7c;
+  font-weight: 700;
+  margin-bottom: 14px;
+  font-size: 1.18rem;
+}
+.patient-info-row > div {
+  margin-bottom: 7px;
+  font-size: 1.08rem;
+}
+.card-title-ordo {
+  color: #579e96;
+  font-weight: 700;
+  margin-bottom: 16px;
+  font-size: 1.2rem;
+}
+.card-title-obs {
+  color: #3a7c7c;
+  font-weight: 700;
+  margin-bottom: 16px;
+  font-size: 1.2rem;
+}
+.list-group-custom {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 18px;
+}
+.mini-card {
+  background: #e8eddf;
+  border-radius: 7px;
+  margin-bottom: 10px;
+  padding: 10px 14px;
+  font-size: 1.04rem;
+  box-shadow: 0 2px 6px rgba(102,183,173,0.08);
+}
+.empty-history-msg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60px;
+  font-size: 1.1rem;
+  color: #579e96;
+  font-weight: 600;
+  background: #fff;
+  border-radius: 10px;
+  margin: 20px 0 18px 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+.btn-action-add {
+  background: #f6faf9;
+  color: #3a7c7c;
+  border-radius: 5px;
+  padding: 8px 22px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.08rem;
+  border: 1px solid #e3e8e7;
+  transition: background 0.18s, color 0.18s;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 8px;
+}
+.btn-action-add:hover {
+  background: #3a7c7c;
+  color: #fff;
+}
+.retour-center {
+  text-align: center;
+  margin-top: 32px;
+  margin-bottom: 0;
+}
+.btn-retour-main {
+  background: #f6faf9;
+  color: #3a7c7c;
+  border-radius: 5px;
+  padding: 13px 38px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.13rem;
+  border: 1px solid #e3e8e7;
+  transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+  box-shadow: 0 2px 8px rgba(44, 62, 80, 0.08);
+  display: inline-block;
+  margin-top: 0;
+}
+.btn-retour-main:hover {
+  background: #3a7c7c;
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(44, 62, 80, 0.13);
+}
+@media (max-width: 1100px) {
+  .dossier-centered {
+    max-width: 99vw;
+    padding: 18px 0 40px 0;
+    gap: 22px;
+  }
+  .patient-card, .section-card {
+    padding: 18px 2vw;
+    max-width: 99vw;
+    font-size: 1.05rem;
+  }
+}
+html, body {
+  height: auto !important;
+  min-height: 100vh;
+  overflow-y: auto !important;
+}
+</style> 

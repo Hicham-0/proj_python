@@ -1,0 +1,80 @@
+{% include 'cabinet/headerbasepagemed.html' %}
+<div class="main-bg">
+  <div class="content-centered">
+    <section class="services-section">
+      <h2 class="services-title">Ajouter une ordonnance pour {{ patient.nom }} {{ patient.prenom }}</h2>
+      <form method="post" class="form-ajout-unique" onsubmit="return prepareOrdonnanceContent();">
+        {% csrf_token %}
+        <label>Médicaments et posologies</label>
+        <table id="ordotable" class="ordotable">
+          <thead>
+            <tr>
+              <th>Médicament</th>
+              <th>Posologie</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><input type="text" name="medicament" required></td>
+              <td><input type="text" name="posologie" required></td>
+              <td><button type="button" onclick="removeRow(this)" class="btn-remove">-</button></td>
+            </tr>
+          </tbody>
+        </table>
+        <button type="button" onclick="addRow()" class="btn-add"><i class="fa fa-plus"></i> Ajouter une ligne</button>
+        <input type="hidden" name="contenu_ordonnance" id="contenu_ordonnance">
+        <button type="submit" class="btn-ajout-unique"><i class="fa fa-plus"></i> Ajouter</button>
+        <a href="{% url 'dossier_patient_med' patient.id %}" class="btn-retour-unique"><i class="fa fa-arrow-left"></i> Retour au dossier</a>
+      </form>
+    </section>
+  </div>
+</div>
+<script>
+function addRow() {
+  const tbody = document.querySelector('#ordotable tbody');
+  const tr = document.createElement('tr');
+  tr.innerHTML = `<td><input type="text" name="medicament" required></td>
+                  <td><input type="text" name="posologie" required></td>
+                  <td><button type="button" onclick="removeRow(this)" class="btn-remove">-</button></td>`;
+  tbody.appendChild(tr);
+}
+function removeRow(btn) {
+  const row = btn.closest('tr');
+  const tbody = row.parentNode;
+  if (tbody.rows.length > 1) tbody.removeChild(row);
+}
+function prepareOrdonnanceContent() {
+  const rows = document.querySelectorAll('#ordotable tbody tr');
+  let content = '';
+  rows.forEach(row => {
+    const med = row.querySelector('input[name="medicament"]').value.trim();
+    const poso = row.querySelector('input[name="posologie"]').value.trim();
+    if (med && poso) {
+      content += med + ', ' + poso + '\n';
+    }
+  });
+  document.getElementById('contenu_ordonnance').value = content.trim();
+  return true;
+}
+</script>
+<style>
+  .main-bg { min-height: 100vh; background: #f5f6f7; width: 100vw; }
+  .content-centered { max-width: 600px; margin: 0 auto; padding-top: 40px; }
+  .services-section { padding: 0 20px; }
+  .services-title { font-size: 2rem; color: #3a7c7c; font-weight: 700; margin-bottom: 24px; }
+  .form-ajout-unique { background: #fff; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.10); padding: 32px 28px 24px 28px; display: flex; flex-direction: column; gap: 16px; }
+  .form-ajout-unique label { font-weight: 600; color: #3a7c7c; margin-bottom: 4px; }
+  .ordotable { width: 100%; border-collapse: collapse; margin-bottom: 10px; }
+  .ordotable th, .ordotable td { border: none; padding: 8px 6px; }
+  .ordotable th { background: #e8eddf; color: #3a7c7c; font-weight: 600; }
+  .ordotable input[type="text"] { width: 98%; border-radius: 5px; border: 1px solid #b7c9a8; padding: 6px 8px; font-size: 1rem; }
+  .btn-add { background: #66b7ad; color: #fff; border: none; border-radius: 6px; padding: 7px 18px; font-weight: 600; font-size: 1rem; margin-bottom: 10px; cursor: pointer; transition: background 0.2s; align-self: flex-start; }
+  .btn-add:hover { background: #3a7c7c; }
+  .btn-remove { background: #e57373; color: #fff; border: none; border-radius: 6px; padding: 4px 12px; font-weight: 700; font-size: 1.1rem; cursor: pointer; }
+  .btn-remove:hover { background: #b71c1c; }
+  .btn-ajout-unique { background: #66b7ad; color: #fff; border: none; border-radius: 6px; padding: 10px 24px; font-weight: 600; font-size: 1.1rem; cursor: pointer; transition: background 0.2s; align-self: flex-start; }
+  .btn-ajout-unique:hover { background: #3a7c7c; }
+  .btn-retour-unique { display: inline-block; margin-top: 10px; background: #e8eddf; color: #3a7c7c !important; padding: 8px 22px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 1.05rem; border: 1px solid #b7c9a8; transition: background 0.2s, color 0.2s; }
+  .btn-retour-unique:hover { background: #3a7c7c; color: #fff !important; }
+</style> 
