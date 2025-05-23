@@ -264,15 +264,10 @@ def voirprflmed(request):
         infos=Medecin.objects.get(email=emailm,mot_de_passe=mdpm)
         return render(request,'cabinet/voirprfl_med.html',{'user':infos})
 
-def genfact(request):
-    return render(request,'cabinet/genererfacture_med.html')
-
-def createfolder(request):
-    return render(request,'cabinet/creerdossier_med.html')
 
 
-def consultdossier(request):
-    return render(request,'cabinet/voirdossier_med.html')
+
+
 
 def mes_patients_med(request):
     """
@@ -291,12 +286,7 @@ def mes_patients_med(request):
         messages.error(request, "Médecin non trouvé.")
         return redirect('login')
 
-def ajoutordonnance(request):
-    return render(request,'cabinet/ajoutordan_med.html')
 
-
-def ajoutobservation(request):
-    return render(request,'cabinet/ajoutobserv_med.html')
 
 def updateprflmed(request):
          if request.method == 'POST':

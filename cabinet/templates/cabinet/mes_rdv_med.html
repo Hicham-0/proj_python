@@ -11,6 +11,9 @@
     />
     <!-- Le CSS du header est déjà inclus via headerbasepagemed.html -->
     <style>
+      body {
+  background-color: #f4f5f7;; /* même fond partout */
+}
       .content {
         flex: 1;
         background-color: #f7f7f7;
@@ -65,7 +68,8 @@
   </head>
   <body>
     {% include 'cabinet/headerbasepagemed.html' %}
-    <div class="content" style="padding: 40px 0 0 0">
+    
+   
       <section class="services-section">
         <h2 class="services-title">Mes rendez-vous</h2>
         {% if rdvs %}

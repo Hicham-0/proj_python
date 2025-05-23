@@ -28,13 +28,11 @@ path('mes-rdv-med/', views.mes_rdv_med, name='mes_rdv_med'),
 path("voirprflvmed/",views.voirprflmed,name="voirprflmed"),
 
 
-path("genfact/",views.genfact,name="genfact"),
-path("createfolder/",views.createfolder,name="createfolder"),
 
 
-path("ajoutordonnance/",views.ajoutordonnance,name="ajoutordonnance"),
 
-path("ajoutobservation/",views.ajoutobservation,name="ajoutobservation"),
+
+
 path("updateprflmed/",views.updateprflmed,name="updateprflmed"),
 
 path('dossier-patient-med/<int:patient_id>/', views.dossier_patient_med, name='dossier_patient_med'),
