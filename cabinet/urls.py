@@ -41,4 +41,7 @@ path('mes-patients-med/', views.mes_patients_med, name='mes_patients_med'),
 path('ajout-ordonnance-patient/<int:patient_id>/', views.ajout_ordonnance_patient, name='ajout_ordonnance_patient'),
 path('ajout-observation-patient/<int:patient_id>/', views.ajout_observation_patient, name='ajout_observation_patient'),
 
+path('notifications-medecin/', views.notifications_medecin, name='notifications_medecin'),
+path('marquer-notification-lue/', views.marquer_notification_lue, name='marquer_notification_lue'),
+
 ]

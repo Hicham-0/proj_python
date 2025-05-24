@@ -1,11 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Medecin, Patient,Facture, RendezVous, DossierMedical, Ordonnance, Observation
+from .models import Medecin, Patient,Facture, RendezVous, DossierMedical, Ordonnance, Observation, Notification
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required 
 from django.urls import reverse
 from datetime import datetime, time
 from django.http import JsonResponse
 import random
+from django.views.decorators.http import require_GET, require_POST
+from django.views.decorators.csrf import csrf_exempt
 
 
 
@@ -69,6 +71,9 @@ def reserverrdv(request):
                     date=datetime_rdv,
                     motif=motif
                 )
+                # Création de la notification pour le médecin
+                message = f"Le patient {patient.nom} {patient.prenom} a réservé un rendez-vous."
+                Notification.objects.create(medecin=medecin, message=message)
                 numero_facture = f"FCT-{random.randint(10,999)}"
                 Facture.objects.create(
                     numero_facture=numero_facture,
@@ -386,3 +391,42 @@ def ajout_observation_patient(request, patient_id):
             messages.success(request, "Observation ajoutée avec succès.")
             return redirect(reverse('dossier_patient_med', args=[patient.id]))
     return render(request, 'cabinet/ajout_observation_patient.html', {'patient': patient})
+
+@csrf_exempt
+@require_GET
+def notifications_medecin(request):
+    email = request.session.get('user_email')
+    role = request.session.get('user_role')
+    if not email or role != 'médecin':
+        return JsonResponse({'error': 'Non autorisé'}, status=403)
+    try:
+        medecin = Medecin.objects.get(email=email)
+    except Medecin.DoesNotExist:
+        return JsonResponse({'error': 'Médecin non trouvé'}, status=404)
+    notifications = Notification.objects.filter(medecin=medecin, lu=False).order_by('-date_creation')
+    data = [
+        {
+            'id': n.id,
+            'message': n.message,
+            'date': n.date_creation.strftime('%d/%m/%Y %H:%M'),
+        }
+        for n in notifications
+        
+    ]
+    return JsonResponse({'notifications': data})
+
+@csrf_exempt
+@require_POST
+def marquer_notification_lue(request):
+    email = request.session.get('user_email')
+    role = request.session.get('user_role')
+    notif_id = request.POST.get('id')
+    if not email or role != 'médecin' or not notif_id:
+        return JsonResponse({'error': 'Non autorisé'}, status=403)
+    try:
+        notif = Notification.objects.get(id=notif_id, medecin__email=email)
+        notif.lu = True
+        notif.save()
+        return JsonResponse({'success': True})
+    except Notification.DoesNotExist:
+        return JsonResponse({'error': 'Notification non trouvée'}, status=404)

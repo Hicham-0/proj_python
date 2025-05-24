@@ -72,3 +72,12 @@ class Facture(models.Model):
 
     def __str__(self):
         return f"Facture {self.numero_facture}"
+
+class Notification(models.Model):
+    medecin = models.ForeignKey(Medecin, on_delete=models.CASCADE, related_name='notifications')
+    message = models.CharField(max_length=255)
+    lu = models.BooleanField(default=False)
+    date_creation = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Notification pour Dr. {self.medecin.nom}: {self.message} ({'lu' if self.lu else 'non lu'})"

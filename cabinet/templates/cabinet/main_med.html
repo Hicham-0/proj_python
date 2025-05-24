@@ -138,7 +138,7 @@
   color: inherit;
 }
  .welcome-container {
-    height: calc(100vh - 60px); /* pour prendre tout l’espace dispo en dessous du header */
+    height: calc(100vh - 60px); /* pour prendre tout l'espace dispo en dessous du header */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -178,8 +178,15 @@
     <div class="logo">
       <span class="medi">Medi</span><span class="place">Place</span>
     </div>
-   <div class="header-buttons">
-         <a href="{% url 'main_med' %}" class="nav-btn">Retour</a>
+    <div class="header-buttons" style="display: flex; align-items: center; gap: 10px; margin-left: auto;">
+      <div class="notif-bell-container" style="position:relative; display:flex; align-items:center; height:40px; margin:0 4px 0 0;">
+        <i id="notif-bell" class="fa fa-bell fa-lg" style="cursor:pointer; position:relative; vertical-align:middle;"></i>
+        <span id="notif-badge" style="display:none; position:absolute; top:2px; right:-4px; background:#e74c3c; color:white; border-radius:50%; width:13px; height:13px; font-size:10px; display:flex; align-items:center; justify-content:center; font-weight:bold;">•</span>
+        <div id="notif-dropdown" style="display:none; position:absolute; top:28px; right:-10px; background:#fff; color:#333; min-width:260px; box-shadow:0 4px 18px rgba(44,62,80,0.13); border-radius:8px; z-index:1000; padding:0;">
+          <div id="notif-content" style="padding:14px 18px; font-size:15px;"></div>
+        </div>
+      </div>
+      <a href="{% url 'main_med' %}" class="nav-btn">Retour</a>
       <a href="{% url 'landing' %}" class="nav-btn">Déconnexion</a>
     </div>
   </header>
@@ -215,4 +222,89 @@
   <p>Votre tableau de bord centralisé pour gérer efficacement <br>vos consultations, dossiers médicaux et prescriptions.</p>
 </div>
 </body>
+<script>
+let notifData = [];
+let notifDropdownOpen = false;
+
+function fetchNotifications() {
+  fetch('{% url "notifications_medecin" %}')
+    .then(response => response.json())
+    .then(data => {
+      notifData = data.notifications || [];
+      const badge = document.getElementById('notif-badge');
+      if (notifData.length > 0) {
+        badge.style.display = 'flex';
+      } else {
+        badge.style.display = 'none';
+      }
+      if (notifDropdownOpen) {
+        updateNotifDropdown();
+      }
+    });
+}
+
+function updateNotifDropdown() {
+  const content = document.getElementById('notif-content');
+  if (notifData.length === 0) {
+    content.innerHTML = "<span style='color:#888;'>Pas de notification pour l'instant</span>";
+  } else {
+    let html = '';
+    notifData.forEach(function(notif) {
+      html += `<div style='margin-bottom:12px; border-bottom:1px solid #eee; padding-bottom:8px;'>` +
+        `<i class='fa fa-bell'></i> ${notif.message}<br>` +
+        `<span style='font-size:12px;color:#888;'>${notif.date}</span><br>` +
+        `<button class='notif-ok-btn' data-id='${notif.id}' style='background:#66B7AD;color:white;border:none;padding:5px 14px;border-radius:5px;cursor:pointer;font-size:13px;margin-top:4px;'>OK</button>` +
+        `</div>`;
+    });
+    content.innerHTML = html;
+    // Attacher les handlers sur tous les boutons OK
+    document.querySelectorAll('.notif-ok-btn').forEach(function(btn) {
+      btn.onclick = function() {
+        const notifId = this.getAttribute('data-id');
+        fetch('{% url "marquer_notification_lue" %}', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          body: 'id=' + notifId
+        }).then(() => {
+          fetchNotifications();
+          updateNotifDropdown();
+        });
+      };
+    });
+  }
+}
+
+function openNotifDropdown() {
+  notifDropdownOpen = true;
+  document.getElementById('notif-dropdown').style.display = 'block';
+  updateNotifDropdown();
+  setTimeout(() => {
+    document.addEventListener('click', notifOutsideClick);
+  }, 0);
+}
+function closeNotifDropdown() {
+  notifDropdownOpen = false;
+  document.getElementById('notif-dropdown').style.display = 'none';
+  document.removeEventListener('click', notifOutsideClick);
+}
+function notifOutsideClick(e) {
+  const bell = document.getElementById('notif-bell');
+  const dropdown = document.getElementById('notif-dropdown');
+  if (!bell.contains(e.target) && !dropdown.contains(e.target)) {
+    closeNotifDropdown();
+  }
+}
+document.getElementById('notif-bell').onclick = function(e) {
+  e.stopPropagation();
+  if (notifDropdownOpen) {
+    closeNotifDropdown();
+  } else {
+    openNotifDropdown();
+  }
+};
+fetchNotifications();
+setInterval(fetchNotifications, 10000);
+</script>
 </html>
