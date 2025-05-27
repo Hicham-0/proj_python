@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Medecin, Patient,Facture, RendezVous, DossierMedical, Ordonnance, Observation, Notification
+from .models import Medecin, Patient,Facture, RendezVous, DossierMedical, Ordonnance, Observation, Notification,Admin
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required 
 from django.urls import reverse
@@ -8,8 +8,9 @@ from django.http import JsonResponse
 import random
 from django.views.decorators.http import require_GET, require_POST
 from django.views.decorators.csrf import csrf_exempt
-
-
+from decimal import Decimal
+import pywhatkit 
+import os
 
 def creer_compte(request):
    if request.method =='POST':
@@ -149,7 +150,7 @@ def login(request):
        emaila=request.POST.get('email')
        mdpa=request.POST.get('mdp')
        rolea=request.POST.get('role')
-       if emaila and mdpa and rolea and rolea =="patient":
+       if emaila and mdpa and rolea =="patient":
            try:
                user=Patient.objects.get(email=emaila,mot_de_passe=mdpa)
                request.session["user_email"]=user.email
@@ -158,7 +159,7 @@ def login(request):
                return redirect("main_pat")
            except Patient.DoesNotExist:
                return render(request,'cabinet/login.html',{'form':"impossible de se connecter,informations invalide "})
-       elif emaila and mdpa and rolea and rolea =="medecin":
+       elif emaila and mdpa and rolea =="medecin":
            try:
                user=Medecin.objects.get(email=emaila,mot_de_passe=mdpa)
                request.session["user_email"]=user.email
@@ -167,8 +168,18 @@ def login(request):
                return redirect("main_med")
            except Medecin.DoesNotExist:
                return render(request,'cabinet/login.html',{'form':"impossible de se connecter,informations invalide "})
+       elif  emaila and mdpa and  rolea =="admin":
+           try:
+               user=Admin.objects.get(email=emaila,mot_de_passe=mdpa)
+               request.session["user_email"]=user.email
+               request.session["user_mdp"]=user.mot_de_passe
+               request.session["user_role"]="admin"
+               return redirect("main_admin")
+           except Admin.DoesNotExist:
+               return render(request,'cabinet/login.html',{'form':"impossible de se connecter,informations invalide "})
     return render(request,'cabinet/login.html')
-               
+def main_admin(request):
+    return render(request,'cabinet/main_admin.html')           
 
 def logout(request):
     request.session.flush()  # Efface toutes les données de session
@@ -430,3 +441,40 @@ def marquer_notification_lue(request):
         return JsonResponse({'success': True})
     except Notification.DoesNotExist:
         return JsonResponse({'error': 'Notification non trouvée'}, status=404)
+    
+def voircomptepat_admin(request):
+    tab=Patient.objects.all()
+    return render(request,'cabinet/voircomptepat_admin.html',{'pat':tab})
+
+def voircomptemed_admin(request):
+    tab=Medecin.objects.all()
+    return render(request,'cabinet/voircomptemed_admin.html',{'med':tab})
+
+def voifacture_admin(request):
+    tab=Facture.objects.filter(statut_paiement='EN_ATTENTE')
+    return render(request,'cabinet/voirfact_admin.html',{'fact':tab})
+
+def appliquer_penalite(request, id):
+    fact=Facture.objects.get(id=id)
+    text=""
+    if request.method == "POST":
+       
+       frais= request.POST.get('montant')
+       fact.montant=fact.montant+Decimal(frais) 
+       fact.save()
+       rdv=fact.rendez_vous;
+       pat=rdv.patient;
+       tel=pat.numero_telephone;
+       text="pénalité attribuée avec succés"
+       tel = tel.replace(" ", "").replace("-", "")
+       if tel.startswith("0"):
+           tel = tel[1:]
+           phone = "+212" + tel
+       message= f"Bonjour,\nMediPlace vous informe qu’une pénalité a été appliquée à la facture n°{fact.numero_facture}.Le montant total de cette facture s’élève désormais à {fact.montant} dhs.\nNous vous invitons à régler cette somme dans les plus brefs délais afin d’éviter toute nouvelle majoration.\nMerci pour votre compréhension,\nL’équipe MediPlace."
+ 
+       pywhatkit.sendwhatmsg_instantly(phone,message)
+       
+
+
+
+    return render(request, 'cabinet/penalite_form.html', {'msg':text,'facture':fact})

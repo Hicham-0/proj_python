@@ -25,6 +25,11 @@ class Patient(models.Model):
     def __str__(self):
         return f"{self.nom} {self.prenom}"
     
+class Admin(models.Model):
+    email = models.EmailField(unique=True)
+    mot_de_passe = models.CharField(max_length=128)
+    
+
 class RendezVous(models.Model):
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     medecin = models.ForeignKey(Medecin, on_delete=models.CASCADE)

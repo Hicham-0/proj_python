@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    {% load static %}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dashboard Admin - MediPlace</title>
+  <link rel="stylesheet" href="{% static 'cabinet/css/mainpage_admin.css' %}"/>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <span class="medi">Medi</span><span class="place">Place</span>
+  </div>
+  <div class="header-buttons">
+    <a href="{% url 'main_admin' %}" class="nav-btn">Retour</a>
+    <a href="{% url 'landing' %}" class="nav-btn">Déconnexion</a>
+  </div>
+</header>
+
+<div class="sidebar">
+  <h2>Dashboard Admin</h2>
+  <ul>
+    <li><a href="{% url 'voircomptepat_admin' %}" >Consulter les comptes des patients</a></li>
+    <li><a href="{% url 'voircomptemed_admin' %}" >Consulter les comptes des médecins</a></li>
+    <li><a href="{% url 'voirfact_admin' %}" >Suivre les factures impayées</a></li>
+  </ul>
+</div>
+
+<div class="main-content">
+
+  <div class="main-container">
+    <div class="icon">&#128200;</div>
+    <h2>Bienvenue, Administrateur</h2>
+    <hr />
+    <p class="description">
+      Vous avez le contrôle sur les comptes, les médecins et les factures.
+    </p>
+
+    <div class="cards-container">
+     <a href="{% url 'voircomptepat_admin' %}" class="card patient-card" style="text-decoration:none;">
+    <h4>Comptes Patients</h4>
+    <p>Consultez la liste des patients et leurs infos clés.</p>
+  </a>
+
+  <!-- Comptes Médecins -->
+  <a href="{% url 'voircomptemed_admin' %}" class="card doctor-card" style="text-decoration:none;">
+    <h4>Comptes Médecins</h4>
+    <p>Consultez les profils des médecins.</p>
+  </a>
+
+  <!-- Factures en attente -->
+  <a href="{% url 'voirfact_admin' %}" class="card invoice-card" style="text-decoration:none;">
+    <h4>Factures impayées</h4>
+    <p>Visualisez ou appliquez les pénalités pour les paiements en retard.</p>
+  </a>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,176 @@
+ header {
+      height: 60px;
+      background-color: #66B7AD;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      color: white;
+      position: fixed;
+      top: 0;
+      left: 250px; /* largeur de la sidebar */
+      right: 0;
+      box-shadow: none;
+      border-bottom: none;
+      z-index: 10;
+    }
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      margin-left: 460px; /* décalage vers la gauche */
+    }
+    .logo .medi {
+      color: white;
+    }
+    .logo .place {
+      color: #F0E5CF;
+    }
+    .header-buttons {
+      display: flex;
+      gap: 15px;
+      margin-left: auto;
+    }
+    .nav-btn {
+      background-color: #939597;
+      color: white;
+      padding: 8px 14px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 14px;
+      transition: background-color 0.3s ease;
+    }
+    .nav-btn:hover {
+      background-color: #B0B9A8;
+    }
+    .menu-item a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      position: fixed;
+      top: 0px;
+      left: 0;
+      width: 250px;
+      height: 100%;
+      background-color: #66B7AD;
+      padding: 24px 20px 20px 20px;
+      box-sizing: border-box;
+      color: white;
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    }
+    .sidebar h2 {
+      margin-bottom: 30px;
+      font-size: 24px;
+      border-bottom: 1px solid #3A5068;
+      padding-bottom: 10px;
+      text-align: center;
+      color: #F0E5CF;
+      margin-top: 0;
+    }
+    .sidebar ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    .sidebar li {
+      margin-bottom: 20px;
+    }
+    .sidebar li a {
+      color: white;
+      font-weight: bold;
+      text-decoration: none;
+      display: block;
+      padding: 8px 12px;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+    .sidebar li a:hover {
+      background-color: #939597;
+      color: white;
+    }
+
+    /* Contenu principal */
+    .main-content {
+      margin-left: 370px;
+      padding: 110px 40px 40px 40px; /* padding top pour navbar */
+      box-sizing: border-box;
+      min-height: calc(100vh - 60px);
+      background-color: #f5f7fa;
+    }
+
+   
+    /* Corps et fond */
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: #f5f7fa;
+      height: 100%;
+    }
+    
+  .cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: flex-start;
+  margin-top: 40px;
+  margin-left: -35px;
+}
+
+/* Chaque carte */
+.card {
+  background: #ffffff;
+  padding: 24px 20px;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(102, 183, 173, 0.15);
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  
+  flex: 1 1 calc(31% - 24px);
+  box-sizing: border-box;
+
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  white-space: nowrap;
+  max-width: 300px;  
+  width: 100%;  
+}
+.page-title {
+  text-align: left;
+  font-size: 26px;
+  font-weight: bold;
+  color: #939597;
+  margin-bottom: 30px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-left: 200px;
+}
+
+
+/* Effet hover élégant */
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 16px 32px rgba(102, 183, 173, 0.3);
+  background-color: #e8f6f5;
+}
+
+/* Texte dans la carte */
+.card p {
+  margin: 10px 0;
+  font-size: 15px;
+  color: #333333;
+  line-height: 1.4;
+}
+
+/* Labels colorés et alignés */
+.card p .label {
+  font-weight: 600;
+  color: #5B696B;
+  margin-right: 10px;
+  display: inline-block;
+  min-width: 100px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: inline;
+  min-width: unset;
+}

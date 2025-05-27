@@ -1,0 +1,155 @@
+Date: 25/5/2025
+Time: 16:1
+Phone Number: +212644662853
+Message: heyyy test django
+--------------------
+Date: 25/5/2025
+Time: 16:16
+Phone Number: +2120697567741
+Message: heyyy test django
+--------------------
+Date: 25/5/2025
+Time: 16:20
+Phone Number: +2120697567741
+Message: MediPlace vous invite à régler vos factures qui s'élèvent à1200.00pour éviter tout autre frais supplémentaire
+--------------------
+Date: 25/5/2025
+Time: 16:27
+Phone Number: +2120697567741
+Message: Bonjour,MediPlace vous informe qu’une pénalité a été appliquée à la facture n°FCT-142.Le montant total de cette facture s’élève désormais à 1300.00 dhs.Nous vous invitons à régler cette somme dans les plus brefs délais afin d’éviter toute nouvelle majoration.Merci pour votre compréhension,L’équipe MediPlace.
+--------------------
+Date: 25/5/2025
+Time: 16:28
+Phone Number: +2120697567741
+Message: Bonjour,MediPlace vous informe qu’une pénalité a été appliquée à la facture n°{fact.numero_facture}.Le montant total de cette facture s’élève désormais à {fact.montant} dhs.Nous vous invitons à régler cette somme dans les plus brefs délais afin d’éviter toute nouvelle majoration.Merci pour votre compréhension,L’équipe MediPlace.
+--------------------
+Date: 25/5/2025
+Time: 16:31
+Phone Number: +2120697567741
+Message: Bonjour,MediPlace vous informe qu’une pénalité a été appliquée à la facture n°FCT-142.Le montant total de cette facture s’élève désormais à 1370.00 dhs.Nous vous invitons à régler cette somme dans les plus brefs délais afin d’éviter toute nouvelle majoration.Merci pour votre compréhension,L’équipe MediPlace.
+--------------------
+Date: 25/5/2025
+Time: 16:32
+Phone Number: +2120697567741
+Message: Bonjour,MediPlace vous informe qu’une pénalité a été appliquée à la facture n°FCT-142.Le montant total de cette facture s’élève désormais à 1380.00 dhs.Nous vous invitons à régler cette somme dans les plus brefs délais afin d’éviter toute nouvelle majoration.Merci pour votre compréhension,L’équipe MediPlace.
+--------------------
+Date: 25/5/2025
+Time: 16:35
+Phone Number: +21206979008875
+Message: Bonjour,MediPlace vous informe qu’une pénalité a été appliquée à la facture n°FCT-59.Le montant total de cette facture s’élève désormais à 400.00 dhs.Nous vous invitons à régler cette somme dans les plus brefs délais afin d’éviter toute nouvelle majoration.Merci pour votre compréhension,L’équipe MediPlace.
+--------------------
+Date: 25/5/2025
+Time: 16:36
+Phone Number: +21206979008875
+Message: Bonjour,MediPlace vous informe qu’une pénalité a été appliquée à la facture n°FCT-59.Le montant total de cette facture s’élève désormais à 600.00 dhs.Nous vous invitons à régler cette somme dans les plus brefs délais afin d’éviter toute nouvelle majoration.Merci pour votre compréhension,L’équipe MediPlace.
+--------------------
+Date: 25/5/2025
+Time: 16:36
+Phone Number: +21206979008875
+Message: Bonjour,MediPlace vous informe qu’une pénalité a été appliquée à la facture n°FCT-59.Le montant total de cette facture s’élève désormais à 700.00 dhs.Nous vous invitons à régler cette somme dans les plus brefs délais afin d’éviter toute nouvelle majoration.Merci pour votre compréhension,L’équipe MediPlace.
+--------------------
+Date: 25/5/2025
+Time: 16:42
+Phone Number: +2126979008875
+Message: Bonjour,MediPlace vous informe qu’une pénalité a été appliquée à la facture n°FCT-59.Le montant total de cette facture s’élève désormais à 800.00 dhs.Nous vous invitons à régler cette somme dans les plus brefs délais afin d’éviter toute nouvelle majoration.Merci pour votre compréhension,L’équipe MediPlace.
+--------------------
+Date: 25/5/2025
+Time: 16:48
+Phone Number: +212697567741
+Message: Bonjour,MediPlace vous informe qu’une pénalité a été appliquée à la facture n°FCT-142.Le montant total de cette facture s’élève désormais à 1400.00 dhs.Nous vous invitons à régler cette somme dans les plus brefs délais afin d’éviter toute nouvelle majoration.Merci pour votre compréhension,L’équipe MediPlace.
+--------------------
+Date: 25/5/2025
+Time: 16:48
+Phone Number: +212679008875
+Message: Bonjour,MediPlace vous informe qu’une pénalité a été appliquée à la facture n°FCT-59.Le montant total de cette facture s’élève désormais à 1050.00 dhs.Nous vous invitons à régler cette somme dans les plus brefs délais afin d’éviter toute nouvelle majoration.Merci pour votre compréhension,L’équipe MediPlace.
+--------------------
+Date: 26/5/2025
+Time: 0:24
+Phone Number: +212679008875
+Message: test msg automatise
+--------------------
+Date: 26/5/2025
+Time: 20:20
+Phone Number: +212679008875
+Message: test msg automatise
+--------------------
+Date: 26/5/2025
+Time: 20:24
+Phone Number: +212679008875
+Message: test msg automatise
+--------------------
+Date: 26/5/2025
+Time: 23:11
+Phone Number: +212679008875
+Message: test msg automatise
+--------------------
+Date: 26/5/2025
+Time: 23:11
+Phone Number: +212679008875
+Message: test msg automatise
+--------------------
+Date: 26/5/2025
+Time: 23:11
+Phone Number: +212679008875
+Message: test msg automatise
+--------------------
+Date: 26/5/2025
+Time: 23:11
+Phone Number: +212679008875
+Message: test msg automatise
+--------------------
+Date: 26/5/2025
+Time: 23:12
+Phone Number: +212679008875
+Message: test msg automatise
+--------------------
+Date: 26/5/2025
+Time: 23:29
+Phone Number: +212679008875
+Message: test msg automatise
+--------------------
+Date: 26/5/2025
+Time: 23:36
+Phone Number: +212679008875
+Message: test msg automatise
+--------------------
+Date: 26/5/2025
+Time: 23:39
+Phone Number: +212679008875
+Message: test msg automatise
+--------------------
+Date: 26/5/2025
+Time: 23:52
+Phone Number: +212679008875
+Message: test msg automatise
+--------------------
+Date: 27/5/2025
+Time: 0:1
+Phone Number: +212679008875
+Message: test msg automatise
+--------------------
+Date: 27/5/2025
+Time: 0:5
+Phone Number: +212679008875
+Message: test msg automatise
+--------------------
+Date: 26/5/2025
+Time: 23:27
+Phone Number: +212679008875
+Message: test msg automatise
+--------------------
+Date: 26/5/2025
+Time: 23:29
+Phone Number: +212679008875
+Message: test msg automatise
+--------------------
+Date: 27/5/2025
+Time: 1:4
+Phone Number: +212679008875
+Message: test msg automatise
+--------------------
+Date: 27/5/2025
+Time: 1:28
+Phone Number: +212650775321
+Message: Bonjour,MediPlace vous rappelle que vous avez un rendez-vous prévu **demain** (28/05/2025 à 00h00) avec le Dr Houda.Merci de bien vouloir vous présenter à l'heure prévue ou de modifier votre réservation si nécessaire.Cordialement, L’équipe MediPlace.
+--------------------

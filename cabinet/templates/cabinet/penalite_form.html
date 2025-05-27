@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    {% load static %}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dashboard Admin - MediPlace</title>
+<link rel="stylesheet" href="{% static 'cabinet/css/penalite_form_admin.css' %}"/>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <span class="medi">Medi</span><span class="place">Place</span>
+  </div>
+  <div class="header-buttons">
+    <a href="{% url 'main_admin' %}" class="nav-btn">Retour</a>
+    <a href="{% url 'landing' %}" class="nav-btn">Déconnexion</a>
+  </div>
+</header>
+
+<div class="sidebar">
+  <h2>Dashboard Admin</h2>
+  <ul>
+    <li><a href="{% url 'voircomptepat_admin' %}">Consulter les comptes des patients</a></li>
+    <li><a href="{% url 'voircomptemed_admin' %}">Consulter les comptes des médecins</a></li>
+    <li><a href="{% url 'voirfact_admin' %}">Suivre les factures impayées</a></li>
+  </ul>
+</div>
+
+<div class="main-content">
+  <h1 class="page-title">Appliquer pénalité pour facture N° {{ facture.numero_facture }}</h1>
+  <form method="post">
+    {% csrf_token %}
+    <label for="montant">Montant de la pénalité :</label>
+    <input type="number" id="montant" name="montant" required>
+    <button type="submit">Affecter</button>
+  </form>
+  {% if msg %}  
+  <div class="success-alert">
+    <span class="icon">✔</span>
+    <span class="message">{{ msg }}</span>
+  </div>
+{% endif %}
+</div>
+
+</body>
+</html>

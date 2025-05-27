@@ -1,0 +1,162 @@
+header {
+      height: 60px;
+      background-color: #66B7AD;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      color: white;
+      position: fixed;
+      top: 0;
+      left: 250px; /* largeur de la sidebar */
+      right: 0;
+      box-shadow: none;
+      border-bottom: none;
+      z-index: 10;
+    }
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      margin-left: 460px; /* décalage vers la gauche */
+    }
+    .logo .medi {
+      color: white;
+    }
+    .logo .place {
+      color: #F0E5CF;
+    }
+    .header-buttons {
+      display: flex;
+      gap: 15px;
+      margin-left: auto;
+    }
+    .nav-btn {
+      background-color: #939597;
+      color: white;
+      padding: 8px 14px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 14px;
+      transition: background-color 0.3s ease;
+    }
+    .nav-btn:hover {
+      background-color: #B0B9A8;
+    }
+    .menu-item a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      position: fixed;
+      top: 0px;
+      left: 0;
+      width: 250px;
+      height: 100%;
+      background-color: #66B7AD;
+      padding: 24px 20px 20px 20px;
+      box-sizing: border-box;
+      color: white;
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    }
+    .sidebar h2 {
+      margin-bottom: 30px;
+      font-size: 24px;
+      border-bottom: 1px solid #3A5068;
+      padding-bottom: 10px;
+      text-align: center;
+      color: #F0E5CF;
+      margin-top: 0;
+    }
+    .sidebar ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    .sidebar li {
+      margin-bottom: 20px;
+    }
+    .sidebar li a {
+      color: white;
+      font-weight: bold;
+      text-decoration: none;
+      display: block;
+      padding: 8px 12px;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+    .sidebar li a:hover {
+      background-color: #939597;
+      color: white;
+    }
+
+    /* Contenu principal */
+    .main-content {
+      margin-left: 370px;
+      padding: 110px 40px 40px 40px; /* padding top pour navbar */
+      box-sizing: border-box;
+      min-height: calc(100vh - 60px);
+      background-color: #f5f7fa;
+    }
+
+   
+    /* Corps et fond */
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: #f5f7fa;
+      height: 100%;
+    }
+    .patient-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  padding: 20px 0;
+  margin-left: -100px;
+}
+
+/* Style de chaque carte */
+.patient-card {
+  background: linear-gradient(145deg, #fdfdfd, #f1f1f1);
+  border-left: 6px solid #939597;
+  border-radius: 12px;
+  padding: 20px 24px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.patient-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+  border-left-color: #2c3e50;
+   background-color: #7a7d80; 
+}
+
+/* Style des informations */
+.patient-card p {
+  margin: 10px 0;
+  font-size: 15.5px;
+  color: #333;
+  line-height: 1.4;
+}
+
+.patient-card .label {
+  font-weight: 600;
+  color: #2c3e50;
+  text-transform: uppercase;
+  font-size: 13px;
+  letter-spacing: 0.05em;
+  margin-right: 6px;
+}
+
+/* Titre principal */
+.page-title {
+  text-align: left;
+  margin-bottom: 30px;
+  font-size: 24px;
+  color: #2c3e50;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-left: 225px; 
+    margin-bottom: 20px;
+}

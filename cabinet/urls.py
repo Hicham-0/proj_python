@@ -26,11 +26,7 @@ path('creneaux_disponibles/', views.creneaux_disponibles, name='creneaux_disponi
 
 path('mes-rdv-med/', views.mes_rdv_med, name='mes_rdv_med'),
 path("voirprflvmed/",views.voirprflmed,name="voirprflmed"),
-
-
-
-
-
+path("main_admin/",views.main_admin,name='main_admin'),
 
 
 path("updateprflmed/",views.updateprflmed,name="updateprflmed"),
@@ -44,4 +40,8 @@ path('ajout-observation-patient/<int:patient_id>/', views.ajout_observation_pati
 path('notifications-medecin/', views.notifications_medecin, name='notifications_medecin'),
 path('marquer-notification-lue/', views.marquer_notification_lue, name='marquer_notification_lue'),
 
+path("voirpats/",views.voircomptepat_admin,name="voircomptepat_admin"),
+path("voirmeds/",views.voircomptemed_admin,name="voircomptemed_admin"),
+path("voirfact/",views.voifacture_admin,name="voirfact_admin"),
+ path('appliquer-penalite/<int:id>/', views.appliquer_penalite, name='appliquerpenalite'),
 ]

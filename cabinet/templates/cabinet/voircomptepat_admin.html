@@ -1,0 +1,50 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    {% load static %}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dashboard Admin - MediPlace</title>
+ <link rel="stylesheet" href="{% static 'cabinet/css/voircomptepatient_admin.css' %}"/>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <span class="medi">Medi</span><span class="place">Place</span>
+  </div>
+  <div class="header-buttons">
+    <a href="{% url 'main_admin' %}" class="nav-btn">Retour</a>
+    <a href="{% url 'landing' %}" class="nav-btn">Déconnexion</a>
+  </div>
+</header>
+
+<div class="sidebar">
+  <h2>Dashboard Admin</h2>
+  <ul>
+    <li><a href="{% url 'voircomptepat_admin' %}" >Consulter les comptes des patients</a></li>
+    <li><a href="{% url 'voircomptemed_admin' %}" >Consulter les comptes des médecins</a></li>
+    <li><a href="{% url 'voirfact_admin' %}" >Suivre les factures impayées</a></li>
+  </ul>
+</div>
+
+<div class="main-content">
+  <h1 class="page-title">Comptes Patients – MediPlace</h1>
+
+  <div class="patient-grid">
+    {% for x in pat %}
+      <div class="patient-card">
+        <p><span class="label">Nom :</span> {{ x.nom }}</p>
+        <p><span class="label">Prénom :</span> {{ x.prenom }}</p>
+        <p><span class="label">Email :</span> {{ x.email }}</p>
+        <p><span class="label">Téléphone :</span> {{ x.numero_telephone }}</p>
+        <p><span class="label">Ville :</span> {{ x.date_naissance }}</p>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+
+</body>
+</html>
