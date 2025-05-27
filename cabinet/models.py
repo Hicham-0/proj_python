@@ -28,6 +28,8 @@ class Patient(models.Model):
 class Admin(models.Model):
     email = models.EmailField(unique=True)
     mot_de_passe = models.CharField(max_length=128)
+    def __str__(self):
+        return f"{self.email}"
     
 
 class RendezVous(models.Model):

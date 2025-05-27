@@ -9,78 +9,147 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     />
-    <!-- Le CSS du header est déjà inclus via headerbasepagemed.html -->
     <style>
-      body {
-  background-color: #f4f5f7;; /* même fond partout */
-}
-      .content {
-        flex: 1;
-        background-color: #f7f7f7;
+      .patients-bg {
+        min-height: 100vh;
+        background: #f7f8fa;
+        width: 100vw;
       }
-      .services-section {
-        min-height: 70vh;
-        padding: 40px 30px 0 30px;
+      .patients-centered {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 48px 0 48px 0;
+        display: flex;
+        flex-direction: column;
+        gap: 38px;
       }
-      .modern-table {
-        width: 100%;
-        border-collapse: collapse;
+      .patients-title {
+        font-size: 2.2rem;
+        color: #2d4c4c;
+        font-weight: 700;
+        margin-bottom: 38px;
+        text-align: center;
+        letter-spacing: 0.5px;
+      }
+      .table-bg {
         background: #fff;
-        border-radius: 10px;
+        border-radius: 16px;
+        box-shadow: 0 4px 18px rgba(44, 62, 80, 0.09);
         overflow: hidden;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-      }
-      .modern-table th,
-      .modern-table td {
-        padding: 14px 18px;
-        text-align: left;
-      }
-      .modern-table th {
-        background: #66b7ad;
-        color: #fff;
-        font-weight: 600;
-      }
-      .modern-table tbody tr:nth-child(even) {
-        background: #f2f2f2;
-      }
-      .modern-table tbody tr:hover {
-        background: #e0f7f4;
-      }
-      .table-responsive {
-        overflow-x: auto;
-        margin-top: 30px;
-      }
-      .empty-history-msg {
         display: flex;
         justify-content: center;
-        align-items: center;
-        min-height: 300px;
-        font-size: 2rem;
-        color: #579e96;
+      }
+      .patients-table {
+        width: 100%;
+        margin: 0 auto;
+        border-collapse: separate;
+        border-spacing: 0;
+        font-size: 1.15rem;
+        letter-spacing: 0.01em;
+        background: transparent;
+      }
+      .patients-table th,
+      .patients-table td {
+        padding: 22px 28px;
+        text-align: left;
+      }
+      .patients-table th {
+        background: #f6faf9;
+        color: #3a7c7c;
+        font-weight: 700;
+        font-size: 1.15rem;
+        border-bottom: 2px solid #e3e8e7;
+        letter-spacing: 0.2px;
+      }
+      .patients-table tr {
+        border-bottom: 1px solid #f0f3f2;
+        transition: background 0.18s;
+      }
+      .patients-table tr:nth-child(even) {
+        background: #f8fbfa;
+      }
+      .patients-table tr:last-child {
+        border-bottom: none;
+      }
+      .patients-table tr:hover {
+        background: #f1f7f5;
+      }
+      .btn-voir-dossier {
+        background: #f6faf9;
+        color: #217a5b;
+        border: 1px solid #dbe7e4;
+        border-radius: 7px;
+        padding: 10px 26px;
         font-weight: 600;
-        background: #fff;
-        border-radius: 10px;
-        margin: 40px auto;
-        max-width: 700px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        font-size: 1.08rem;
+        text-decoration: none;
+        transition: background 0.18s, color 0.18s, border 0.18s,
+          box-shadow 0.18s;
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        box-shadow: 0 2px 8px rgba(44, 62, 80, 0.07);
+      }
+      .btn-voir-dossier i {
+        font-size: 1.13em;
+      }
+      .btn-voir-dossier:hover {
+        background: #e8eddf;
+        color: #217a5b;
+        border: 1.5px solid #b7c9a8;
+        box-shadow: 0 4px 16px rgba(44, 62, 80, 0.13);
+      }
+      .retour-center {
+        text-align: center;
+        margin-top: 38px;
+      }
+      @media (max-width: 1000px) {
+        .patients-centered {
+          max-width: 99vw;
+          padding: 32px 0 0 0;
+        }
+        .patients-table th,
+        .patients-table td {
+          padding: 14px 10px;
+        }
+      }
+      .btn-retour-main {
+        background: #f6faf9;
+        color: #3a7c7c;
+        border-radius: 7px;
+        padding: 13px 38px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 1.13rem;
+        border: 1px solid #e3e8e7;
+        transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+        box-shadow: 0 2px 8px rgba(44, 62, 80, 0.08);
+        display: inline-block;
+        margin-top: 0;
+      }
+      .btn-retour-main:hover {
+        background: #3a7c7c;
+        color: #fff;
+        box-shadow: 0 4px 16px rgba(44, 62, 80, 0.13);
       }
     </style>
   </head>
   <body>
     {% include 'cabinet/headerbasepagemed.html' %}
-    
-   
-      <section class="services-section">
-        <h2 class="services-title">Mes rendez-vous</h2>
-        {% if rdvs %}
-        <div class="table-responsive">
-          <table class="modern-table">
+
+    <div class="patients-bg">
+      <div class="patients-centered">
+        <h2 class="patients-title">Mes rendez-vous</h2>
+        <div class="table-bg">
+          {% if rdvs %}
+          <table class="patients-table">
             <thead>
               <tr>
                 <th>Nom du patient</th>
                 <th>Prénom du patient</th>
                 <th>Date et heure</th>
                 <th>Motif</th>
+                <th>Voir dossier</th>
               </tr>
             </thead>
             <tbody>
@@ -90,18 +159,30 @@
                 <td>{{ rdv.patient.prenom }}</td>
                 <td>{{ rdv.date|date:"d/m/Y H:i" }}</td>
                 <td>{{ rdv.motif|truncatechars:50 }}</td>
+                <td>
+                  <a
+                    href="{% url 'dossier_patient_med' rdv.patient.id %}?from=rdv"
+                    class="btn-voir-dossier"
+                  >
+                    <i class="fa fa-folder-open"></i> Voir dossier
+                  </a>
+                </td>
               </tr>
               {% endfor %}
             </tbody>
           </table>
+          {% else %}
+          <div class="empty-history-msg">
+            Aucun rendez-vous prévu pour le moment.
+          </div>
+          {% endif %}
         </div>
-        {% else %}
-        <div class="empty-history-msg">
-          Aucun rendez-vous prévu pour le moment.
-        </div>
-        {% endif %}
-      </section>
-      <div style="height: 240px; background-color: #e8eddf"></div>
+      </div>
+      <div class="retour-center">
+        <a href="{% url 'main_med' %}" class="btn-retour-main">
+          <i class="fa fa-arrow-left"></i> Retour
+        </a>
+      </div>
     </div>
   </body>
 </html>

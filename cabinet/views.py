@@ -349,14 +349,15 @@ def dossier_patient_med(request, patient_id):
     ordonnances = Ordonnance.objects.filter(dossier_medical=dossier) if dossier else []
     observations = Observation.objects.filter(dossier_medical=dossier) if dossier else []
     msg = None
-
-
+    
+    origine = request.GET.get('from', 'patients')  # 'patients' par défaut
     return render(request, 'cabinet/dossier_patient_med.html', {
         'patient': patient,
         'dossier': dossier,
-        'ordonnances': ordonnances,
         'observations': observations,
+        'ordonnances': ordonnances,
         'msg': msg,
+        'origine': origine,
     })
 
 def ajout_ordonnance_patient(request, patient_id):
@@ -459,8 +460,4 @@ def appliquer_penalite(request, id):
        message= f"Bonjour,\nMediPlace vous informe qu’une pénalité a été appliquée à la facture n°{fact.numero_facture}.Le montant total de cette facture s’élève désormais à {fact.montant} dhs.\nNous vous invitons à régler cette somme dans les plus brefs délais afin d’éviter toute nouvelle majoration.\nMerci pour votre compréhension,\nL’équipe MediPlace."
  
        pywhatkit.sendwhatmsg_instantly(phone,message)
-       
-
-
-
     return render(request, 'cabinet/penalite_form.html', {'msg':text,'facture':fact})

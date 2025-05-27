@@ -1,8 +1,7 @@
-{% load static %}
-{% include 'cabinet/headerbasepagemed.html' %}
+{% load static %} {% include 'cabinet/headerbasepagemed.html' %}
 <div class="patients-bg">
   <div class="patients-centered">
-    <h2 class="patients-title">👥 Mes patients</h2>
+    <h2 class="patients-title">Mes patients</h2>
     <div class="table-bg">
       <table class="patients-table">
         <thead>
@@ -18,7 +17,10 @@
             <td>{{ patient.nom }}</td>
             <td>{{ patient.prenom }}</td>
             <td>
-              <a href="{% url 'dossier_patient_med' patient.id %}" class="btn-voir-dossier">
+              <a
+                href="{% url 'dossier_patient_med' patient.id %}?from=patients"
+                class="btn-voir-dossier"
+              >
                 <i class="fa fa-folder-open"></i> Voir dossier
               </a>
             </td>
@@ -35,125 +37,127 @@
   </div>
 </div>
 <style>
-.patients-bg {
-  min-height: 100vh;
-  background: #f7f8fa;
-  width: 100vw;
-}
-.patients-centered {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 48px 0 48px 0;
-  display: flex;
-  flex-direction: column;
-  gap: 38px;
-}
-.patients-title {
-  font-size: 2.2rem;
-  color: #2d4c4c;
-  font-weight: 700;
-  margin-bottom: 38px;
-  text-align: center;
-  letter-spacing: 0.5px;
-}
-.table-bg {
-  background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 4px 18px rgba(44, 62, 80, 0.09);
-  padding: 0 0 0 0;
-  overflow: hidden;
-  margin-top: 0;
-  display: flex;
-  justify-content: center;
-}
-.patients-table {
-  width: 100%;
-  margin: 0 auto;
-  border-collapse: separate;
-  border-spacing: 0;
-  font-size: 1.15rem;
-  letter-spacing: 0.01em;
-  background: transparent;
-}
-.patients-table th, .patients-table td {
-  padding: 22px 28px;
-  text-align: left;
-}
-.patients-table th {
-  background: #f6faf9;
-  color: #3a7c7c;
-  font-weight: 700;
-  font-size: 1.15rem;
-  border-bottom: 2px solid #e3e8e7;
-  letter-spacing: 0.2px;
-}
-.patients-table tr {
-  border-bottom: 1px solid #f0f3f2;
-  transition: background 0.18s;
-}
-.patients-table tr:nth-child(even) {
-  background: #f8fbfa;
-}
-.patients-table tr:last-child {
-  border-bottom: none;
-}
-.patients-table tr:hover {
-  background: #f1f7f5;
-}
-.btn-voir-dossier {
-  background: #f6faf9;
-  color: #217a5b;
-  border: 1px solid #dbe7e4;
-  border-radius: 7px;
-  padding: 10px 26px;
-  font-weight: 600;
-  font-size: 1.08rem;
-  text-decoration: none;
-  transition: background 0.18s, color 0.18s, border 0.18s, box-shadow 0.18s;
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  box-shadow: 0 2px 8px rgba(44, 62, 80, 0.07);
-}
-.btn-voir-dossier i {
-  font-size: 1.13em;
-}
-.btn-voir-dossier:hover {
-  background: #e8eddf;
-  color: #217a5b;
-  border: 1.5px solid #b7c9a8;
-  box-shadow: 0 4px 16px rgba(44, 62, 80, 0.13);
-}
-.retour-center {
-  text-align: center;
-  margin-top: 38px;
-}
-.btn-retour-main {
-  background: #f6faf9;
-  color: #3a7c7c;
-  border-radius: 7px;
-  padding: 13px 38px;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 1.13rem;
-  border: 1px solid #e3e8e7;
-  transition: background 0.18s, color 0.18s, box-shadow 0.18s;
-  box-shadow: 0 2px 8px rgba(44, 62, 80, 0.08);
-  display: inline-block;
-  margin-top: 0;
-}
-.btn-retour-main:hover {
-  background: #3a7c7c;
-  color: #fff;
-  box-shadow: 0 4px 16px rgba(44, 62, 80, 0.13);
-}
-@media (max-width: 1000px) {
+  .patients-bg {
+    min-height: 100vh;
+    background: #f7f8fa;
+    width: 100vw;
+  }
   .patients-centered {
-    max-width: 99vw;
-    padding: 32px 0 0 0;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 48px 0 48px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 38px;
   }
-  .patients-table th, .patients-table td {
-    padding: 14px 10px;
+  .patients-title {
+    font-size: 2.2rem;
+    color: #2d4c4c;
+    font-weight: 700;
+    margin-bottom: 38px;
+    text-align: center;
+    letter-spacing: 0.5px;
   }
-}
-</style> 
+  .table-bg {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 18px rgba(44, 62, 80, 0.09);
+    padding: 0 0 0 0;
+    overflow: hidden;
+    margin-top: 0;
+    display: flex;
+    justify-content: center;
+  }
+  .patients-table {
+    width: 100%;
+    margin: 0 auto;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 1.15rem;
+    letter-spacing: 0.01em;
+    background: transparent;
+  }
+  .patients-table th,
+  .patients-table td {
+    padding: 22px 28px;
+    text-align: left;
+  }
+  .patients-table th {
+    background: #f6faf9;
+    color: #3a7c7c;
+    font-weight: 700;
+    font-size: 1.15rem;
+    border-bottom: 2px solid #e3e8e7;
+    letter-spacing: 0.2px;
+  }
+  .patients-table tr {
+    border-bottom: 1px solid #f0f3f2;
+    transition: background 0.18s;
+  }
+  .patients-table tr:nth-child(even) {
+    background: #f8fbfa;
+  }
+  .patients-table tr:last-child {
+    border-bottom: none;
+  }
+  .patients-table tr:hover {
+    background: #f1f7f5;
+  }
+  .btn-voir-dossier {
+    background: #f6faf9;
+    color: #217a5b;
+    border: 1px solid #dbe7e4;
+    border-radius: 7px;
+    padding: 10px 26px;
+    font-weight: 600;
+    font-size: 1.08rem;
+    text-decoration: none;
+    transition: background 0.18s, color 0.18s, border 0.18s, box-shadow 0.18s;
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    box-shadow: 0 2px 8px rgba(44, 62, 80, 0.07);
+  }
+  .btn-voir-dossier i {
+    font-size: 1.13em;
+  }
+  .btn-voir-dossier:hover {
+    background: #e8eddf;
+    color: #217a5b;
+    border: 1.5px solid #b7c9a8;
+    box-shadow: 0 4px 16px rgba(44, 62, 80, 0.13);
+  }
+  .retour-center {
+    text-align: center;
+    margin-top: 38px;
+  }
+  .btn-retour-main {
+    background: #f6faf9;
+    color: #3a7c7c;
+    border-radius: 7px;
+    padding: 13px 38px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.13rem;
+    border: 1px solid #e3e8e7;
+    transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+    box-shadow: 0 2px 8px rgba(44, 62, 80, 0.08);
+    display: inline-block;
+    margin-top: 0;
+  }
+  .btn-retour-main:hover {
+    background: #3a7c7c;
+    color: #fff;
+    box-shadow: 0 4px 16px rgba(44, 62, 80, 0.13);
+  }
+  @media (max-width: 1000px) {
+    .patients-centered {
+      max-width: 99vw;
+      padding: 32px 0 0 0;
+    }
+    .patients-table th,
+    .patients-table td {
+      padding: 14px 10px;
+    }
+  }
+</style>

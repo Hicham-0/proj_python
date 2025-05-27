@@ -2,7 +2,7 @@ import os
 import sys
 import pywhatkit 
 # le chemin du projet Django (le dossier contenant manage.py)
-sys.path.append("C:/Users/hp/Documents/proj_python")
+sys.path.append("C:\Users\user\Desktop\proj_python")
 
 #  Définir le module de configuration Django
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'proj_python.settings')
