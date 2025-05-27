@@ -350,20 +350,6 @@ def dossier_patient_med(request, patient_id):
     observations = Observation.objects.filter(dossier_medical=dossier) if dossier else []
     msg = None
 
-    # Ajout d'une ordonnance
-    if request.method == 'POST' and 'ajouter_ordonnance' in request.POST:
-        contenu = request.POST.get('contenu_ordonnance')
-        if contenu and dossier:
-            Ordonnance.objects.create(dossier_medical=dossier, medecin=medecin, contenu=contenu)
-            msg = "Ordonnance ajoutée avec succès."
-            ordonnances = Ordonnance.objects.filter(dossier_medical=dossier)
-    # Ajout d'une observation
-    if request.method == 'POST' and 'ajouter_observation' in request.POST:
-        contenu = request.POST.get('contenu_observation')
-        if contenu and dossier:
-            Observation.objects.create(dossier_medical=dossier, medecin=medecin, contenu=contenu)
-            msg = "Observation ajoutée avec succès."
-            observations = Observation.objects.filter(dossier_medical=dossier)
 
     return render(request, 'cabinet/dossier_patient_med.html', {
         'patient': patient,

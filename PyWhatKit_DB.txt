@@ -153,3 +153,8 @@ Time: 1:28
 Phone Number: +212650775321
 Message: Bonjour,MediPlace vous rappelle que vous avez un rendez-vous prévu **demain** (28/05/2025 à 00h00) avec le Dr Houda.Merci de bien vouloir vous présenter à l'heure prévue ou de modifier votre réservation si nécessaire.Cordialement, L’équipe MediPlace.
 --------------------
+Date: 27/5/2025
+Time: 9:55
+Phone Number: +212612369940
+Message: Bonjour,MediPlace vous informe qu’une pénalité a été appliquée à la facture n°FCT-827.Le montant total de cette facture s’élève désormais à 220.00 dhs.Nous vous invitons à régler cette somme dans les plus brefs délais afin d’éviter toute nouvelle majoration.Merci pour votre compréhension,L’équipe MediPlace.
+--------------------
