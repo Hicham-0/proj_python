@@ -32,8 +32,7 @@
             <strong>Date :</strong> {{ observation.date|date:'d/m/Y H:i' }}
           </div>
           <div>
-            <strong>Médecin :</strong> Dr. {{ observation.medecin.nom }} {{
-            observation.medecin.prenom }}
+            <strong>Médecin :</strong> Dr. {{ observation.medecin.nom }} {{ observation.medecin.prenom }}
           </div>
           <div><strong>Contenu :</strong> {{ observation.contenu }}</div>
         </li>
@@ -60,8 +59,7 @@
             <strong>Date :</strong> {{ ordonnance.date|date:'d/m/Y H:i' }}
           </div>
           <div>
-            <strong>Médecin :</strong> Dr. {{ ordonnance.medecin.nom }} {{
-            ordonnance.medecin.prenom }}
+            <strong>Médecin :</strong> Dr. {{ ordonnance.medecin.nom }} {{ordonnance.medecin.prenom }}
           </div>
           {% for ligne in ordonnance.contenu.splitlines %}
           <div><strong>Médicament & posologie :</strong> {{ ligne }}</div>

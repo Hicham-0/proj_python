@@ -142,6 +142,7 @@ def updateprflpat(request):
          pat.mot_de_passe=nvmdp
          pat.save() 
          return render(request,'cabinet/updateprflpat.html',{'msg':"Vos informations ont été mises à jour avec succès"})
+    return render(request,'cabinet/updateprflpat.html')
 
         
 
