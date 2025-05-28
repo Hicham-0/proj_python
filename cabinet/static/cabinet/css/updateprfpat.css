@@ -7,19 +7,22 @@
 body {
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     background: linear-gradient(to right, #f0f2f5, #e4e7eb);
-    padding: 50px;
+    padding: 50px 0 50px 0;
 }
 
 .main-container {
     display: flex;
     max-width: 1000px;
-    margin: auto;
+   margin-left: auto;
     background-color: white;
     border-radius: 12px;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     margin-top: 50px;
     height: 520px;
+    margin-right: 10px
+   
+
 }
 
 .left-panel {

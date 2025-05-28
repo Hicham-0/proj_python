@@ -1,28 +1,45 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Paiement - MediPlace</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-  <link rel="stylesheet" href="{% static 'cabinet/css/main_pat.css' %}"/>
-  <link rel="stylesheet" href="{% static 'cabinet/css/Paiementpat.css' %}"/>
-    
-</head>
-<body>
- {% include 'cabinet/headerbase.html' %}
-  <section class="paiement-section">
-    <div class="paiement-box">
-      <div style="font-size:2.5em; margin-bottom: 10px; color:#66B7AD;">💳</div>
-      <h2 style="font-size:1.7em; font-weight:700; margin-bottom: 18px; letter-spacing:0.01em;">Factures à payer</h2>
-      {% if msg %}
-        <div class="success-message" style="display:flex;align-items:center;gap:8px;"><span style="font-size:1.3em;">✔️</span> {{ msg }}</div>
-      {% endif %}
-      {% if factures %}
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Paiement - MediPlace</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="{% static 'cabinet/css/main_pat.css' %}" />
+    <link rel="stylesheet" href="{% static 'cabinet/css/Paiementpat.css' %}" />
+  </head>
+  <body>
+    {% include 'cabinet/headerbase.html' %}
+    <section class="paiement-section">
+      <div class="paiement-box">
+        <div style="font-size: 2.5em; margin-bottom: 10px; color: #66b7ad">
+          💳
+        </div>
+        <h2
+          style="
+            font-size: 1.7em;
+            font-weight: 700;
+            margin-bottom: 18px;
+            letter-spacing: 0.01em;
+          "
+        >
+          Factures à payer
+        </h2>
+        {% if msg %}
+        <div
+          class="success-message"
+          style="display: flex; align-items: center; gap: 8px"
+        >
+          <span style="font-size: 1.3em">✔️</span> {{ msg }}
+        </div>
+        {% endif %} {% if factures %}
         <form method="POST">
           {% csrf_token %}
-          <table class="modern-table" style="margin: 0 auto;">
+          <table class="modern-table" style="margin: 0 auto">
             <thead>
               <tr>
                 <th>Numéro</th>
@@ -38,19 +55,39 @@
                 <td>{{ facture.montant }} Dhs</td>
                 <td>{{ facture.date_emission }}</td>
                 <td>
-                  <button type="submit" name="facture_id" value="{{ facture.id }}" class="action-btn" style="background:#66B7AD;color:white;border:none;border-radius:6px;padding:7px 18px;font-weight:600;display:flex;align-items:center;gap:7px;cursor:pointer;transition:background 0.2s;"><i class="fas fa-credit-card"></i> Payer</button>
+                  <button
+                    type="submit"
+                    name="facture_id"
+                    value="{{ facture.id }}"
+                    class="action-btn"
+                    style="
+                      background: #66b7ad;
+                      color: white;
+                      border: none;
+                      border-radius: 6px;
+                      padding: 7px 18px;
+                      font-weight: 600;
+                      display: flex;
+                      align-items: center;
+                      gap: 7px;
+                      cursor: pointer;
+                      transition: background 0.2s;
+                    "
+                  >
+                    <i class="fas fa-credit-card"></i> Payer
+                  </button>
                 </td>
               </tr>
               {% endfor %}
             </tbody>
           </table>
         </form>
-      {% else %}
+        {% else %}
         <div class="empty-history-msg">Aucune facture à payer.</div>
-      {% endif %}
-    </div>
-  </section>
-   <div style="height: 80px;"></div>
-{% include 'cabinet/footerbase.html' %}
-</body>
+        {% endif %}
+      </div>
+    </section>
+    <div style="height: 80px"></div>
+    {% include 'cabinet/footerbase.html' %}
+  </body>
 </html>
