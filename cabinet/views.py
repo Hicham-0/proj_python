@@ -3,7 +3,7 @@ from .models import Medecin, Patient,Facture, RendezVous, DossierMedical, Ordonn
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required 
 from django.urls import reverse
-from datetime import datetime, time
+from datetime import datetime, time, timedelta
 from django.http import JsonResponse
 import random
 from django.views.decorators.http import require_GET, require_POST
@@ -11,6 +11,7 @@ from django.views.decorators.csrf import csrf_exempt
 from decimal import Decimal
 import pywhatkit 
 import os
+from django.utils import timezone
 
 def creer_compte(request):
    if request.method =='POST':
@@ -196,27 +197,38 @@ def main_pat(request):
     return render(request, 'cabinet/main_pat.html')
 
 def annuler_rdv(request, rdv_id):
+    from datetime import timedelta
     emailp = request.session.get('user_email')
     if not emailp:
         return redirect('login')
     try:
         patient = Patient.objects.get(email=emailp)
         rdv = RendezVous.objects.get(id=rdv_id, patient=patient)
-        rdv.delete()
-        messages.success(request, "Le rendez-vous a été annulé avec succès.")
+        now = timezone.now()
+        # Si le rendez-vous est dans moins de 24h ou déjà passé
+        if rdv.date <= now or (rdv.date - now) < timedelta(hours=24):
+            messages.error(request, "Vous ne pouvez plus effectuer la suppression de ce rendez-vous (moins de 24h ou déjà passé).")
+        else:
+            rdv.delete()
+            messages.success(request, "Le rendez-vous a été annulé avec succès.")
     except (Patient.DoesNotExist, RendezVous.DoesNotExist):
         messages.error(request, "Impossible d'annuler ce rendez-vous.")
     return redirect('voirhistopat')
 
 def modifier_rdv(request, rdv_id):
     from .models import Medecin, RendezVous, Patient
-    from datetime import datetime, time
+    from datetime import timedelta
     emailp = request.session.get('user_email')
     if not emailp:
         return redirect('login')
     try:
         patient = Patient.objects.get(email=emailp)
         rdv = RendezVous.objects.get(id=rdv_id, patient=patient)
+        now = timezone.now()
+        # Si le rendez-vous est dans moins de 24h ou déjà passé
+        if rdv.date <= now or (rdv.date - now) < timedelta(hours=24):
+            messages.error(request, "Vous ne pouvez plus effectuer la modification de ce rendez-vous (moins de 24h ou déjà passé).")
+            return redirect('voirhistopat')
     except (Patient.DoesNotExist, RendezVous.DoesNotExist):
         messages.error(request, "Impossible de modifier ce rendez-vous.")
         return redirect('voirhistopat')
@@ -458,7 +470,7 @@ def appliquer_penalite(request, id):
        if tel.startswith("0"):
            tel = tel[1:]
            phone = "+212" + tel
-       message= f"Bonjour,\nMediPlace vous informe qu’une pénalité a été appliquée à la facture n°{fact.numero_facture}.Le montant total de cette facture s’élève désormais à {fact.montant} dhs.\nNous vous invitons à régler cette somme dans les plus brefs délais afin d’éviter toute nouvelle majoration.\nMerci pour votre compréhension,\nL’équipe MediPlace."
+       message= f"Bonjour,\nMediPlace vous informe qu'une pénalité a été appliquée à la facture n°{fact.numero_facture}.Le montant total de cette facture s'élève désormais à {fact.montant} dhs.\nNous vous invitons à régler cette somme dans les plus brefs délais afin d'éviter toute nouvelle majoration.\nMerci pour votre compréhension,\nL'équipe MediPlace."
  
        pywhatkit.sendwhatmsg_instantly(phone,message)
     return render(request, 'cabinet/penalite_form.html', {'msg':text,'facture':fact})

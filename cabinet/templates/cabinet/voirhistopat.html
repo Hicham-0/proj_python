@@ -10,6 +10,20 @@
     {% include 'cabinet/headerbase.html' %}
     <section class="services-section">
         <h2 class="services-title">Historique de mes rendez-vous</h2>
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li class="{{ message.tags }}">
+                        {% if message.tags == 'error' %}
+                            <span style="margin-right:8px;">&#9888;</span>
+                        {% elif message.tags == 'success' %}
+                            <span style="margin-right:8px;">&#10003;</span>
+                        {% endif %}
+                        {{ message }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
         <style>
             .empty-history-msg {
                 display: flex;
@@ -31,6 +45,37 @@
             .modern-table tbody tr:hover {
              background: inherit;
 }
+            .messages {
+                list-style: none;
+                padding: 0;
+                margin: 0 0 24px 0;
+                max-width: 700px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .messages li {
+                padding: 16px 22px;
+                margin-bottom: 12px;
+                border-radius: 8px;
+                font-size: 1.13rem;
+                font-weight: 500;
+                display: flex;
+                align-items: center;
+                box-shadow: 0 2px 8px rgba(44, 62, 80, 0.07);
+                background: #fff;
+                border-left: 5px solid #579E96;
+                color: #2d4c4c;
+            }
+            .messages li.error {
+                border-left-color: #e57373;
+                background: #fff6f6;
+                color: #b71c1c;
+            }
+            .messages li.success {
+                border-left-color: #66b7ad;
+                background: #f6faf9;
+                color: #217a5b;
+            }
         </style>
         {% if rdvs %}
         <div class="table-responsive">
